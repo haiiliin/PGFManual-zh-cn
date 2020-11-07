@@ -1,0 +1,652 @@
+% Copyright 2019 by Till Tantau
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Free Documentation License.
+%
+% See the file doc/generic/pgf/licenses/LICENSE for more details.
+
+
+% \section{Tutorial: Euclid's Amber Version of the \emph{Elements}}
+\section{教程：欧几里得的琥珀版本的\emph{几何原本}}
+
+% In this third tutorial we have a look at how \tikzname\ can be used to draw geometric constructions.
+
+在第三个教程中，我们将了解如何使用\tikzname\ 绘制几何构造。
+
+% Euclid is currently quite busy writing his new book series, whose working title is ``Elements'' (Euclid is not quite sure whether this title will convey the message of the series to future generations correctly, but he intends to change the title before it goes to the publisher). Up to know, he wrote down his text and graphics on papyrus, but his publisher suddenly insists that he must submit in electronic form. Euclid tries to argue with the publisher that electronics will only be discovered thousands of years later, but the publisher informs him that the use of papyrus is no longer cutting edge technology and Euclid will just have to keep up with modern tools.
+
+欧几里德（Euclid）目前正忙于撰写他的新书系列，其标题是``几何原本''（欧克利德不确定该标题是否会正确地向后人传达该系列的信息，但他打算在它交给出版商之前更改书名）。 据他所知，他在纸莎草纸上写下了文字和图形，但是他的出版商突然坚持要求他必须以电子形式提交。 欧几里得试图与出版商争辩，电子技术只会在数千年后才被发现，但是出版商告诉他，纸莎草纸的使用不再是尖端技术，欧几里得将不得不跟上现代工具的发展。
+
+% Slightly disgruntled, Euclid starts converting his papyrus entitled ``Book I, Proposition I'' to an amber version.
+
+欧几里得有些不满，开始将名为``书I，命题I''的纸莎草纸改成琥珀版本。
+
+
+% \subsection{Book I, Proposition I}
+\subsection{书I，命题I}
+
+% The drawing on his papyrus looks like this:\footnote{The text is taken from the wonderful interactive version of Euclid's Elements by David E. Joyce, to be found on his website at Clark University.} 
+
+他的纸莎草纸上的图形看起来像这样：\footnote{该文本摘自David E. Joyce的Euclid's Elements精彩互动版本，可在他在Clark University的网站上找到。}
+
+\bigskip
+\noindent
+\begin{tikzpicture}[thick,help lines/.style={thin,draw=black!50}]
+  \pgfmathsetseed{1}
+  \def\A{\textcolor{input}{$A$}}
+  \def\B{\textcolor{input}{$B$}}
+  \def\C{\textcolor{output}{$C$}}
+  \def\D{$D$}
+  \def\E{$E$}
+
+  \colorlet{input}{blue!80!black}
+  \colorlet{output}{red!70!black}
+  \colorlet{triangle}{orange}
+
+  \coordinate [label=left:\A]
+    (A) at ($ (0,0) + .1*(rand,rand) $);
+  \coordinate [label=right:\B]
+    (B) at ($ (1.25,0.25) + .1*(rand,rand) $);
+
+  \draw [input] (A) -- (B);
+
+  \node [name path=D,help lines,draw,label=left:\D] (D) at (A) [circle through=(B)] {};
+  \node [name path=E,help lines,draw,label=right:\E] (E) at (B) [circle through=(A)] {};
+
+  \path [name intersections={of=D and E,by={[label=above:\C]C}}];
+
+  \draw [output] (A) -- (C);
+  \draw [output] (B) -- (C);
+
+  \foreach \point in {A,B,C}
+    \fill [black,opacity=.5] (\point) circle (2pt);
+
+  \begin{pgfonlayer}{background}
+    \fill[triangle!80] (A) -- (C) -- (B) -- cycle;
+  \end{pgfonlayer}
+
+  \node [below right,text width=10cm,align=justify] at (4,3)
+  {
+    \small
+    \textbf{Proposition I}\par
+    \emph{To construct an \textcolor{triangle}{equilateral triangle}
+      on a given \textcolor{input}{finite straight line}.}
+    \par
+    \vskip1em
+    Let \A\B\ be the given \textcolor{input}{finite straight line}. It is required to construct an \textcolor{triangle}{equilateral triangle} on the \textcolor{input}{straight line}~\A\B.
+
+    Describe the circle \B\C\D\ with center~\A\ and radius \A\B. Again describe the circle \A\C\E\ with center~\B\ and radius \B\A. Join the \textcolor{output}{straight lines} \C\A\ and \C\B\ from the point~\C\ at which the circles cut one another to the points~\A\ and~\B.
+
+    Now, since the point~\A\ is the center of the circle \C\D\B, therefore \A\C\ equals \A\B. Again, since the point \B\ is the center of the circle \C\A\E, therefore \B\C\ equals \B\A. But \A\C\ was proved equal to \A\B, therefore each of the straight lines \A\C\ and \B\C\ equals \A\B. And     things which equal the same thing also equal one another, therefore \A\C\ also equals \B\C. Therefore the three straight lines \A\C, \A\B, and \B\C\ equal one another. Therefore the \textcolor{triangle}{triangle} \A\B\C\ is equilateral, and it has been  constructed on the given finite \textcolor{input}{straight line}~\A\B.
+  };
+\end{tikzpicture}
+\bigskip
+
+% Let us have a look at how Euclid can turn this into \tikzname\ code.
+
+让我们看看欧几里得如何将其转换为\tikzname\ 代码。
+
+
+% \subsubsection{Setting up the Environment}
+\subsubsection{配置环境}
+
+% As in the previous tutorials, Euclid needs to load \tikzname, together with some libraries. These libraries are |calc|, |intersections|, |through|, and |backgrounds|. Depending on which format he uses, Euclid would use one of the following in the preamble:
+
+与以前的教程一样，欧几里得需要加载\tikzname 以及一些库。 这些库是包括 |calc|、|intersections|、|through| 和 | backgrounds|。 根据他使用的格式，欧几里得将在序言中使用以下其中之一：
+
+%
+\begin{codeexample}[code only]
+% For LaTeX:
+\usepackage{tikz}
+\usetikzlibrary{calc,intersections,through,backgrounds}
+\end{codeexample}
+
+\begin{codeexample}[code only]
+% For plain TeX:
+\input tikz.tex
+\usetikzlibrary{calc,intersections,through,backgrounds}
+\end{codeexample}
+
+\begin{codeexample}[code only]
+% For ConTeXt:
+\usemodule[tikz]
+\usetikzlibrary[calc,intersections,through,backgrounds]
+\end{codeexample}
+
+
+%\subsubsection{The Line \emph{AB}}
+\subsubsection{线段\emph{AB}}
+
+% The first part of the picture that Euclid wishes to draw is the line $AB$. That is easy enough, something like |\draw (0,0) -- (2,1);| might do. However, Euclid does not wish to reference the two points $A$ and $B$ as $(0,0)$ and $(2,1)$ subsequently. Rather, he wishes to just write |A| and |B|. Indeed, the whole point of his book is that the points $A$ and $B$ can be arbitrary and all other points (like $C$) are constructed in terms of their positions. It would not do if Euclid were to write down the coordinates of $C$ explicitly.
+
+欧几里得希望绘制图片的第一部分是$AB$线段。 这很容易，像 |\draw (0,0) -- (2,1);| 就可以做到。但是，欧几里得不希望随后将两个点$A$和$B$分别称为$(0,0)$和$(2,1)$。 相反，他希望只写 |A| 和 |B|，确实，他的书的要点是$A$和$B$点可以是任意的，其他所有点（如$C$）都是根据其位置构造的。如果欧几里得明确地写下$C$的坐标，它就不会这样做了。{\color{red}\ref{error}}
+
+% So, Euclid starts with defining two coordinates using the |\coordinate| command:
+
+因此，欧几里得从使用 |\coordinate| 命令定义两个坐标开始：
+
+%
+\begin{codeexample}[]
+\begin{tikzpicture}
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (1.25,0.25);
+
+  \draw[blue] (A) -- (B);
+\end{tikzpicture}
+\end{codeexample}
+
+% That was easy enough. What is missing at this point are the labels for the coordinates. Euclid does not want them \emph{on} the points, but next to them. He decides to use the |label| option:
+
+这已经足够简单。此时缺少的是坐标的标签。 欧几里得不希望它们在这些坐标点\emph{上}，而是在坐标点旁边。 他决定使用 |label| 选项：
+
+%
+\begin{codeexample}[]
+\begin{tikzpicture}
+  \coordinate [label=left:\textcolor{blue}{$A$}]  (A) at (0,0);
+  \coordinate [label=right:\textcolor{blue}{$B$}] (B) at (1.25,0.25);
+
+  \draw[blue] (A) -- (B);
+\end{tikzpicture}
+\end{codeexample}
+
+% At this point, Euclid decides that it would be even nicer if the points $A$ and $B$ were in some sense ``random''. Then, neither Euclid nor the reader can make the mistake of taking ``anything for granted'' concerning these position of these points. Euclid is pleased to learn that there is a |rand| function in \tikzname\ that does exactly what he needs: It produces a number between $-1$ and $1$. Since \tikzname\ can do a bit of math, Euclid can change the coordinates of the points as follows:
+
+在这一点上，欧几里得认为如果点$A$和$B$在某种意义上是``随机的''，那就更好了。 这样，无论是欧几里德还是读者都不会犯错误，认为这些点的位置是“理所当然的”。 欧几里得很高兴得知\tikzname\ 中的 |rand| 函数完全满足他的需要：它产生介于$-1$和$1$之间的数字。 由于\tikzname\ 可以进行一些数学运算，因此欧几里得可以如下更改点的坐标：
+
+%
+\begin{codeexample}[code only]
+\coordinate [...] (A) at (0+0.1*rand,0+0.1*rand);
+\coordinate [...] (B) at (1.25+0.1*rand,0.25+0.1*rand);
+\end{codeexample}
+
+% This works fine. However, Euclid is not quite satisfied since he would prefer that the ``main coordinates'' $(0,0)$ and $(1.25,0.25)$ are ``kept separate'' from the perturbation $0.1(\mathit{rand},\mathit{rand})$. This means, he would like to specify that coordinate $A$ as ``the point that is at $(0,0)$ plus one tenth of the vector  $(\mathit{rand},\mathit{rand})$''.
+
+这确实很好。 但是，欧几里得并不十分满意，因为他希望``主坐标''$(0,0)$和$(1.25,0.25)$与扰动$0.1(\mathit{rand},\mathit{rand})$``保持分离''。 这意味着，他想将坐标$A$指定为``在$(0,0)$上加上向量$(\mathit{rand},\mathit{rand})$的十分之一''。
+
+% It turns out that the |calc| library allows him to do exactly this kind of computation. When this library is loaded, you can use special coordinates that start with |($| and end with |$)| rather than just |(| and~|)|. Inside these special coordinates you can give a linear combination of coordinates. (Note that the dollar signs are only intended to signal that a ``computation'' is going on; no mathematical typesetting is done.)
+
+事实证明 |calc| 库允许他精确地进行这种计算。 加载此库后，可以使用以 |($| 开始以及以 |$)| 结束的特殊坐标，而不只是 |(| 和 |)|。 在这些特殊坐标内，您可以给出坐标的线性组合。 （请注意，美元符号仅用于表示正在进行``计算''；不进行数学排版。）
+
+
+% The new code for the coordinates is the following:
+
+坐标新的代码如下：
+
+%
+\begin{codeexample}[code only]
+\coordinate [...] (A) at ($ (0,0) + .1*(rand,rand) $);
+\coordinate [...] (B) at ($ (1.25,0.25) + .1*(rand,rand) $);
+\end{codeexample}
+
+% Note that if a coordinate in such a computation has a factor (like |.1|), you must place a |*| directly before the opening parenthesis of the coordinate. You can nest such computations.
+
+请注意，如果此类计算中的坐标有一个乘数（例如|.1|），则必须直接在坐标的圆括号之前放置|*|。 您可以嵌套进行这样的计算。
+
+
+% \subsubsection{The Circle Around \emph{A}}
+\subsubsection{以点\emph{A}为圆心的圆}
+
+% The first tricky construction is the circle around $A$. We will see later how to do this in a very simple manner, but first let us do it the ``hard'' way.
+
+第一个棘手的结构是以点$A$为圆心的圆。 稍后我们将看到如何以非常简单的方式执行此操作，但首先让我们以一种更``困难''方式执行此操作。
+
+% The idea is the following: We draw a circle around the point $A$ whose radius is given by the length of the line $AB$. The difficulty lies in computing the length of this line.
+
+想法如下：我们在点$A$周围画一个圆，其半径由线$AB$的长度给定。 困难在于计算这条线的长度。
+
+% Two ideas ``nearly'' solve this problem: First, we can write |($ (A) - (B) $)| for the vector that is the difference between $A$ and~$B$. All we need is the length of this vector. Second, given two numbers $x$ and $y$, one can write |veclen(|$x$|,|$y$|)| inside a mathematical expression. This gives the value $\sqrt{x^2+y^2}$, which is exactly the desired length.
+
+有两种``差不多''可以解决这个问题的想法：首先，我们可以说 |($ (A) - (B) $)| 是对于$A$和$B$之差的向量。 我们需要的只是该向量的长度。 第二，给定两个数字$x$和$y$，可以在数学表达式中使用 |veclen(|$x$|,|$y$|)|。 该表达式的值为$\sqrt{x^2+y^2}$，恰好是所需的长度。
+
+% The only remaining problem is to access the $x$- and $y$-coordinate of the vector~$AB$. For this, we need a new concept: the \emph{let operation}. A let operation can be given anywhere on a path where a normal path operation like a line-to or a move-to is expected. The effect of a let operation is to evaluate some coordinates and to assign the results to special macros. These macros make it easy to access the $x$- and $y$-coordinates of the coordinates.
+
+
+唯一剩下的问题是访问向量$AB$的$x$和$y$坐标。为此，我们需要一个新概念：\emph{let操作}。 let操作可以在路径上的任何位置进行，在这些位置可以进行常规的路径操作（如line-to或move-to）。let操作的作用是计算一些坐标，并将结果分配给特殊的宏。这些宏可以方便地访问坐标点的$x$和$y$坐标。
+
+% Euclid would write the following:
+
+欧几里得将编写以下内容：
+
+%
+\begin{codeexample}[preamble={\usetikzlibrary{calc}}]
+\begin{tikzpicture}
+  \coordinate [label=left:$A$]  (A) at (0,0);
+  \coordinate [label=right:$B$] (B) at (1.25,0.25);
+  \draw (A) -- (B);
+
+  \draw (A) let
+              \p1 = ($ (B) - (A) $)
+            in
+              circle ({veclen(\x1,\y1)});
+\end{tikzpicture}
+\end{codeexample}
+
+% Each assignment in a let operation starts with |\p|, usually followed by a \meta{digit}. Then comes an equal sign and a coordinate. The coordinate is evaluated and the result is stored internally. From then on you can use the following expressions:
+
+let操作中的每个赋值都以 |\p| 开始，通常后跟一个 \meta{数字}，然后是等号和坐标。坐标将被计算，结果被存储在内部。之后你可以使用下面的表达方式:
+
+%
+\begin{enumerate}
+    % \item |\x|\meta{digit} yields the $x$-coordinate of the resulting point.
+    \item |\x|\meta{数字} 产生指定点的$x$坐标。
+    % \item |\y|\meta{digit} yields the $y$-coordinate of the resulting point.
+    \item |\y|\meta{数字} 产生指定点的$x$坐标。
+    % \item |\p|\meta{digit} yields the same as |\x|\meta{digit}|,\y|\meta{digit}.
+    \item |\p|\meta{数字} 产生与 |\x|\meta{数字}|,\y|\meta{数字} 相同的结果。
+\end{enumerate}
+%
+% You can have multiple assignments in a let operation, just separate them with commas. In later assignments you can already use the results of earlier assignments.
+%
+在let操作中可以有多个赋值，只需用逗号分隔即可。 在以后的赋值中，您已经可以使用以前的赋值的结果。
+
+% Note that |\p1| is not a coordinate in the usual sense. Rather, it just expands to a string like |10pt,20pt|. So, you cannot write, for instance, |(\p1.center)| since this would just expand to |(10pt,20pt.center)|, which makes no sense.
+
+注意 |\p1| 不是通常意义上的坐标。相反，它只是扩展为一个字符串，如 |10pt,20pt|。例如，你不能写 |(\p1.center)| 因为它会扩展到 |(10pt,20pt.center)|，这没有意义。
+
+% Next, we want to draw both circles at the same time. Each time the radius is |veclen(\x1,\y1)|. It seems natural to compute this radius only once. For this, we can also use a let operation: Instead of writing |\p1 = ...|, we write |\n2 = ...|. Here, ``n'' stands for ``number'' (while ``p'' stands for ``point''). The assignment of a number should be followed by a number in curly braces.
+
+接下来，我们想要同时画两个圆。每个圆半径是 |veclen(\x1，\y1)|。只计算一次半径似乎很自然。为此，我们还可以使用let操作：他使用 |\n2 = ...| 代替 |\p1 = ...| 。这里，``n''代表``数字''（而``p''代表``点''）。数字的赋值后面应该跟一个用花括号括起来的数字。
+
+%
+\begin{codeexample}[preamble={\usetikzlibrary{calc}}]
+\begin{tikzpicture}
+  \coordinate [label=left:$A$]  (A) at (0,0);
+  \coordinate [label=right:$B$] (B) at (1.25,0.25);
+  \draw (A) -- (B);
+
+  \draw let \p1 = ($ (B) - (A) $),
+            \n2 = {veclen(\x1,\y1)}
+        in
+          (A) circle (\n2)
+          (B) circle (\n2);
+\end{tikzpicture}
+\end{codeexample}
+%
+% In the above example, you may wonder, what |\n1| would yield? The answer is that it would be undefined -- the |\p|, |\x|, and |\y| macros refer to the same logical point, while the |\n| macro has ``its own namespace''. We could even have replaced |\n2| in the example by |\n1| and it would still work. Indeed, the digits following these macros are just normal \TeX\ parameters. We could also use a longer name, but then we have to use curly braces:
+
+在上面的例子中，您可能想知道 |\n1| 会产生什么？答案是它将是未定义的，|\p|， |\x|，和 |\y| 宏引用相同的逻辑坐标点，而 |\n| 宏有''它自己的名称空间"。我们甚至可以把例子中的 |\n2| 替换成 |\n1| 而且仍然工作正常。实际上，这些宏后面的数字只是普通的\TeX\ 参数。我们也可以使用更长的名字，但我们必须使用花括号：
+
+%
+\begin{codeexample}[preamble={\usetikzlibrary{calc}}]
+\begin{tikzpicture}
+  \coordinate [label=left:$A$]  (A) at (0,0);
+  \coordinate [label=right:$B$] (B) at (1.25,0.25);
+  \draw (A) -- (B);
+
+  \draw let \p1        = ($ (B) - (A) $),
+            \n{radius} = {veclen(\x1,\y1)}
+        in
+          (A) circle (\n{radius})
+          (B) circle (\n{radius});
+\end{tikzpicture}
+\end{codeexample}
+
+% At the beginning of this section it was promised that there is an easier way to create the desired circle. The trick is to use the |through| library. As the name suggests, it contains code for creating shapes that go through a given point.
+
+在本节的开始，我们承诺有一种更简单的方法来创建想要的圆。诀窍是通过使用|through| 库。顾名思义，它包含用于创建经过给定点的形状的代码。
+
+% The option that we are looking for is |circle through|. This option is given to a \emph{node} and has the following effects: First, it causes the node's inner and outer separations to be set to zero. Then it sets the shape of the node to |circle|. Finally, it sets the radius of the node such that it goes through the parameter given to |circle through|. This radius is computed in essentially the same way as above.
+
+我们需要的选项是 |circle through|。将此选项提供给\emph{节点}并具有以下效果：首先，它将使节点的内部和外部的间隔设置为零。然后它将节点的形状设置为 |circle|。最后，它设置节点的半径，使其通过给定的 |circle through|。这个半径的计算方法和上面一样。
+
+%
+\begin{codeexample}[preamble={\usetikzlibrary{through}}]
+\begin{tikzpicture}
+  \coordinate [label=left:$A$]  (A) at (0,0);
+  \coordinate [label=right:$B$] (B) at (1.25,0.25);
+  \draw (A) -- (B);
+
+  \node [draw,circle through=(B),label=left:$D$] at (A) {};
+\end{tikzpicture}
+\end{codeexample}
+
+
+% \subsubsection{The Intersection of the Circles}
+\subsubsection{圆的交集}
+
+% Euclid can now draw the line and the circles. The final problem is to compute the intersection of the two circles. This computation is a bit involved if you want to do it ``by hand''. Fortunately, the |intersections| library allows us to compute the intersection of arbitrary paths.
+
+欧几里得现在可以画线段和圆了。最后一个问题是计算两个圆的交点。如果你想手工做的话，这个计算有点复杂。幸运的是，|intersections| 库允许我们计算任意路径的交集。
+
+% The idea is simple: First, you ``name'' two paths using the |name path| option. Then, at some later point, you can use the option |name intersections|, which creates coordinates called |intersection-1|, |intersection-2|, and so on at all intersections of the paths. Euclid assigns the names |D| and |E| to the paths of the two circles (which happen to be the same names as the nodes themselves, but nodes and their paths live in different ``namespaces'').
+
+其思想很简单：首先，使用|name path|选项给两条路径``命名''。然后，在以后的某个时候，您可以使用名称为 |name intersections| 选项，它在路径的所有交点上创建名为 |intersec-1|、|intersec-2| 的坐标，以此类推。欧几里德将名称 |D| 和 |E| 分配给两个圆的路径（这两个圆恰好与节点本身的名称相同，但节点及其路径位于不同的``名称空间''中）。
+
+%
+\begin{codeexample}[preamble={\usetikzlibrary{intersections,through}}]
+\begin{tikzpicture}
+  \coordinate [label=left:$A$]  (A) at (0,0);
+  \coordinate [label=right:$B$] (B) at (1.25,0.25);
+  \draw (A) -- (B);
+
+  \node (D) [name path=D,draw,circle through=(B),label=left:$D$]  at (A) {};
+  \node (E) [name path=E,draw,circle through=(A),label=right:$E$] at (B) {};
+
+  % Name the coordinates, but do not draw anything:
+  \path [name intersections={of=D and E}];
+
+  \coordinate [label=above:$C$] (C) at (intersection-1);
+
+  \draw [red] (A) -- (C);
+  \draw [red] (B) -- (C);
+\end{tikzpicture}
+\end{codeexample}
+
+% It turns out that this can be further shortened: The |name intersections| takes an optional argument |by|, which lets you specify names for the coordinates and options for them. This creates more compact code. Although Euclid does not need it for the current picture, it is just a small step to computing the bisection of the line $AB$:
+
+事实证明，这个过程可以进一步缩减：|name intersections| 接受一个可选参数 |by|，它允许您为坐标指定名称和选项。这将创建更紧凑的代码。虽然欧几里得在现在的图中不需要它，但它只是计算直线AB的等分线的一个小步骤：
+
+%
+\begin{codeexample}[preamble={\usetikzlibrary{intersections,through}}]
+\begin{tikzpicture}
+  \coordinate [label=left:$A$]  (A) at (0,0);
+  \coordinate [label=right:$B$] (B) at (1.25,0.25);
+  \draw [name path=A--B] (A) -- (B);
+
+  \node (D) [name path=D,draw,circle through=(B),label=left:$D$]  at (A) {};
+  \node (E) [name path=E,draw,circle through=(A),label=right:$E$] at (B) {};
+
+  \path [name intersections={of=D and E, by={[label=above:$C$]C, [label=below:$C'$]C'}}];
+
+  \draw [name path=C--C',red] (C) -- (C');
+
+  \path [name intersections={of=A--B and C--C',by=F}];
+  \node [fill=red,inner sep=1pt,label=-45:$F$] at (F) {};
+\end{tikzpicture}
+\end{codeexample}
+
+
+% \subsubsection{The Complete Code}
+\subsubsection{完整代码}
+
+% Back to Euclid's code. He introduces a few macros to make life simpler, like a |\A| macro for typesetting a blue $A$. He also uses the |background| layer for drawing the triangle behind everything at the end.
+
+回到欧几里得的代码。他引入了一些宏来简化工作，比如用于排版蓝色的$A$的 |\A| 宏。他还使用了 |background| 层来绘制最后所有东西后面的三角形。
+
+%
+\begin{codeexample}[pre={\pgfmathsetseed{1}},preamble={\usetikzlibrary{backgrounds,calc,intersections,through}}]
+\begin{tikzpicture}[thick,help lines/.style={thin,draw=black!50}]
+  \def\A{\textcolor{input}{$A$}}     \def\B{\textcolor{input}{$B$}}
+  \def\C{\textcolor{output}{$C$}}    \def\D{$D$}
+  \def\E{$E$}
+
+  \colorlet{input}{blue!80!black}    \colorlet{output}{red!70!black}
+  \colorlet{triangle}{orange}
+
+  \coordinate [label=left:\A]  (A) at ($ (0,0) + .1*(rand,rand) $);
+  \coordinate [label=right:\B] (B) at ($ (1.25,0.25) + .1*(rand,rand) $);
+
+  \draw [input] (A) -- (B);
+
+  \node [name path=D,help lines,draw,label=left:\D]   (D) at (A) [circle through=(B)] {};
+  \node [name path=E,help lines,draw,label=right:\E]  (E) at (B) [circle through=(A)] {};
+
+  \path [name intersections={of=D and E,by={[label=above:\C]C}}];
+
+  \draw [output] (A) -- (C) -- (B);
+
+  \foreach \point in {A,B,C}
+    \fill [black,opacity=.5] (\point) circle (2pt);
+
+  \begin{pgfonlayer}{background}
+    \fill[triangle!80] (A) -- (C) -- (B) -- cycle;
+  \end{pgfonlayer}
+
+  \node [below right, text width=10cm,align=justify] at (4,3) {
+    \small\textbf{Proposition I}\par
+    \emph{To construct an \textcolor{triangle}{equilateral triangle}
+      on a given \textcolor{input}{finite straight line}.}
+    \par\vskip1em
+    Let \A\B\ be the given \textcolor{input}{finite straight line}.  \dots
+  };
+\end{tikzpicture}
+\end{codeexample}
+
+
+% \subsection{Book I, Proposition II}
+\subsection{书I，命题II}
+
+% The second proposition in the Elements is the following:
+
+几何原本中的第二个命题如下：
+
+\bigskip\noindent
+\begin{tikzpicture}[thick,help lines/.style={thin,draw=black!50}]
+  \pgfmathsetseed{1}
+  \def\A{\textcolor{orange}{$A$}}   \def\B{\textcolor{input}{$B$}}
+  \def\C{\textcolor{input}{$C$}}    \def\D{$D$}
+  \def\E{$E$}                       \def\F{$F$}
+  \def\G{$G$}                       \def\H{$H$}
+  \def\K{$K$}                       \def\L{\textcolor{output}{$L$}}
+
+  \colorlet{input}{blue!80!black}    \colorlet{output}{red!70!black}
+
+  \coordinate [label=left:\A]  (A) at ($ (0,0) + .1*(rand,rand) $);
+  \coordinate [label=right:\B] (B) at ($ (1,0.2) + .1*(rand,rand) $);
+  \coordinate [label=above:\C] (C) at ($ (1,2) + .1*(rand,rand) $);
+
+  \draw [input] (B) -- (C);
+  \draw [help lines] (A) -- (B);
+
+  \coordinate [label=above:\D] (D) at ($ (A)!.5!(B) ! {sin(60)*2} ! 90:(B) $);
+
+  \draw [help lines] (D) -- ($ (D)!3.75!(A) $) coordinate [label=-135:\E] (E);
+  \draw [help lines] (D) -- ($ (D)!3.75!(B) $) coordinate [label=-45:\F] (F);
+
+  \node (H) at (B) [name path=H,help lines,circle through=(C),draw,label=135:\H] {};
+  \path [name path=B--F] (B) -- (F);
+  \path [name intersections={of=H and B--F}]
+    coordinate [label=right:\G] (G) at (intersection-1);
+
+  \node (K) at (D) [name path=K,help lines,circle through=(G),draw,label=135:\K] {};
+
+  \path [name path=A to E line] (A) -- (E);
+  \path [name intersections={of=K and A to E line}]
+    coordinate [label=below:\L] (L) at (intersection-1);
+
+  \draw [output] (A) -- (L);
+
+  \foreach \point in {A,B,C,D,G,L}
+    \fill [black,opacity=.5] (\point) circle (2pt);
+
+  \node [below right, text width=9cm,align=justify] at (4,4) {
+    \small\textbf{Proposition II}\par
+    \emph{To place a \textcolor{output}{straight line} equal to a
+      given \textcolor{input}{straight line} with
+      one end at a \textcolor{orange}{given point}.}
+    \par\vskip1em
+    Let \A\ be the given point, and \B\C\ the given
+    \textcolor{input}{straight line}. It is required to place a \textcolor{output}{straight line} equal to the given \textcolor{input}{straight line} \B\C\ with one end at the point~\A.
+
+    Join the straight line \A\B\ from the point \A\ to the point \B, and construct the equilateral triangle \D\A\B\ on it.
+
+    Produce the straight lines \A\E\ and \B\F\ in a straight line with \D\A\ and \D\B. Describe the circle \C\G\H\ with center \B\ and radius \B\C, and  again, describe the circle \G\K\L\ with center \D\ and radius \D\G.
+
+    Since the point \B\ is the center of the circle \C\G\H, therefore \B\C\ equals \B\G. Again, since the point \D\ is the center of the circle \G\K\L, therefore \D\L\ equals \D\G. And in these \D\A\ equals \D\B, therefore the remainder \A\L\ equals the remainder \B\G. But \B\C\ was also proved  equal to \B\G, therefore each of the straight lines \A\L\ and \B\C\ equals \B\G. And things which equal the same thing also equal one another, therefore \A\L\ also equals \B\C.
+
+    Therefore the \textcolor{output}{straight line} \A\L\ equal to the given \textcolor{input}{straight line} \B\C\  has been placed with one end at the \textcolor{orange}{given point}~\A.
+  };
+\end{tikzpicture}
+
+
+% \subsubsection{Using Partway Calculations for the Construction of \emph{D}}
+\subsubsection{使用分割运算进行点\emph{D}的构造}
+
+% Euclid's construction starts with ``referencing'' Proposition~I for the construction of the point~$D$. Now, while we could simply repeat the construction, it seems a bit bothersome that one has to draw all these circles and do all these complicated constructions.
+
+欧几里得的构造从``引用''命题I开始，用来构造点$D$。现在，虽然我们可以简单地重复这个结构，但要画出所有这些圆并做所有这些复杂的结构似乎有点麻烦。
+
+% For this reason, \tikzname\ supports some simplifications. First, there is a simple syntax for computing a point that is ``partway'' on a line from $p$ to~$q$: You place these two points in a coordinate calculation -- remember, they start with |($| and end with |$)| -- and then combine them using |!|\meta{part}|!|. A \meta{part} of |0| refers to the \emph{first} coordinate, a \meta{part} of |1| refers to the second coordinate, and a value in between refers to a point on the line from $p$ to~$q$. Thus, the syntax is similar to the |xcolor| syntax for mixing colors.
+
+因此，\tikzname\ 支持一些简化。 首先，有一种简单的语法可以计算从$p$到$q$的直线上的``中间''点：将这两点放在坐标计算中，请记住，它们以 |($| 开头，以 |$)| 结束，然后使用 |!|\meta{分割比}|!| 将它们组合起来。\meta{分割比} 为0表示\emph{第一个}坐标，\meta{分割比} 为1表示\emph{第二个}坐标，其间的值表示从$p$到$q$的线段上的点。 因此，语法类似于用于混合颜色的 |xcolor| 语法。
+
+% Here is the computation of the point in the middle of the line $AB$:
+
+这是$AB$线段中点的计算：
+
+%
+\begin{codeexample}[preamble={\usetikzlibrary{calc}}]
+\begin{tikzpicture}
+  \coordinate [label=left:$A$]  (A) at (0,0);
+  \coordinate [label=right:$B$] (B) at (1.25,0.25);
+  \draw (A) -- (B);
+  \node [fill=red,inner sep=1pt,label=below:$X$] (X) at ($ (A)!.5!(B) $) {};
+\end{tikzpicture}
+\end{codeexample}
+
+% The computation of the point $D$ in Euclid's second proposition is a bit more complicated. It can be expressed as follows: Consider the line from $X$ to $B$. Suppose we rotate this line around $X$ for 90$^\circ$ and then stretch it by a factor of $\sin(60^\circ) \cdot 2$. This yields the desired point~$D$. We can do the stretching using the partway modifier above, for the rotation we need a new modifier: the rotation modifier. The idea is that the second coordinate in a partway computation can be prefixed by an angle. Then the partway point is computed normally (as if no angle were given), but the resulting point is rotated by this angle around the first point.
+
+欧几里得第二个命题中的点$D$的计算要复杂一些。可以表示为：考虑从$X$到$B$的线段。假设我们将这条线段绕$X$旋转90$^\circ$，然后将其拉伸$\sin(60^\circ) \cdot 2$倍，这将产生所需的点$D$。我们可以使用上面的分割运算编辑器进行拉伸，对于旋转，我们需要一个新的编辑器：旋转编辑器。这个想法是，在进行中间计算时，第二个坐标可以加上一个角度作为前缀。然后正常计算中间点（好像没有给出角度），但是结果点围绕第一个点旋转了这个角度。
+
+%
+\begin{codeexample}[preamble={\usetikzlibrary{calc}}]
+\begin{tikzpicture}
+  \coordinate [label=left:$A$]  (A) at (0,0);
+  \coordinate [label=right:$B$] (B) at (1.25,0.25);
+  \draw (A) -- (B);
+  \node [fill=red,inner sep=1pt,label=below:$X$] (X) at ($ (A)!.5!(B) $) {};
+  \node [fill=red,inner sep=1pt,label=above:$D$] (D) at
+    ($ (X) ! {sin(60)*2} ! 90:(B) $) {};
+  \draw (A) -- (D) -- (B);
+\end{tikzpicture}
+\end{codeexample}
+
+% Finally, it is not necessary to explicitly name the point $X$. Rather, again like in the |xcolor| package, it is possible to chain partway modifiers:
+
+最后，不必显式命名点$X$。 相反，就像在 |xcolor| 宏包中一样，可以链接分割编辑器：
+
+%
+\begin{codeexample}[preamble={\usetikzlibrary{calc}}]
+\begin{tikzpicture}
+  \coordinate [label=left:$A$]  (A) at (0,0);
+  \coordinate [label=right:$B$] (B) at (1.25,0.25);
+  \draw (A) -- (B);
+  \node [fill=red,inner sep=1pt,label=above:$D$] (D) at
+    ($ (A) ! .5 ! (B) ! {sin(60)*2} ! 90:(B) $) {};
+  \draw (A) -- (D) -- (B);
+\end{tikzpicture}
+\end{codeexample}
+
+
+% \subsubsection{Intersecting a Line and a Circle}
+\subsubsection{线段与圆相交}
+
+% The next step in the construction is to draw a circle around $B$ through $C$, which is easy enough to do using the |circle through| option. Extending the lines $DA$ and $DB$ can be done using partway calculations, but this time with a part value outside the range $[0,1]$:
+
+绘图的下一步是在$B$到$C$之间画一个圆，使用 |circle through| 选项很容易做到。 可以使用分割运算来延伸$DA$和$DB$线段，只是这里的分割比值超出$[0,1]$的范围：
+
+%
+\begin{codeexample}[preamble={\usetikzlibrary{calc,through}}]
+\begin{tikzpicture}
+  \coordinate [label=left:$A$]  (A) at (0,0);
+  \coordinate [label=right:$B$] (B) at (0.75,0.25);
+  \coordinate [label=above:$C$] (C) at (1,1.5);
+  \draw (A) -- (B) -- (C);
+  \coordinate [label=above:$D$] (D) at
+    ($ (A) ! .5 ! (B) ! {sin(60)*2} ! 90:(B) $) {};
+  \node (H) [label=135:$H$,draw,circle through=(C)] at (B) {};
+  \draw (D) -- ($ (D) ! 3.5 ! (B) $) coordinate [label=below:$F$] (F);
+  \draw (D) -- ($ (D) ! 2.5 ! (A) $) coordinate [label=below:$E$] (E);
+\end{tikzpicture}
+\end{codeexample}
+
+% We now face the problem of finding the point $G$, which is the intersection of the line $BF$ and the circle $H$. One way is to use yet another variant of the partway computation: Normally, a partway computation has the form \meta{p}|!|\meta{factor}|!|\meta{q}, resulting in the point $(1-\meta{factor})\meta{p} + \meta{factor}\meta{q}$. Alternatively, instead of \meta{factor} you can also use a \meta{dimension} between the points. In this case, you get the point that is \meta{dimension} away from \meta{p} on the straight line to \meta{q}.
+
+现在，我们面临寻找点$G$的问题，该点是线$BF$和圆$H$的交点。一种方法是使用分割运算的另一种变体：通常，分割运算的形式为 \meta{p}|!|\meta{因子}|!|\meta{q}，得出点$(1-\meta{因子})\meta{p} + \meta{因子}\meta{q}$。另外，除了使用 \meta{因子} 外，您还可以在两点之间使用 \meta{距离}。在这种情况下，您得到的点是从 \meta{p} 到 \meta{q} 的直线上距 \meta{p} 的距离为 \meta{距离} 的点。
+
+% We know that the point $G$ is on the way from $B$ to $F$. The distance is given by the radius of the circle~$H$. Here is the code for computing $H$:
+
+我们知道点$G$在点$B$到点$F$的中间。距离由圆的半径$H$给出。这是计算$H$的代码：
+
+%
+{\ifpgfmanualexternalize\tikzexternaldisable\fi
+\begin{codeexample}[
+    preamble={\usetikzlibrary{calc,through}},
+    pre={\begin{tikzpicture}
+  \coordinate [label=left:$A$]  (A) at (0,0);
+  \coordinate [label=right:$B$] (B) at (0.75,0.25);
+  \coordinate [label=above:$C$] (C) at (1,1.5);
+  \draw (A) -- (B) -- (C);
+  \coordinate [label=above:$D$] (D) at
+    ($ (A) ! .5 ! (B) ! {sin(60)*2} ! 90:(B) $) {};
+  \draw (D) -- ($ (D) ! 3.5 ! (B) $) coordinate [label=below:$F$] (F);
+  \draw (D) -- ($ (D) ! 2.5 ! (A) $) coordinate [label=below:$E$] (E);},
+    post={\end{tikzpicture}},
+]
+  \node (H) [label=135:$H$,draw,circle through=(C)] at (B) {};
+  \path let \p1 = ($ (B) - (C) $) in
+    coordinate [label=left:$G$] (G) at ($ (B) ! veclen(\x1,\y1) ! (F) $);
+  \fill[red,opacity=.5] (G) circle (2pt);
+\end{codeexample}
+
+% However, there is a simpler way: We can simply name the path of the circle and of the line in question and then use |name intersections| to compute the intersections.
+
+但是，有一种更简单的方法：我们可以简单地对圆和所讨论的线段的路径进行命名，然后使用 |name intersections| 计算交点。
+
+%
+\begin{codeexample}[
+    preamble={\usetikzlibrary{calc,intersections,through}},
+    pre={\begin{tikzpicture}
+  \coordinate [label=left:$A$]  (A) at (0,0);
+  \coordinate [label=right:$B$] (B) at (0.75,0.25);
+  \coordinate [label=above:$C$] (C) at (1,1.5);
+  \draw (A) -- (B) -- (C);
+  \coordinate [label=above:$D$] (D) at
+    ($ (A) ! .5 ! (B) ! {sin(60)*2} ! 90:(B) $) {};
+  \draw (D) -- ($ (D) ! 3.5 ! (B) $) coordinate [label=below:$F$] (F);
+  \draw (D) -- ($ (D) ! 2.5 ! (A) $) coordinate [label=below:$E$] (E);},
+    post={\end{tikzpicture}},
+]
+  \node (H) [name path=H,label=135:$H$,draw,circle through=(C)] at (B) {};
+  \path [name path=B--F] (B) -- (F);
+  \path [name intersections={of=H and B--F,by={[label=left:$G$]G}}];
+  \fill[red,opacity=.5] (G) circle (2pt);
+\end{codeexample}
+}%
+
+
+%　\subsubsection{The Complete Code}
+\subsubsection{完整代码}
+
+\begin{codeexample}[pre={\pgfmathsetseed{1}},preamble={\usetikzlibrary{calc,intersections,through}}]
+\begin{tikzpicture}[thick,help lines/.style={thin,draw=black!50}]
+  \def\A{\textcolor{orange}{$A$}}   \def\B{\textcolor{input}{$B$}}
+  \def\C{\textcolor{input}{$C$}}    \def\D{$D$}
+  \def\E{$E$}                       \def\F{$F$}
+  \def\G{$G$}                       \def\H{$H$}
+  \def\K{$K$}                       \def\L{\textcolor{output}{$L$}}
+
+  \colorlet{input}{blue!80!black}    \colorlet{output}{red!70!black}
+
+  \coordinate [label=left:\A]  (A) at ($ (0,0) + .1*(rand,rand) $);
+  \coordinate [label=right:\B] (B) at ($ (1,0.2) + .1*(rand,rand) $);
+  \coordinate [label=above:\C] (C) at ($ (1,2) + .1*(rand,rand) $);
+
+  \draw [input] (B) -- (C);
+  \draw [help lines] (A) -- (B);
+
+  \coordinate [label=above:\D] (D) at ($ (A)!.5!(B) ! {sin(60)*2} ! 90:(B) $);
+
+  \draw [help lines] (D) -- ($ (D)!3.75!(A) $) coordinate [label=-135:\E] (E);
+  \draw [help lines] (D) -- ($ (D)!3.75!(B) $) coordinate [label=-45:\F] (F);
+
+  \node (H) at (B) [name path=H,help lines,circle through=(C),draw,label=135:\H] {};
+  \path [name path=B--F] (B) -- (F);
+  \path [name intersections={of=H and B--F,by={[label=right:\G]G}}];
+
+  \node (K) at (D) [name path=K,help lines,circle through=(G),draw,label=135:\K] {};
+  \path [name path=A--E] (A) -- (E);
+  \path [name intersections={of=K and A--E,by={[label=below:\L]L}}];
+
+  \draw [output] (A) -- (L);
+
+  \foreach \point in {A,B,C,D,G,L}
+    \fill [black,opacity=.5] (\point) circle (2pt);
+
+  % \node ...
+\end{tikzpicture}
+\end{codeexample}
+
+\clearpage

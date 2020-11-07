@@ -1,0 +1,1330 @@
+% Copyright 2019 by Till Tantau
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Free Documentation License.
+%
+% See the file doc/generic/pgf/licenses/LICENSE for more details.
+
+
+% \section{Tutorial: A Lecture Map for Johannes}
+\section{教程：约翰内斯的演讲图}
+
+% In this tutorial we explore the tree and mind map mechanisms of \tikzname.
+
+在本教程中，我们探索\tikzname 的树状图和思维导图机制。
+
+% Johannes is quite excited: For the first time he will be teaching a course all by himself during the upcoming semester! Unfortunately, the course is not on his favorite subject, which is of course Theoretical Immunology, but on Complexity Theory, but as a young academic Johannes is not likely to complain too loudly. In order to help the students get a general overview of what is going to happen during the course as a whole, he intends to draw some kind of tree or graph containing the basic concepts. He got this idea from his old professor who seems to be using these ``lecture maps'' with some success. Independently of the success of these maps, Johannes thinks they look quite neat.
+
+约翰内斯（Johannes）非常兴奋：在即将到来的一个学期中，他将第一次独自一人教授一门课程！ 不幸的是，这门课程不是他最喜欢的科目，当然是理论免疫学，但是基于复杂性理论，但是作为一个年轻的学者，约翰内斯不太可能大声抱怨。 为了帮助学生大致了解整个课程中将要发生的事情，他打算画一些包含基本概念的树或图。 他从他的老教授那里得到了这个想法，他的老教授似乎成功地使用了这些``讲义图''。约翰内斯认为，撇开这些图的成功不谈，它们看起来相当整洁。
+
+
+% \subsection{Problem Statement}
+\subsection{问题描述}
+
+% Johannes wishes to create a lecture map with the following features:
+
+约翰内斯希望创建一个具有以下功能的讲义图：
+%
+\begin{enumerate}
+    % \item It should contain a tree or graph depicting the main concepts.
+    \item 它应该是包含描述主要概念的树或图。
+    % \item It should somehow visualize the different lectures that will be taught. Note that the lectures are not necessarily the same as the concepts since the graph may contain more concepts than will be addressed in lectures and some concepts may be addressed during more than one lecture.
+    % \item 它应该以某种方式将所教的不同课程形象化。请注意，课程不一定与概念相同，因为图表中包含的概念可能比课程中介绍的更多，而且有些概念可能会在不止一堂课中介绍。
+    % \item The map should also contain a calendar showing when the individual lectures will be given.
+    \item 该地图还应包含一个日历，该日历显示何时举行各个讲座。
+    % \item The aesthetical reasons, the whole map  should have a visually nice and information-rich background.
+    \item 出于美学原因，整张图应具有视觉美观且信息丰富的背景。
+\end{enumerate}
+
+% As always, Johannes will have to include the right libraries and set up the environment. Johannes is going to use the |mindmap| library and since he wishes to show a calendar, he will also need the |calendar| library. In order to put something on a background layer, it seems like a good idea to also include the |backgrounds| library.
+
+与往常一样，约翰内斯将必须引入正确的库并配置环境。 约翰尼斯将使用 |mindmap| 库，并且由于他希望显示日历，因此他还需要 |calendar| 库。为了在背景层上放置一些东西，最好还包含 |background| 库。
+
+
+% \subsection{Introduction to Trees}
+\subsection{树状图简介}
+
+% The first choice Johannes must make is whether he will organize the concepts as a tree, with root concepts and concept branches and leaf concepts, or as a general graph. The tree implicitly organizes the concepts, while a graph is more flexible. Johannes decides to compromise: Basically, the concepts will be organized as a tree. However, he will selectively add connections between concepts that are related, but which appear on different levels or branches of the tree.
+
+约翰内斯必须做出的第一选择是他将这些概念组织成一棵树，其带有根的概念，分支的概念和叶子的概念，亦或是组织成一般的图形。 树状图隐式地组织了概念，而一般的图形则更加灵活。约翰内斯决定做出让步：基本上，这些概念将被组织成一棵树。然而，他会选择性地在相关概念之间添加联系，但这些概念出现在树的不同层次或分支上。
+
+% Johannes starts with a tree-like list of concepts that he feels are important in Computational Complexity:
+
+约翰内斯首先在树上列出了一些概念，他认为这些概念对于计算复杂性很重要：
+
+\begin{itemize}
+  \item Computational Problems
+      \begin{itemize}\itemsep=0pt\parskip=0pt
+          \item Problem Measures
+          \item Problem Aspects
+          \item Problem Domains
+          \item Key Problems
+      \end{itemize}
+  \item Computational Models
+      \begin{itemize}\itemsep=0pt\parskip=0pt
+          \item Turing Machines
+          \item Random-Access Machines
+          \item Circuits
+          \item Binary Decision Diagrams
+          \item Oracle Machines
+          \item Programming in Logic
+      \end{itemize}
+  \item Measuring Complexity
+      \begin{itemize}\itemsep=0pt\parskip=0pt
+          \item Complexity Measures
+          \item Classifying Complexity
+          \item Comparing Complexity
+          \item Describing Complexity
+      \end{itemize}
+  \item Solving Problems
+      \begin{itemize}\itemsep=0pt\parskip=0pt
+          \item Exact Algorithms
+          \item Randomization
+          \item Fixed-Parameter Algorithms
+          \item Parallel Computation
+          \item Partial Solutions
+          \item Approximation
+      \end{itemize}
+\end{itemize}
+
+%
+\iffalse
+\begin{itemize}
+    % \item Computational Problems
+    \item 计算问题
+        \begin{itemize}\itemsep=0pt\parskip=0pt
+            % \item Problem Measures
+            \item 问题测度
+            % \item Problem Aspects
+            \item 问题方向
+            % \item Problem Domains
+            \item 问题领域
+            % \item Key Problems
+            \item 关键问题
+        \end{itemize}
+    % \item Computational Models
+    \item 计算模型
+        \begin{itemize}\itemsep=0pt\parskip=0pt
+            % \item Turing Machines
+            \item 图灵机
+            % \item Random-Access Machines
+            \item 随机存取机
+            % \item Circuits
+            \item 循环训练
+            % \item Binary Decision Diagrams
+            \item 二元决策图
+            % \item Oracle Machines
+            \item Oracle机器学习
+            % \item Programming in Logic
+            \item 编程逻辑
+        \end{itemize}
+    % \item Measuring Complexity
+    \item 测量复杂度
+        \begin{itemize}\itemsep=0pt\parskip=0pt
+            % \item Complexity Measures
+            \item 复杂度衡量
+            % \item Classifying Complexity
+            \item 分类复杂度
+            % \item Comparing Complexity
+            \item 比较复杂度
+            % \item Describing Complexity
+            \item 描述复杂度
+        \end{itemize}
+    % \item Solving Problems
+    \item 解决问题
+        \begin{itemize}\itemsep=0pt\parskip=0pt
+            % \item Exact Algorithms
+            \item 精确算法
+            % \item Randomization
+            \item 随机化
+            % \item Fixed-Parameter Algorithms
+            \item 固定参数算法
+            % \item Parallel Computation
+            \item 并行计算
+            % \item Partial Solutions
+            \item 部分解决方案
+            % \item Approximation
+            \item 近似
+        \end{itemize}
+\end{itemize}
+\fi
+
+% Johannes will surely need to modify this list later on, but it looks good as a first approximation. He will also need to add a number of subtopics (like \emph{lots} of complexity classes under the topic ``classifying complexity''), but he will do this as he constructs the map.
+
+约翰内斯肯定以后需要修改此列表，但作为初步近似看起来不错。 他还需要添加一些子主题（例如``分类复杂度''主题下的\emph {大量}复杂度类别），但是他在创建图形时才会这样做。
+
+% Turning the list of topics into a \tikzname-tree is easy, in principle. The basic idea is that a node can have \emph{children}, which in turn can have children of their own, and so on. To add a child to a node, Johannes can simply write |child {|\meta{node}|}| right after a node. The \meta{node} should, in turn, be the code for creating a node. To add another node, Johannes can use |child| once more, and so on. Johannes is eager to try out this construct and writes down the following:
+
+原则上，将主题列表转换为\tikzname 树很容易。 基本思想是节点可以具有\emph{子节点}，而后者又可以具有自己的子节点，依此类推。 要将子节点添加到节点，约翰内斯只需在一个节点之后添加 |child {|\meta{节点}|}|。而 \meta{节点} 应该是用于创建一个节点的代码。 要添加另一个节点，约翰内斯可以再一次使用 |child|，依此类推。约翰内斯渴望尝试这种构造并写下以下内容：
+
+%
+\begin{codeexample}[]
+\tikz
+  \node {Computational Complexity} % root
+    child { node {Computational Problems}
+      child { node {Problem Measures} }
+      child { node {Problem Aspects} }
+      child { node {Problem Domains} }
+      child { node {Key Problems} }
+    }
+    child { node {Computational Models}
+      child { node {Turing Machines} }
+      child { node {Random-Access Machines} }
+      child { node {Circuits} }
+      child { node {Binary Decision Diagrams} }
+      child { node {Oracle Machines} }
+      child { node {Programming in Logic} }
+    }
+    child { node {Measuring Complexity}
+      child { node {Complexity Measures} }
+      child { node {Classifying Complexity} }
+      child { node {Comparing Complexity} }
+      child { node {Describing Complexity} }
+    }
+    child { node {Solving Problems}
+      child { node {Exact Algorithms} }
+      child { node {Randomization} }
+      child { node {Fixed-Parameter Algorithms} }
+      child { node {Parallel Computation} }
+      child { node {Partial Solutions} }
+      child { node {Approximation} }
+    };
+\end{codeexample}
+
+% Well, that did not quite work out as expected (although, what, exactly, did one expect?). There are two problems:
+
+好吧，这并没有完全按预期进行（尽管，人们究竟期望什么呢？）。有两个问题：
+
+%
+\begin{enumerate}
+    % \item The overlap of the nodes is due to the fact that \tikzname\ is not particularly smart when it comes to placing child nodes. Even though it is possible to configure \tikzname\ to use rather clever placement methods, \tikzname\ has no way of taking the actual size of the child nodes into account. This may seem strange but the reason is that the child nodes are rendered and placed one at a time, so the size of the last node is not known when the first node is being processed. In essence, you have to specify appropriate level and sibling node spacings ``by hand''.
+    \item 节点的重叠是由于\tikzname\ 在放置子节点时并不是特别聪明。尽管可以将\tikzname\ 配置为使用更聪明的放置方法，但是\tikzname\ 无法将子节点的实际大小考虑在内。这可能看起来很奇怪，但原因是子节点一次被渲染并放置一个，因此在处理第一个节点时最后一个节点的大小是未知的。本质上，您必须``手动''指定适当的级别和同级节点间距。
+    % \item The standard computer-science-top-down rendering of a tree is rather ill-suited to visualizing the concepts. It would be better to either rotate the map by ninety degrees or, even better, to use some sort of circular arrangement.
+    \item 树的标准计算机科学自上而下的渲染方式非常不适合可视化概念。 最好将地图旋转90度，甚至最好使用某种圆形排列。
+\end{enumerate}
+
+% Johannes redraws the tree, but this time with some more appropriate options set, which he found more or less by trial-and-error:
+
+约翰尼斯重新绘制了树，他或多或少地通过反复试验发现并使用了一些更合适的选项集:
+
+%
+\begin{codeexample}[
+    preamble={\usetikzlibrary{trees}},
+    render instead={
+        \tikz [font=\footnotesize,
+               grow=right, level 1/.style={sibling distance=6em},
+                           level 2/.style={sibling distance=1em}, level distance=5cm]
+          \node {Computational Complexity} % root
+            child { node {Computational Problems}
+              child { node {Problem Measures} }           child { node {Problem Aspects} }
+              child { node {Problem Domains} }            child { node {Key Problems} }
+            }
+            child { node {Computational Models}
+              child { node {Turing Machines} }            child { node {Random-Access Machines} }
+              child { node {Circuits} }                   child { node {Binary Decision Diagrams} }
+              child { node {Oracle Machines} }            child { node {Programming in Logic} }
+            }
+            child { node {Measuring Complexity}
+              child { node {Complexity Measures} }        child { node {Classifying Complexity} }
+              child { node {Comparing Complexity} }       child { node {Describing Complexity} }
+            }
+            child { node {Solving Problems}
+              child { node {Exact Algorithms} }           child { node {Randomization} }
+              child { node {Fixed-Parameter Algorithms} } child { node {Parallel Computation} }
+              child { node {Partial Solutions} }          child { node {Approximation} }
+            };
+    },
+]
+\tikz [font=\footnotesize,
+       grow=right, level 1/.style={sibling distance=6em},
+                   level 2/.style={sibling distance=1em}, level distance=5cm]
+  \node {Computational Complexity} % root
+    child { node {Computational Problems}
+      child { node {Problem Measures} }
+      child { node {Problem Aspects} }
+      ... % as before
+\end{codeexample}
+
+% Still not quite what Johannes had in mind, but he is getting somewhere.
+
+约翰内斯的想法仍然不尽如人意，但他正在进步。
+
+% For configuring the tree, two parameters are of particular importance: The |level distance| tells \tikzname\ the distance between (the centers of) the nodes on adjacent levels or layers of a tree. The |sibling distance| is, as the name suggests, the distance between (the centers of) siblings of the tree.
+
+对于配置树而言，有两个参数特别重要：|level distance| 告诉\tikzname\ 树的相邻级别或上层的节点（中心）之间的距离。|sibling distance|，顾名思义，是树的同级节点（中心）之间的距离。
+
+% You can globally set these parameters for a tree by simply setting them somewhere before the tree starts, but you will typically wish them to be different for different levels of the tree. In this case, you should set styles like |level 1| or |level 2|. For the first level of the tree, the |level 1| style is used, for the second level the |level 2| style, and so on. You can also set the sibling and level distances only for certain nodes by passing these options to the |child| command as options. (Note that the options of a |node| command are local to the node and have no effect on the children. Also note that it is possible to specify options that do have an effect on the children. Finally note that specifying options for children ``at the right place'' is an arcane art and you should peruse Section~\ref{section-tree-options} on a rainy Sunday afternoon, if you are really interested.)
+
+您可以通过在树开始绘制之前在某个位置来全局地设置树的这些参数，但是您通常希望它们对于树的不同级别是不同的。在这种情况下，您应该设置像 |level 1| 或 |level 2| 这样的样式。对于树的第一级，使用 |level 1| 样式，对于第二级，使用 |level 2| 的样式，以此类推。您还可以通过将这些选项作为选项传递给 |child| 命令，从而仅为某些节点设置同级距离和级别距离。（注意，|node| 命令的选项是该节点的本地选项，对子节点没有影响。还要注意，可以指定对子节点有影响的选项。最后要注意的是，``在正确的地方''为子节点指定选项是一种神秘的艺术，如果你真的感兴趣的话，你应该在一个下雨的星期天下午阅读\ref{Section -tree-options}节。）
+
+% The |grow| key is used to configure the direction in which a tree grows. You can change growth direction ``in the middle of a tree'' simply by changing this key for a single child or a whole level. By including the |trees| library you also get access to additional growth strategies such as a ``circular'' growth:
+
+|grow| 键用于配置树的生长方向。 您只需为单个子节点或整个级别更改此键，即可更改``在树的中央''的生长方向。 通过包含 |trees| 库，您还可以使用其他增长策略，例如``圆形''增长：
+
+%
+\begin{codeexample}[
+    preamble={\usetikzlibrary{trees}},
+    render instead={
+        \tikz [text width=2.7cm, align=flush center,
+               grow cyclic,
+               level 1/.style={level distance=2.5cm,sibling angle=90},
+               level 2/.style={text width=2cm, font=\footnotesize, level distance=3cm,sibling angle=30}]
+          \node[font=\bfseries] {Computational Complexity} % root
+            child { node {Computational Problems}
+              child { node {Problem Measures} }           child { node {Problem Aspects} }
+              child { node {Problem Domains} }            child { node {Key Problems} }
+            }
+            child { node {Computational Models}
+              child { node {Turing Machines} }            child { node {Random-Access Machines} }
+              child { node {Circuits} }                   child { node {Binary Decision Diagrams} }
+              child { node {Oracle Machines} }            child { node {Programming in Logic} }
+            }
+            child { node {Measuring Complexity}
+              child { node {Complexity Measures} }        child { node {Classifying Complexity} }
+              child { node {Comparing Complexity} }       child { node {Describing Complexity} }
+            }
+            child { node {Solving Problems}
+              child { node {Exact Algorithms} }           child { node {Randomization} }
+              child { node {Fixed-Parameter Algorithms} } child { node {Parallel Computation} }
+              child { node {Partial Solutions} }          child { node {Approximation} }
+            };
+    },
+]
+\tikz [text width=2.7cm, align=flush center,
+       grow cyclic,
+       level 1/.style={level distance=2.5cm,sibling angle=90},
+       level 2/.style={text width=2cm, font=\footnotesize, level distance=3cm,sibling angle=30}]
+  \node[font=\bfseries] {Computational Complexity} % root
+    child { node {Computational Problems}
+      child { node {Problem Measures} }
+      child { node {Problem Aspects} }
+      ... % as before
+\end{codeexample}
+
+% Johannes is pleased to learn that he can access and manipulate the nodes of the tree like any normal node. In particular, he can name them using the |name=| option or the |(|\meta{name}|)| notation and he can use any available shape or style for the trees nodes. He can connect trees later on using the normal |\draw (some node) -- (another node);| syntax. In essence, the |child| command just computes an appropriate position for a node and adds a line from the child to the parent node.
+
+约翰内斯很高兴地了解到他可以访问和操作树的节点，就像任何正常的节点一样。特别是，他可以使用 |name=| 选项或 |(|\meta{名字}|)| 表示法来为它们命名，并且他可以为树节点使用任何可用的形状或样式。稍后，他可以使用普通的 |\draw (某个节点) -- (另一个节点);| 语法连接树。实际上，|child| 命令只是计算节点的适当位置，并在子节点和父节点之间添加一条线。
+
+% \subsection{Creating the Lecture Map}
+\subsection{创建讲义图}
+
+% Johannes now has a first possible layout for his lecture map. The next step is to make it ``look nicer''. For this, the |mindmap| library is helpful since it makes a number of styles available that will make a tree look like a nice ``mind map'' or ``concept map''.
+
+约翰内斯现在有他的讲义图的第一个可能的布局。 下一步是使其``看起来更好''。 为此，|mindmap| 库很有帮助，因为它提供了许多样式，这些样式将使树看起来像一个漂亮的``思维导图''或``概念图''。
+
+% The first step is to include the |mindmap| library, which Johannes already did. Next, he must add one of the following options to a scope that will contain the lecture map: |mindmap| or |large mindmap| or |huge mindmap|. These options all have the same effect, except that for a |large mindmap| the predefined font size and node sizes are somewhat larger than for a standard |mindmap| and for a |huge mindmap| they are even larger. So, a |large mindmap| does not necessarily need to have a lot of concepts, but it will need a lot of paper.
+
+第一步是加入 |mindmap| 库，约翰内斯已经这么做了。接下来，他必须将下列选项之一添加到包含讲义图代码范围中：|mindmap| 或 |large mindmap| 或 |huge mindmap|。这些选项都有相同的效果，除了 |large mindmap| 预定义的字体大小和节点大小比标准的 |mindmap| 大一些，|huge mindmap| 甚至更大一些。所以，一个 |large mindmap| 不一定需要有很多概念，但它需要很多纸。
+
+% The second step is to add the |concept| option to every node that will, indeed, be a concept of the mindmap. The idea is that some nodes of a tree will be real concepts, while other nodes might just be ``simple children''. Typically, this is not the case, so you might consider saying |every node/.style=concept|.
+
+第二步是将 |concept| 选项添加到每一个节点，这些节点实际上是思维导图的一个概念。其思想是树的一些节点将是真实的概念，而其他节点可能只是``简单的子节点''。通常情况下，情况并非如此，因此您可以考虑使用 |every node/.style=concept|。
+
+% The third step is to set up the sibling \emph{angle} (rather than a sibling distance) to specify the angle between sibling concepts.
+
+第三步是设置同级\emph{角度}（而不是同级距离）以指定同级概念之间的角度。
+
+%
+\begin{codeexample}[
+    preamble={\usetikzlibrary{mindmap}},
+    render instead={
+        \tikz [mindmap, every node/.style=concept, concept color=black!20,
+               grow cyclic,
+               level 1/.append style={level distance=4.5cm,sibling angle=90},
+               level 2/.append style={level distance=3cm,sibling angle=45}]
+          \node [root concept] {Computational Complexity} % root
+            child { node {\hbox to 2cm{Computational\hss} Problems}
+              child { node {Problem Measures} }
+              child { node {Problem Aspects} }
+              child { node {Problem Domains} }
+              child { node {Key Problems} }
+            }
+            child { node {\hbox to 2cm{Computational\hss} Models}
+              child { node {Turing Machines} }
+              child { node {Random-Access Machines} }
+              child { node {Circuits} }
+              child { node {Binary Decision Diagrams} }
+              child { node {Oracle Machines} }
+              child { node {\hbox to1.5cm{Programming\hss} in Logic} }
+            }
+            child { node {Measuring Complexity}
+              child { node {Complexity Measures} }
+              child { node {Classifying Complexity} }
+              child { node {Comparing Complexity} }
+              child { node {Describing Complexity} }
+            }
+            child { node {Solving Problems}
+              child { node {Exact Algorithms} }
+              child { node {\hbox to 1.5cm{Randomization\hss}} }
+              child { node {Fixed-Parameter Algorithms} }
+              child { node {Parallel Computation} }
+              child { node {Partial Solutions} }
+              child { node {\hbox to1.5cm{Approximation\hss}} }
+            };
+    },
+]
+\tikz [mindmap, every node/.style=concept, concept color=black!20,
+       grow cyclic,
+       level 1/.append style={level distance=4.5cm,sibling angle=90},
+       level 2/.append style={level distance=3cm,sibling angle=45}]
+  \node [root concept] {Computational Complexity} % root
+    child { node {Computational Problems}
+      child { node {Problem Measures} }
+      child { node {Problem Aspects} }
+      ... % as before
+\end{codeexample}
+
+% When Johannes typesets the above map, \TeX\ (rightfully) starts complaining about several overfull boxes and, indeed, words like ``Randomization'' stretch out beyond the circle of the concept. This seems a bit mysterious at first sight: Why does \TeX\ not hyphenate the word? The reason is that \TeX\ will never hyphenate the first word of a paragraph because it starts looking for ``hyphenatable'' letters only after a so-called glue. In order to have \TeX\ hyphenate these single words, Johannes must use a bit of evil trickery: He inserts a |\hskip0pt| before the word. This has no effect except for inserting an (invisible) glue before the word and, thereby, allowing \TeX\ to hyphenate the first word also. Since Johannes does not want to add |\hskip0pt| inside each node, he uses the |execute at begin node| option to make \tikzname\ insert this text with every node.
+
+当约翰内斯排版上面的地图时，\TeX\ （正当地）开始抱怨盒子太多了，而且确实，像``Randomization''这样的词超出了概念的范围。乍一看，这似乎有点神秘：为什么\TeX\ 不使用连字符？原因是\TeX\ 永远不会在段落的第一个字用连字符连接，因为它只在所谓的胶之后才开始寻找``可连字符''的字母。为了把这些单词连字符化，约翰内斯必须耍点小花招：在单词前插入 |\hskip0pt|。并且约翰内斯只能在单词前面插入一个（不可见的）胶从而允许\TeX\ 将第一个单词用连字符连接。但是，由于约翰内斯不想在每个节点中添加 |\hskip0pt|，他可以使用 |execute at begin node| 选项使\tikzname\ 在每个节点中插入该文本。
+
+%
+\begin{codeexample}[
+    preamble={\usetikzlibrary{mindmap}},
+    render instead={
+        \begin{tikzpicture}
+          [mindmap,
+           every node/.style={concept, execute at begin node=\hskip0pt},
+           concept color=black!20,
+           grow cyclic,
+           level 1/.append style={level distance=4.5cm,sibling angle=90},
+           level 2/.append style={level distance=3cm,sibling angle=45}]
+          \clip (-1,2) rectangle ++ (-4,5);
+          \node [root concept] {Computational Complexity} % root
+            child { node {Computational Problems}
+              child { node {Problem Measures} }
+              child { node {Problem Aspects} }
+              child { node {Problem Domains} }
+              child { node {Key Problems} }
+            }
+            child { node {Computational Models}
+              child { node {Turing Machines} }
+              child { node {Random-Access Machines} }
+              child { node {Circuits} }
+              child { node {Binary Decision Diagrams} }
+              child { node {Oracle Machines} }
+              child { node {Programming in Logic} }
+            }
+            child { node {Measuring Complexity}
+              child { node {Complexity Measures} }
+              child { node {Classifying Complexity} }
+              child { node {Comparing Complexity} }
+              child { node {Describing Complexity} }
+            }
+            child { node {Solving Problems}
+              child { node {Exact Algorithms} }
+              child { node {Randomization} }
+              child { node {Fixed-Parameter Algorithms} }
+              child { node {Parallel Computation} }
+              child { node {Partial Solutions} }
+              child { node {Approximation} }
+            };
+        \end{tikzpicture}
+    },
+]
+\begin{tikzpicture}
+  [mindmap,
+   every node/.style={concept, execute at begin node=\hskip0pt},
+   concept color=black!20,
+   grow cyclic,
+   level 1/.append style={level distance=4.5cm,sibling angle=90},
+   level 2/.append style={level distance=3cm,sibling angle=45}]
+  \clip (-1,2) rectangle ++ (-4,5);
+  \node [root concept] {Computational Complexity} % root
+    child { node {Computational Problems}
+      child { node {Problem Measures} }
+      child { node {Problem Aspects} }
+      ... % as before
+\end{tikzpicture}
+\end{codeexample}
+
+% In the above example a clipping was used to show only part of the lecture map, in order to save space. The same will be done in the following examples, we return to the complete lecture map at the end of this tutorial.
+
+在上面的示例中，为了节省空间，使用裁剪仅显示了讲义图的一部分。 在以下示例中将执行相同的操作，我们将在本教程的末尾回到完整的讲义图。
+
+% Johannes is now eager to colorize the map. The idea is to use different colors for different parts of the map. He can then, during his lectures, talk about the ``green'' or the ``red'' topics. This will make it easier for his students to locate the topic he is talking about on the map. Since ``computational problems'' somehow sounds ``problematic'', Johannes chooses red for them, while he picks green for the ``solving problems''. The topics ``measuring complexity'' and ``computational models'' get more neutral colors; Johannes picks orange and blue.
+
+约翰内斯现在渴望为图形着色。 想法是对图形的不同部分使用不同的颜色。 然后，他可以在讲座中讨论`绿色''或``红色''主题。 这将使他的学生更容易在图形上找到他正在谈论的主题。 由于``computational problems''听起来有点像``problematic''，因此约翰内斯为他们选择了红色，而他为``solving problems''选择了绿色。 ``measuring complexity''和``computational models''主题使用中性色；约翰内斯选择橙色和蓝色。
+
+% To set the colors, Johannes must use the |concept color| option, rather than just, say, |node [fill=red]|. Setting just the fill color to |red| would, indeed, make the node red, but it would \emph{just} make the node red and not the bar connecting the concept to its parent and also not its children. By comparison, the special |concept color| option will not only set the color of the node and its children, but it will also (magically) create appropriate shadings so that the color of a parent concept smoothly changes to the color of a child concept.
+
+为了设置颜色，约翰内斯必须使用 |concept color| 选项，而不仅仅是 |node [fill=red]|。仅将填充颜色设置为 |red| 确实会使节点为红色，但它将\emph{仅}使节点为红色，而不是连接概念到父节点和子节点的颜色带。相比之下，特殊的 |concept color| 选项不仅会设置节点及其子节点的颜色，而且还会（神奇地）创建适当的阴影，以便父概念的颜色平稳地变化为子概念的颜色。
+
+% For the root concept Johannes decides to do something special: He sets the concept color to black, sets the line width to a large value, and sets the fill color to white. The effect of this is that the root concept will be encircled with a thick black line and the children are connected to the central concept via bars.
+
+对于根概念，约翰内斯决定做一些特殊的事情：他将概念颜色设置为黑色，将线宽设置为较大的值，并将填充颜色设置为白色。 这样的效果是，根概念将被一条粗黑线包围，并且子节点通过颜色带与中心概念相连。
+
+%
+\begin{codeexample}[
+    preamble={\usetikzlibrary{mindmap}},
+    render instead={
+        \begin{tikzpicture}
+          [mindmap,
+           every node/.style={concept, execute at begin node=\hskip0pt},
+           root concept/.append style={
+             concept color=black,
+             fill=white, line width=1ex,
+             text=black},
+           text=white,
+           grow cyclic,
+           level 1/.append style={level distance=4.5cm,sibling angle=90},
+           level 2/.append style={level distance=3cm,sibling angle=45}]
+          \clip (0,-1) rectangle ++(4,5);
+          \node [root concept] {Computational Complexity} % root
+            child [concept color=red] { node {Computational Problems}
+              child { node {Problem Measures} }
+              child { node {Problem Aspects} }
+              child { node {Problem Domains} }
+              child { node {Key Problems} }
+            }
+            child [concept color=blue] { node {Computational Models}
+              child { node {Turing Machines} }
+              child { node {Random-Access Machines} }
+              child { node {Circuits} }
+              child { node {Binary Decision Diagrams} }
+              child { node {Oracle Machines} }
+              child { node {Programming in Logic} }
+            }
+            child [concept color=orange] { node {Measuring Complexity}
+              child { node {Complexity Measures} }
+              child { node {Classifying Complexity} }
+              child { node {Comparing Complexity} }
+              child { node {Describing Complexity} }
+            }
+            child [concept color=green!50!black] { node {Solving Problems}
+              child { node {Exact Algorithms} }
+              child { node {Randomization} }
+              child { node {Fixed-Parameter Algorithms} }
+              child { node {Parallel Computation} }
+              child { node {Partial Solutions} }
+              child { node {Approximation} }
+            };
+        \end{tikzpicture}
+    },
+]
+\begin{tikzpicture}
+  [mindmap,
+   every node/.style={concept, execute at begin node=\hskip0pt},
+   root concept/.append style={
+     concept color=black, fill=white, line width=1ex, text=black},
+   text=white,
+   grow cyclic,
+   level 1/.append style={level distance=4.5cm,sibling angle=90},
+   level 2/.append style={level distance=3cm,sibling angle=45}]
+   \clip (0,-1) rectangle ++(4,5);
+  \node [root concept] {Computational Complexity} % root
+    child [concept color=red] { node {Computational Problems}
+      child { node {Problem Measures} }
+      ... % as before
+    }
+    child [concept color=blue] { node {Computational Models}
+      child { node {Turing Machines} }
+      ... % as before
+    }
+    child [concept color=orange] { node {Measuring Complexity}
+      child { node {Complexity Measures} }
+      ... % as before
+    }
+    child [concept color=green!50!black] { node {Solving Problems}
+      child { node {Exact Algorithms} }
+      ... % as before
+    };
+\end{tikzpicture}
+\end{codeexample}
+
+% Johannes adds three finishing touches: First, he changes the font of the main concepts to small caps. Second, he decides that some concepts should be ``faded'', namely those that are important in principle and belong on the map, but which he will not talk about in his lecture. To achieve this, Johannes defines four styles, one for each of the four main branches. These styles (a) set up the correct concept color for the whole branch and (b) define the |faded| style appropriately for this branch. Third, he adds a |circular drop shadow|, defined in the |shadows| library, to the concepts, just to make things look a bit more fancy.
+
+约翰内斯增加了三处收尾工作：首先，他将主要概念的字体更改为小写。 其次，他决定应该对某些概念进行``淡化''，即那些原则上很重要并且属于图的概念，但在讲座中将不予讨论。 为了实现这一点，约翰内斯定义了四种样式，四个主要分支中的每个分支都使用一种。 这些样式（a）为整个分支设置正确的概念颜色，（b）定义了 |faded| 样式以适用于此分支。 第三，他添加了 |circular drop shadow|，在 |shadows| 库中定义，从概念上讲，只是为了使图形看起来更漂亮。
+
+%
+\begin{codeexample}[
+    preamble={\usetikzlibrary{mindmap,shadows}},
+    render instead={
+        \begin{tikzpicture}[mindmap]
+          \begin{scope}[
+           every node/.style={concept, circular drop shadow,execute at begin node=\hskip0pt},
+           root concept/.append style={
+             concept color=black,
+             fill=white, line width=1ex,
+             text=black, font=\large\scshape},
+           text=white,
+           computational problems/.style={concept color=red,faded/.style={concept color=red!50}},
+           computational models/.style={concept color=blue,faded/.style={concept color=blue!50}},
+           measuring complexity/.style={concept color=orange,faded/.style={concept color=orange!50}},
+           solving problems/.style={concept color=green!50!black,faded/.style={concept color=green!50!black!50}},
+           grow cyclic,
+           level 1/.append style={level distance=4.5cm,sibling angle=90,font=\scshape},
+           level 2/.append style={level distance=3cm,sibling angle=45,font=\scriptsize}]
+          \node [root concept] {Computational Complexity} % root
+            child [computational problems] { node {Computational Problems}
+              child         { node {Problem Measures} }
+              child         { node {Problem Aspects} }
+              child [faded] { node {Problem Domains} }
+              child         { node {Key Problems} }
+            }
+            child [computational models] { node {Computational Models}
+              child         { node {Turing Machines} }
+              child [faded] { node {Random-Access Machines} }
+              child         { node {Circuits} }
+              child [faded] { node {Binary Decision Diagrams} }
+              child         { node {Oracle Machines} }
+              child         { node {Programming in Logic} }
+            }
+            child [measuring complexity] { node {Measuring Complexity}
+              child         { node {Complexity Measures} }
+              child         { node {Classifying Complexity} }
+              child         { node {Comparing Complexity} }
+              child [faded] { node {Describing Complexity} }
+            }
+            child [solving problems] { node {Solving Problems}
+              child         { node {Exact Algorithms} }
+              child         { node {Randomization} }
+              child         { node {Fixed-Parameter Algorithms} }
+              child         { node {Parallel Computation} }
+              child         { node {Partial Solutions} }
+              child         { node {Approximation} }
+            };
+          \end{scope}
+        \end{tikzpicture}
+    },
+]
+\begin{tikzpicture}[mindmap]
+  \begin{scope}[
+    every node/.style={concept, circular drop shadow,execute at begin node=\hskip0pt},
+    root concept/.append style={
+      concept color=black, fill=white, line width=1ex, text=black, font=\large\scshape},
+    text=white,
+    computational problems/.style={concept color=red,faded/.style={concept color=red!50}},
+    computational models/.style={concept color=blue,faded/.style={concept color=blue!50}},
+    measuring complexity/.style={concept color=orange,faded/.style={concept color=orange!50}},
+    solving problems/.style={concept color=green!50!black,faded/.style={concept color=green!50!black!50}},
+    grow cyclic,
+    level 1/.append style={level distance=4.5cm,sibling angle=90,font=\scshape},
+    level 2/.append style={level distance=3cm,sibling angle=45,font=\scriptsize}]
+    \node [root concept] {Computational Complexity} % root
+      child [computational problems] { node {Computational Problems}
+        child         { node {Problem Measures} }
+        child         { node {Problem Aspects} }
+        child [faded] { node {Problem Domains} }
+        child         { node {Key Problems} }
+      }
+      child [computational models] { node {Computational Models}
+        child         { node {Turing Machines} }
+        child [faded] { node {Random-Access Machines} }
+        ...
+  \end{scope}
+\end{tikzpicture}
+\end{codeexample}
+
+
+% \subsection{Adding the Lecture Annotations}
+\subsection{添加讲义注释}
+
+% Johannes will give about a dozen lectures during the course ``computational complexity''. For each lecture he has compiled a (short) list of learning targets that state what knowledge and qualifications his students should acquire during this particular lecture (note that learning targets are not the same as the contents of a lecture). For each lecture he intends to put a little rectangle on the map containing these learning targets and the name of the lecture, each time somewhere near the topic of the lecture. Such ``little rectangles'' are called ``annotations'' by the |mindmap| library.
+
+约翰内斯将在``computational complexity''课程中进行大约十二次讲座。 对于每一次讲座，他都编制了一个（简短的）学习目标清单，陈述了学生在该特定讲座中应获得的知识和条件（请注意，学习目标与讲座的内容不同）。 对于每次讲座，他打算在图上的每个主题附近的某个位置上在地图上放置一个小矩形，其中包含这些学习目标和讲座名称。  |mindmap| 将这种``小矩形''称为``注释''。 图书馆。
+
+% In order to place the annotations next to the concepts, Johannes must assign names to the nodes of the concepts. He could rely on \tikzname's automatic naming of the nodes in a tree, where the children of a node named |root| are named |root-1|, |root-2|, |root-3|, and so on. However, since Johannes is not sure about the final order of the concepts in the tree, it seems better to explicitly name all concepts of the tree in the following manner:
+
+为了将注释放置在概念旁边，约翰内斯必须为概念的节点分配名称。 他可以使用\tikzname 对树中节点的自动命名，其中树节点名为 |root|。 节点的子节点被命名为 |root-1|、|root-2|、|root-3|，依此类推。 但是，由于约翰内斯不确定树中概念的最终顺序，因此最好以以下方式明确命名树的所有概念：
+
+%
+\begin{codeexample}[code only]
+\node [root concept] (Computational Complexity) {Computational Complexity}
+  child [computational problems] { node (Computational Problems) {Computational Problems}
+    child         { node (Problem Measures) {Problem Measures} }
+    child         { node (Problem Aspects) {Problem Aspects} }
+    child [faded] { node (Problem Domains) {Problem Domains} }
+    child         { node (Key Problems) {Key Problems} }
+  }
+...
+\end{codeexample}
+
+% The |annotation| style of the |mindmap| library mainly sets up a rectangular shape of appropriate size. Johannes configures the style by defining |every annotation| appropriately.
+
+|mindmap| 库的 |annotation| 样式主要设置一个大小合适的矩形。 约翰尼斯通过恰当地定义 |every annotation| 来设置样式。 
+
+%
+\begin{codeexample}[
+    preamble={\usetikzlibrary{mindmap,shadows}},
+    render instead={
+        \begin{tikzpicture}[mindmap]
+          \clip (-5.25,-3) rectangle ++ (4,5);
+          \begin{scope}[
+            every node/.style={concept, circular drop shadow,execute at begin node=\hskip0pt},
+            root concept/.append style={
+              concept color=black,
+              fill=white, line width=1ex,
+              text=black, font=\large\scshape},
+            text=white,
+            computational problems/.style={concept color=red,faded/.style={concept color=red!50}},
+            computational models/.style={concept color=blue,faded/.style={concept color=blue!50}},
+            measuring complexity/.style={concept color=orange,faded/.style={concept color=orange!50}},
+            solving problems/.style={concept color=green!50!black,faded/.style={concept color=green!50!black!50}},
+            grow cyclic,
+            level 1/.append style={level distance=4.5cm,sibling angle=90,font=\scshape},
+            level 2/.append style={level distance=3cm,sibling angle=45,font=\scriptsize}]
+            \node [root concept] (Computational Complexity) {Computational Complexity} % root
+              child [computational problems] { node (Computational Problems) {Computational Problems}
+                child         { node (Problem Measures) {Problem Measures} }
+                child         { node (Problem Aspects) {Problem Aspects} }
+                child [faded] { node (problem Domains) {Problem Domains} }
+                child         { node (Key Problems) {Key Problems} }
+              }
+              child [computational models] { node (Computational Models) {Computational Models}
+                child         { node (Turing Machines) {Turing Machines} }
+                child [faded] { node (Random-Access Machines) {Random-Access Machines} }
+                child         { node (Circuits) {Circuits} }
+                child [faded] { node (Binary Decision Diagrams) {Binary Decision Diagrams} }
+                child         { node (Oracle Machines) {Oracle Machines} }
+                child         { node (Programming in Logic) {Programming in Logic} }
+              }
+              child [measuring complexity] { node (Measuring Complexity) {Measuring Complexity}
+                child         { node (Complexity Measures) {Complexity Measures} }
+                child         { node (Classifying Complexity) {Classifying Complexity} }
+                child         { node (Comparing Complexity) {Comparing Complexity} }
+                child [faded] { node (Describing Complexity) {Describing Complexity} }
+              }
+              child [solving problems] { node (Solving Problems) {Solving Problems}
+                child         { node (Exact Algorithms) {Exact Algorithms} }
+                child         { node (Randomization) {Randomization} }
+                child         { node (Fixed-Parameter Algorithms) {Fixed-Parameter Algorithms} }
+                child         { node (Parallel Computation) {Parallel Computation} }
+                child         { node (Partial Solutions) {Partial Solutions} }
+                child         { node (Approximation) {Approximation} }
+              };
+          \end{scope}
+          \begin{scope}[every annotation/.style={fill=black!40}]
+            \node [annotation, above] at (Computational Problems.north) {
+              Lecture 1: Computational Problems
+              \begin{itemize}
+              \item Knowledge of several key problems
+              \item Knowledge of problem encodings
+              \item Being able to formalize problems
+              \end{itemize}
+            };
+          \end{scope}
+        \end{tikzpicture}
+    },
+]
+\begin{tikzpicture}[mindmap]
+  \clip (-5,-5) rectangle ++ (4,5);
+  \begin{scope}[
+     every node/.style={concept, circular drop shadow, ...}] % as before
+    \node [root concept] (Computational Complexity)    ...   % as before
+  \end{scope}
+
+  \begin{scope}[every annotation/.style={fill=black!40}]
+    \node [annotation, above] at (Computational Problems.north) {
+      Lecture 1: Computational Problems
+      \begin{itemize}
+      \item Knowledge of several key problems
+      \item Knowledge of problem encodings
+      \item Being able to formalize problems
+      \end{itemize}
+    };
+  \end{scope}
+\end{tikzpicture}
+\end{codeexample}
+
+% Well, that does not yet look quite perfect. The spacing or the |{itemize}| is not really appropriate and the node is too large. Johannes can configure these things ``by hand'', but it seems like a good idea to define a macro that will take care of these things for him. The ``right'' way to do this is to define a |\lecture| macro that takes a list of key--value pairs as argument and produces the desired annotation. However, to keep things simple, Johannes' |\lecture| macro simply takes a fixed number of arguments having the following meaning: The first argument is the number of the lecture, the second is the name of the lecture, the third are positioning options like |above|, the fourth is the position where the node is placed, the fifth is the list of items to be shown, and the sixth is a date when the lecture will be held (this parameter is not yet needed, we will, however, need it later on).
+
+这看起来还不是很完美。间距或 |{itemize}| 实际上并不合适，而且节点太大。约翰内斯可以``手工''配置这些东西，但是定义一个宏来为他处理这些东西似乎是个好主意。``正确''的方法是定义一个 |\lecture| 宏，它接受键值对列表作为参数，并生成所需的注释。然而，为简单起见，约翰内斯的 |\lecture| 宏只需接受具有以下含义的固定数量的参数：第一个参数是讲座的数量，第二个是讲座的名称，第三个是像 |above| 的定位选项，第四是节点放置的位置，第五个的显示列表项，第六个是举行讲座的日期（尚不需要此参数，但是稍后我们将需要它）。
+
+%
+% TODOsp: codeexamples: redo `\lecture` definition*s* when `preamble` can be emptied
+\begin{codeexample}[code only]
+\def\lecture#1#2#3#4#5#6{
+  \node [annotation, #3, scale=0.65, text width=4cm, inner sep=2mm] at (#4) {
+    Lecture #1: \textcolor{orange}{\textbf{#2}}
+    \list{--}{\topsep=2pt\itemsep=0pt\parsep=0pt
+              \parskip=0pt\labelwidth=8pt\leftmargin=8pt
+              \itemindent=0pt\labelsep=2pt}
+    #5
+    \endlist
+  };
+}
+\end{codeexample}
+% TODOsp: codeexamples: this definition can most likely be deleted,
+%         because it is moved to the `pre` key in the `codeexamples`
+\def\lecture#1#2#3#4#5#6{
+  \node [annotation, #3, scale=0.65, text width=4cm, inner sep=2mm] at (#4) {
+    Lecture #1: \textcolor{orange}{\textbf{#2}}
+    \list{--}{\topsep=2pt\itemsep=0pt\parsep=0pt
+              \parskip=0pt\labelwidth=8pt\leftmargin=8pt
+              \itemindent=0pt\labelsep=2pt}
+    #5
+    \endlist
+  };
+}
+
+\begin{codeexample}[
+    preamble={\usetikzlibrary{mindmap,shadows}},
+    pre={ % !!! replace all `##x` with `#x`
+\def\lecture##1##2##3##4##5##6{
+  \node [annotation, ##3, scale=0.65, text width=4cm, inner sep=2mm] at (##4) {
+    Lecture ##1: \textcolor{orange}{\textbf{##2}}
+    \list{--}{\topsep=2pt\itemsep=0pt\parsep=0pt
+              \parskip=0pt\labelwidth=8pt\leftmargin=8pt
+              \itemindent=0pt\labelsep=2pt}
+    ##5
+    \endlist
+  };
+}},
+    render instead={
+        \begin{tikzpicture}[mindmap,every annotation/.style={fill=white}]
+          \clip (-5.25,-3) rectangle ++ (4,5);
+          \begin{scope}[
+            every node/.style={concept, circular drop shadow,execute at begin node=\hskip0pt},
+            root concept/.append style={
+              concept color=black,
+              fill=white, line width=1ex,
+              text=black, font=\large\scshape},
+            text=white,
+            computational problems/.style={concept color=red,faded/.style={concept color=red!50}},
+            computational models/.style={concept color=blue,faded/.style={concept color=blue!50}},
+            measuring complexity/.style={concept color=orange,faded/.style={concept color=orange!50}},
+            solving problems/.style={concept color=green!50!black,faded/.style={concept color=green!50!black!50}},
+            grow cyclic,
+            level 1/.append style={level distance=4.5cm,sibling angle=90,font=\scshape},
+            level 2/.append style={level distance=3cm,sibling angle=45,font=\scriptsize}]
+            \node [root concept] (Computational Complexity) {Computational Complexity} % root
+              child [computational problems] { node (Computational Problems) {Computational Problems}
+                child         { node (Problem Measures) {Problem Measures} }
+                child         { node (Problem Aspects) {Problem Aspects} }
+                child [faded] { node (problem Domains) {Problem Domains} }
+                child         { node (Key Problems) {Key Problems} }
+              }
+              child [computational models] { node (Computational Models) {Computational Models}
+                child         { node (Turing Machines) {Turing Machines} }
+                child [faded] { node (Random-Access Machines) {Random-Access Machines} }
+                child         { node (Circuits) {Circuits} }
+                child [faded] { node (Binary Decision Diagrams) {Binary Decision Diagrams} }
+                child         { node (Oracle Machines) {Oracle Machines} }
+                child         { node (Programming in Logic) {Programming in Logic} }
+              }
+              child [measuring complexity] { node (Measuring Complexity) {Measuring Complexity}
+                child         { node (Complexity Measures) {Complexity Measures} }
+                child         { node (Classifying Complexity) {Classifying Complexity} }
+                child         { node (Comparing Complexity) {Comparing Complexity} }
+                child [faded] { node (Describing Complexity) {Describing Complexity} }
+              }
+              child [solving problems] { node (Solving Problems) {Solving Problems}
+                child         { node (Exact Algorithms) {Exact Algorithms} }
+                child         { node (Randomization) {Randomization} }
+                child         { node (Fixed-Parameter Algorithms) {Fixed-Parameter Algorithms} }
+                child         { node (Parallel Computation) {Parallel Computation} }
+                child         { node (Partial Solutions) {Partial Solutions} }
+                child         { node (Approximation) {Approximation} }
+              };
+          \end{scope}
+          \lecture{1}{Computational Problems}{above,xshift=-3mm}{Computational Problems.north}{
+            \item Knowledge of several key problems
+            \item Knowledge of problem encodings
+            \item Being able to formalize problems
+          }{2009-04-08}
+        \end{tikzpicture}
+    },
+]
+\begin{tikzpicture}[mindmap,every annotation/.style={fill=white}]
+  \clip (-5,-5) rectangle ++ (4,5);
+  \begin{scope}[
+     every node/.style={concept, circular drop shadow, ... % as before
+    \node [root concept] (Computational Complexity)    ... % as before
+  \end{scope}
+
+  \lecture{1}{Computational Problems}{above,xshift=-3mm}
+  {Computational Problems.north}{
+    \item Knowledge of several key problems
+    \item Knowledge of problem encodings
+    \item Being able to formalize problems
+  }{2009-04-08}
+\end{tikzpicture}
+\end{codeexample}
+
+% In the same fashion Johannes can now add the other lecture annotations. Obviously, Johannes will have some trouble fitting everything on a single A4-sized page, but by adjusting the spacing and some experimentation he can quickly arrange all the annotations as needed.
+
+约翰内斯现在可以以相同的方式添加其他讲义注解。 显然，约翰内斯在将所有内容都放在一个A4尺寸的页面上会遇到一些麻烦，但是通过调整间距和进行一些实验，他可以根据需要快速排列所有注释。
+
+
+% \subsection{Adding the Background}
+\subsection{添加背景}
+
+% Johannes has already used colors to organize his lecture map into four regions, each having a different color. In order to emphasize these regions even more strongly, he wishes to add a background coloring to each of these regions.
+
+约翰尼斯已经使用颜色将他的讲座图组织成四个区域，每个区域都有不同的颜色。 为了更加强调这些区域，他希望为每个区域添加背景色。
+
+% Adding these background colors turns out to be more tricky than Johannes would have thought. At first sight, what he needs is some sort of ``color wheel'' that is blue in the lower right direction and then changes smoothly to orange in the upper right direction and then to green in the upper left direction and so on. Unfortunately, there is no easy way of creating such a color wheel shading (although it can be done, in principle, but only at a very high cost, see page~\pageref{shading-color-wheel} for an example).
+
+事实证明，添加这些背景颜色比约翰内斯想象的要复杂得多。 乍一看，他需要的是某种``色轮''，它在右下方向为蓝色，然后在右上方向平滑地变为橙色，然后在左上方向平滑为绿色，依此类推。 不幸的是，没有简单的方法可以创建这样的色轮阴影（尽管原则上可以做到，但是代价是非常高的，作为示例请参见第\pageref{shading-color-wheel}页）。
+
+% Johannes decides to do something a bit more basic: He creates four large rectangles, one for each of the four quadrants around the central concept, each colored with a light version of the quadrant. Then, in order to ``smooth'' the change between adjacent rectangles, he puts four shadings on top of them.
+
+约翰内斯决定做一些更基础的事情：他创建了四个大矩形，围绕中心概念的四个象限中的每个象限中各有一个，每个象素都以浅色的象限着色。 然后，为了``平滑''邻近矩形之间的变化，他在四块区域上加入了底纹。
+
+% Since these background rectangles should go ``behind'' everything else, Johannes puts all his background stuff on the |background| layer.
+
+由于这些背景矩形应位于其他所有内容的``后面''，因此约翰内斯将其所有背景材料放在 |background| 层上。
+
+% In the following code, only the central concept is shown to save some space:
+
+在以下代码中，仅显示中心概念以节省一些空间：
+
+%
+\begin{codeexample}[preamble={\usetikzlibrary{backgrounds,mindmap,shadows}}]
+\begin{tikzpicture}[
+  mindmap,
+  concept color=black,
+  root concept/.append style={
+    concept,
+    circular drop shadow,
+    fill=white, line width=1ex,
+    text=black, font=\large\scshape}
+  ]
+
+  \clip (-1.5,-5) rectangle ++(4,10);
+
+  \node [root concept] (Computational Complexity) {Computational Complexity};
+
+  \begin{pgfonlayer}{background}
+    \clip (-1.5,-5) rectangle ++(4,10);
+
+    \colorlet{upperleft}{green!50!black!25}
+    \colorlet{upperright}{orange!25}
+    \colorlet{lowerleft}{red!25}
+    \colorlet{lowerright}{blue!25}
+
+     % The large rectangles:
+    \fill [upperleft]  (Computational Complexity) rectangle ++(-20,20);
+    \fill [upperright] (Computational Complexity) rectangle ++(20,20);
+    \fill [lowerleft]  (Computational Complexity) rectangle ++(-20,-20);
+    \fill [lowerright] (Computational Complexity) rectangle ++(20,-20);
+
+    % The shadings:
+    \shade [left color=upperleft,right color=upperright]
+      ([xshift=-1cm]Computational Complexity) rectangle ++(2,20);
+    \shade [left color=lowerleft,right color=lowerright]
+      ([xshift=-1cm]Computational Complexity) rectangle ++(2,-20);
+    \shade [top color=upperleft,bottom color=lowerleft]
+      ([yshift=-1cm]Computational Complexity) rectangle ++(-20,2);
+    \shade [top color=upperright,bottom color=lowerright]
+      ([yshift=-1cm]Computational Complexity) rectangle ++(20,2);
+  \end{pgfonlayer}
+\end{tikzpicture}
+\end{codeexample}
+
+
+% \subsection{Adding the Calendar}
+\subsection{添加日历}
+
+%J ohannes intends to plan his lecture rather carefully. In particular, he already knows when each of his lectures will be held during the course. Naturally, this does not mean that Johannes will slavishly follow the plan and he might need longer for some subjects than he anticipated, but nevertheless he has a detailed plan of when which subject will be addressed.
+
+约翰内斯打算相当仔细地计划他的讲座。 特别是，他已经知道在这门课程中何时举行每一次讲座。 自然，这并不意味着约翰内斯会刻苦地遵循该计划，并且某些科目可能比他预期的需要更长的时间，但是尽管如此，他还是有一个详细的计划来计划何时解决该主题。
+
+% Johannes intends to share this plan with his students by adding a calendar to the lecture map. In addition to serving as a reference on which particular day a certain  topic will be addressed, the calendar is also useful to show the overall chronological order of the course.
+
+约翰内斯打算通过在课堂地图上添加日历的方式与他的学生分享这个计划。日历除了可以作为在特定日期举行特定主题的讲座的参考之外，还有助于显示课程的总体时间顺序。
+
+% In order to add a calendar to a \tikzname\ graphic, the |calendar| library is most useful. The library provides the |\calendar| command, which takes a large number of options and which can be configured in many ways to produce just about any kind of calendar imaginable. For Johannes' purposes, a simple |day list downward| will be a nice option since it produces a list of days that go ``downward''.
+
+为了将日历添加到\tikzname\ 图形，|calendar| 库是最有用的。该库提供 |\calendar| 命令，它具有大量选项，并且可以通过多种方式进行配置，以生成几乎可以想象的任何类型的日历。出于约翰内斯的目的，一个简单的 |day list downward| 将是一个不错的选择，因为它会产生一个向下的日期列表。
+
+%
+\begin{codeexample}[
+    leave comments,
+    preamble={\usetikzlibrary{calendar}},
+]
+\tiny
+\begin{tikzpicture}
+  \calendar [day list downward,
+             name=cal,
+             dates=2009-04-01 to 2009-04-14]
+    if (weekend)
+      [black!25];
+\end{tikzpicture}
+\end{codeexample}
+
+% Using the |name| option, we gave a name to the calendar, which will allow us to reference the nodes that make up the individual days of the calendar later on. For instance, the rectangular node containing the |1| that represents April 1st, 2009, can be referenced as |(cal-2009-04-01)|. The |dates| option is used to specify an interval for which the calendar should be drawn. Johannes will need several months in his calendar, but the above example only shows two weeks to save some space.
+
+我们可以使用 |name| 选项为日历命名，这将使我们稍后可以引用组成日历的每一天的节点。 例如，包含 |1| 的矩形节点代表2009年4月1日，可以称为|(cal-2009-04-01)|。  |dates| 选项用于指定应该绘制日历的间隔。约翰内斯的日历中将需要几个月的时间，但是上面的示例仅显示了两周的时间来节省一些空间。
+
+% Note the |if (weekend)| construct. The |\calendar| command is followed by options and then by |if|-statements. These |if|-statements are checked for each day of the calendar and when a date passes this test, the options or the code following the |if|-statement is executed. In the above example, we make weekend days (Saturdays and Sundays, to be precise) lighter than normal days. (Use your favorite calendar to check that, indeed, April 5th, 2009, is a Sunday.)
+
+注意|if (weekend)| 构造。  |\calendar| 命令后跟选项，然后是 |if| 语句。 在日历的每一天都会检查这些 |if| 语句，并且当日期通过此测试时，将执行 |if| 语句之后的选项或代码。 在上面的示例中，我们使周末（准确地说是星期六和星期日）比平常更淡。（使用您喜欢的日历检查一下，2009年4月5日确实是星期天。）
+
+% As mentioned above, Johannes can reference the nodes that are used to typeset days. Recall that his |\lecture| macro already got passed a date, which we did not use, yet. We can now use it to place the lecture's title next to the date when the lecture will be held:
+
+如上所述，约翰内斯可以引用用于排版日期的节点。 回想一下他的 |\lecture| 宏已经接受了一个日期，我们还没有使用过。 现在，我们可以使用它将讲座的标题放在讲座举行的日期旁边：
+
+%
+\begin{codeexample}[code only]
+\def\lecture#1#2#3#4#5#6{
+  % As before:
+  \node [annotation, #3, scale=0.65, text width=4cm, inner sep=2mm] at (#4) {
+    Lecture #1: \textcolor{orange}{\textbf{#2}}
+    \list{--}{\topsep=2pt\itemsep=0pt\parsep=0pt
+              \parskip=0pt\labelwidth=8pt\leftmargin=8pt
+              \itemindent=0pt\labelsep=2pt}
+    #5
+    \endlist
+  };
+  % New:
+  \node [anchor=base west] at (cal-#6.base east) {\textcolor{orange}{\textbf{#2}}};
+}
+\end{codeexample}
+\def\lecture#1#2#3#4#5#6{
+  \node [anchor=base west] at (cal-#6.base east) {\textcolor{orange}{\textbf{#2}}};
+}
+
+% Johannes can now use this new |\lecture| command as follows (in the example, only the new part of the definition is used):
+
+约翰内斯现在可以使用如下这个新的 |\lecture| 命令（在示例中，仅新的定义部分）：
+
+%
+\begin{codeexample}[
+    preamble={\usetikzlibrary{calendar}},
+    pre={ % !!! replace all `##x` with `#x`
+\def\lecture##1##2##3##4##5##6{
+  \node [anchor=base west] at (cal-##6.base east) {\textcolor{orange}{\textbf{##2}}};
+}},
+]
+\tiny
+\begin{tikzpicture}
+  \calendar [day list downward,
+             name=cal,
+             dates=2009-04-01 to 2009-04-14]
+    if (weekend)
+      [black!25];
+
+  % As before:
+  \lecture{1}{Computational Problems}{above,xshift=-3mm}
+  {Computational Problems.north}{
+    \item Knowledge of several key problems
+    \item Knowledge of problem encodings
+    \item Being able to formalize problems
+  }{2009-04-08}
+\end{tikzpicture}
+\end{codeexample}
+
+% As a final step, Johannes needs to add a few more options to the calendar command: He uses the |month text| option to configure how the text of a month is rendered (see Section~\ref{section-calender} for details) and then typesets the month text at a special position at the beginning of each month.
+
+最后，约翰内斯需要向 |\calendar| 命令添加更多选项：他使用 | month text|。 选项配置月份文本的呈现方式（有关详细信息，请参见\ref{section-calender}节），然后在每个月初的特殊位置对月份文本进行排版。
+
+%
+\begin{codeexample}[
+    leave comments,
+    preamble={\usetikzlibrary{calendar}},
+    pre={ % !!! replace all `##x` with `#x`
+\def\lecture##1##2##3##4##5##6{
+  \node [anchor=base west] at (cal-##6.base east) {\textcolor{orange}{\textbf{##2}}};
+}},
+]
+\tiny
+\begin{tikzpicture}
+  \calendar [day list downward,
+             month text=\%mt\ \%y0,
+             month yshift=3.5em,
+             name=cal,
+             dates=2009-04-01 to 2009-05-01]
+    if (weekend)
+      [black!25]
+    if (day of month=1) {
+      \node at (0pt,1.5em) [anchor=base west] {\small\tikzmonthtext};
+    };
+
+  \lecture{1}{Computational Problems}{above,xshift=-3mm}
+  {Computational Problems.north}{
+    \item Knowledge of several key problems
+    \item Knowledge of problem encodings
+    \item Being able to formalize problems
+  }{2009-04-08}
+
+  \lecture{2}{Computational Models}{above,xshift=-3mm}
+  {Computational Models.north}{
+    \item Knowledge of Turing machines
+    \item Being able to compare the computational power of different
+      models
+  }{2009-04-15}
+\end{tikzpicture}
+\end{codeexample}
+
+
+% \subsection{The Complete Code}
+\subsection{完整代码}
+
+% Putting it all together, Johannes gets the following code:
+
+放在一起，约翰内斯得到以下代码：
+
+% First comes the definition of the |\lecture| command:
+
+首先是 |\lecture| 命令的定义：
+
+%
+\begin{codeexample}[code only]
+\def\lecture#1#2#3#4#5#6{
+  % As before:
+  \node [annotation, #3, scale=0.65, text width=4cm, inner sep=2mm, fill=white] at (#4) {
+    Lecture #1: \textcolor{orange}{\textbf{#2}}
+    \list{--}{\topsep=2pt\itemsep=0pt\parsep=0pt
+              \parskip=0pt\labelwidth=8pt\leftmargin=8pt
+              \itemindent=0pt\labelsep=2pt}
+    #5
+    \endlist
+  };
+  % New:
+  \node [anchor=base west] at (cal-#6.base east) {\textcolor{orange}{\textbf{#2}}};
+}
+\end{codeexample}
+
+% This is followed by the main mindmap setup\dots
+
+接下来是主要的思维导图设置\dots
+
+%
+\begin{codeexample}[code only]
+\noindent
+\begin{tikzpicture}
+  \begin{scope}[
+    mindmap,
+    every node/.style={concept, circular drop shadow,execute at begin node=\hskip0pt},
+    root concept/.append style={
+      concept color=black,
+      fill=white, line width=1ex,
+      text=black, font=\large\scshape},
+    text=white,
+    computational problems/.style={concept color=red,faded/.style={concept color=red!50}},
+    computational models/.style={concept color=blue,faded/.style={concept color=blue!50}},
+    measuring complexity/.style={concept color=orange,faded/.style={concept color=orange!50}},
+    solving problems/.style={concept color=green!50!black,faded/.style={concept color=green!50!black!50}},
+    grow cyclic,
+    level 1/.append style={level distance=4.5cm,sibling angle=90,font=\scshape},
+    level 2/.append style={level distance=3cm,sibling angle=45,font=\scriptsize}]
+\end{codeexample}
+%
+% \dots and contents:
+
+\dots 以及思维导图内容：
+%
+\begin{codeexample}[code only]
+  \node [root concept] (Computational Complexity) {Computational Complexity} % root
+      child [computational problems] { node [yshift=-1cm] (Computational Problems) {Computational Problems}
+        child         { node (Problem Measures) {Problem Measures} }
+        child         { node (Problem Aspects) {Problem Aspects} }
+        child [faded] { node (problem Domains) {Problem Domains} }
+        child         { node (Key Problems) {Key Problems} }
+      }
+      child [computational models] { node [yshift=-1cm]  (Computational Models) {Computational Models}
+        child         { node (Turing Machines) {Turing Machines} }
+        child [faded] { node (Random-Access Machines) {Random-Access Machines} }
+        child         { node (Circuits) {Circuits} }
+        child [faded] { node (Binary Decision Diagrams) {Binary Decision Diagrams} }
+        child         { node (Oracle Machines) {Oracle Machines} }
+        child         { node (Programming in Logic) {Programming in Logic} }
+      }
+      child [measuring complexity] { node [yshift=1cm] (Measuring Complexity) {Measuring Complexity}
+        child         { node (Complexity Measures) {Complexity Measures} }
+        child         { node (Classifying Complexity) {Classifying Complexity} }
+        child         { node (Comparing Complexity) {Comparing Complexity} }
+        child [faded] { node (Describing Complexity) {Describing Complexity} }
+      }
+      child [solving problems] { node [yshift=1cm] (Solving Problems) {Solving Problems}
+        child         { node (Exact Algorithms) {Exact Algorithms} }
+        child         { node (Randomization) {Randomization} }
+        child         { node (Fixed-Parameter Algorithms) {Fixed-Parameter Algorithms} }
+        child         { node (Parallel Computation) {Parallel Computation} }
+        child         { node (Partial Solutions) {Partial Solutions} }
+        child         { node (Approximation) {Approximation} }
+      };
+  \end{scope}
+\end{codeexample}
+%
+% Now comes the calendar code:
+
+现在是日历代码：
+%
+\begin{codeexample}[code only]
+  \tiny
+  \calendar [day list downward,
+             month text=\%mt\ \%y0,
+             month yshift=3.5em,
+             name=cal,
+             at={(-.5\textwidth-5mm,.5\textheight-1cm)},
+             dates=2009-04-01 to 2009-06-last]
+    if (weekend)
+      [black!25]
+    if (day of month=1) {
+      \node at (0pt,1.5em) [anchor=base west] {\small\tikzmonthtext};
+    };
+\end{codeexample}
+%
+% The lecture annotations:
+
+讲义注释：
+%
+\begin{codeexample}[code only]
+  \lecture{1}{Computational Problems}{above,xshift=-5mm,yshift=5mm}{Computational Problems.north}{
+    \item Knowledge of several key problems
+    \item Knowledge of problem encodings
+    \item Being able to formalize problems
+  }{2009-04-08}
+
+  \lecture{2}{Computational Models}{above left}
+  {Computational Models.west}{
+    \item Knowledge of Turing machines
+    \item Being able to compare the computational power of different
+      models
+  }{2009-04-15}
+\end{codeexample}
+%
+% Finally, the background:
+
+最后，背景的代码：
+%
+\begin{codeexample}[code only]
+  \begin{pgfonlayer}{background}
+    \clip[xshift=-1cm] (-.5\textwidth,-.5\textheight) rectangle ++(\textwidth,\textheight);
+
+    \colorlet{upperleft}{green!50!black!25}
+    \colorlet{upperright}{orange!25}
+    \colorlet{lowerleft}{red!25}
+    \colorlet{lowerright}{blue!25}
+
+     % The large rectangles:
+    \fill [upperleft]  (Computational Complexity) rectangle ++(-20,20);
+    \fill [upperright] (Computational Complexity) rectangle ++(20,20);
+    \fill [lowerleft]  (Computational Complexity) rectangle ++(-20,-20);
+    \fill [lowerright] (Computational Complexity) rectangle ++(20,-20);
+
+    % The shadings:
+    \shade [left color=upperleft,right color=upperright]
+      ([xshift=-1cm]Computational Complexity) rectangle ++(2,20);
+    \shade [left color=lowerleft,right color=lowerright]
+      ([xshift=-1cm]Computational Complexity) rectangle ++(2,-20);
+    \shade [top color=upperleft,bottom color=lowerleft]
+      ([yshift=-1cm]Computational Complexity) rectangle ++(-20,2);
+    \shade [top color=upperright,bottom color=lowerright]
+      ([yshift=-1cm]Computational Complexity) rectangle ++(20,2);
+  \end{pgfonlayer}
+\end{tikzpicture}
+\end{codeexample}
+
+% The next page shows the resulting lecture map in all its glory (it would be somewhat more glorious, if there were more lecture annotations, but you should get the idea).
+
+下一页显示了最终得到的讲义图（如果有更多讲义注解，那就更好了，但您应该了解其中的思想）。
+
+\def\lecture#1#2#3#4#5#6{
+  % As before:
+  \node [annotation, #3, scale=0.65, text width=4cm, inner sep=2mm, fill=white] at (#4) {
+    Lecture #1: \textcolor{orange}{\textbf{#2}}
+    \list{--}{\topsep=2pt\itemsep=0pt\parsep=0pt
+              \parskip=0pt\labelwidth=8pt\leftmargin=8pt
+              \itemindent=0pt\labelsep=2pt}
+    #5
+    \endlist
+  };
+  % New:
+  \node [anchor=base west] at (cal-#6.base east) {\textcolor{orange}{\textbf{#2}}};
+}
+
+\noindent
+\begin{tikzpicture}
+  \begin{scope}[
+    mindmap,
+    every node/.style={concept, circular drop shadow,execute at begin node=\hskip0pt},
+    root concept/.append style={
+      concept color=black,
+      fill=white, line width=1ex,
+      text=black, font=\large\scshape},
+    text=white,
+    computational problems/.style={concept color=red,faded/.style={concept color=red!50}},
+    computational models/.style={concept color=blue,faded/.style={concept color=blue!50}},
+    measuring complexity/.style={concept color=orange,faded/.style={concept color=orange!50}},
+    solving problems/.style={concept color=green!50!black,faded/.style={concept color=green!50!black!50}},
+    grow cyclic,
+    level 1/.append style={level distance=4.5cm,sibling angle=90,font=\scshape},
+    level 2/.append style={level distance=3cm,sibling angle=45,font=\scriptsize}]
+    \node [root concept] (Computational Complexity) {Computational Complexity} % root
+      child [computational problems] { node [yshift=-1cm] (Computational Problems) {Computational Problems}
+        child         { node (Problem Measures) {Problem Measures} }
+        child         { node (Problem Aspects) {Problem Aspects} }
+        child [faded] { node (problem Domains) {Problem Domains} }
+        child         { node (Key Problems) {Key Problems} }
+      }
+      child [computational models] { node [yshift=-1cm]  (Computational Models) {Computational Models}
+        child         { node (Turing Machines) {Turing Machines} }
+        child [faded] { node (Random-Access Machines) {Random-Access Machines} }
+        child         { node (Circuits) {Circuits} }
+        child [faded] { node (Binary Decision Diagrams) {Binary Decision Diagrams} }
+        child         { node (Oracle Machines) {Oracle Machines} }
+        child         { node (Programming in Logic) {Programming in Logic} }
+      }
+      child [measuring complexity] { node [yshift=1cm] (Measuring Complexity) {Measuring Complexity}
+        child         { node (Complexity Measures) {Complexity Measures} }
+        child         { node (Classifying Complexity) {Classifying Complexity} }
+        child         { node (Comparing Complexity) {Comparing Complexity} }
+        child [faded] { node (Describing Complexity) {Describing Complexity} }
+      }
+      child [solving problems] { node [yshift=1cm] (Solving Problems) {Solving Problems}
+        child         { node (Exact Algorithms) {Exact Algorithms} }
+        child         { node (Randomization) {Randomization} }
+        child         { node (Fixed-Parameter Algorithms) {Fixed-Parameter Algorithms} }
+        child         { node (Parallel Computation) {Parallel Computation} }
+        child         { node (Partial Solutions) {Partial Solutions} }
+        child         { node (Approximation) {Approximation} }
+      };
+  \end{scope}
+
+  \tiny
+  \calendar [day list downward,
+             month text=\%mt\ \%y0,
+             month yshift=3.5em,
+             name=cal,
+             at={(-.5\textwidth-5mm,.5\textheight-1cm)},
+             dates=2009-04-01 to 2009-06-last]
+    if (weekend)
+      [black!25]
+    if (day of month=1) {
+      \node at (0pt,1.5em) [anchor=base west] {\small\tikzmonthtext};
+    };
+
+  \lecture{1}{Computational Problems}{above,xshift=-5mm,yshift=5mm}{Computational Problems.north}{
+    \item Knowledge of several key problems
+    \item Knowledge of problem encodings
+    \item Being able to formalize problems
+  }{2009-04-08}
+
+  \lecture{2}{Computational Models}{above left}
+  {Computational Models.west}{
+    \item Knowledge of Turing machines
+    \item Being able to compare the computational power of different
+      models
+  }{2009-04-15}
+
+  \begin{pgfonlayer}{background}
+    \clip[xshift=-1cm] (-.5\textwidth,-.5\textheight) rectangle ++(\textwidth,\textheight);
+
+    \colorlet{upperleft}{green!50!black!25}
+    \colorlet{upperright}{orange!25}
+    \colorlet{lowerleft}{red!25}
+    \colorlet{lowerright}{blue!25}
+
+     % The large rectangles:
+    \fill [upperleft]  (Computational Complexity) rectangle ++(-20,20);
+    \fill [upperright] (Computational Complexity) rectangle ++(20,20);
+    \fill [lowerleft]  (Computational Complexity) rectangle ++(-20,-20);
+    \fill [lowerright] (Computational Complexity) rectangle ++(20,-20);
+
+    % The shadings:
+    \shade [left color=upperleft,right color=upperright]
+      ([xshift=-1cm]Computational Complexity) rectangle ++(2,20);
+    \shade [left color=lowerleft,right color=lowerright]
+      ([xshift=-1cm]Computational Complexity) rectangle ++(2,-20);
+    \shade [top color=upperleft,bottom color=lowerleft]
+      ([yshift=-1cm]Computational Complexity) rectangle ++(-20,2);
+    \shade [top color=upperright,bottom color=lowerright]
+      ([yshift=-1cm]Computational Complexity) rectangle ++(20,2);
+  \end{pgfonlayer}
+\end{tikzpicture}

@@ -1,0 +1,42 @@
+\part{Data Visualization}
+\label{part-dv}
+
+{\Large \emph{by Till Tantau}}
+
+\bigskip
+\noindent
+
+\begin{codeexample}[graphic=white,preamble={\usetikzlibrary{datavisualization.formats.functions}}]
+\tikz \datavisualization [scientific axes=clean]
+[
+  visualize as smooth line=Gaussian,
+  Gaussian={pin in data={text={$e^{-x^2}$},when=x is 1}}
+]
+data [format=function] {
+  var x : interval [-7:7] samples 51;
+  func y = exp(-\value x*\value x);
+}
+[
+  visualize as scatter,
+  legend={south east outside},
+  scatter={
+    style={mark=*,mark size=1.4pt},
+    label in legend={text={
+        $\sum_{i=1}^{10} x_i$, where $x_i \sim U(-1,1) $}}}
+]
+data [format=function] {
+  var i : interval [0:1] samples 20;
+  func y = 0;
+  func x = (rand + rand + rand + rand + rand +
+            rand + rand + rand + rand + rand);
+};
+\end{codeexample}
+
+\input{parts/Data-Visualization/sections/pgfmanual-zh-dv-introduction}
+\input{parts/Data-Visualization/sections/pgfmanual-zh-dv-main}
+\input{parts/Data-Visualization/sections/pgfmanual-zh-dv-formats}
+\input{parts/Data-Visualization/sections/pgfmanual-zh-dv-axes}
+\input{parts/Data-Visualization/sections/pgfmanual-zh-dv-visualizers}
+\input{parts/Data-Visualization/sections/pgfmanual-zh-dv-stylesheets}
+\input{parts/Data-Visualization/sections/pgfmanual-zh-dv-polar}
+\input{parts/Data-Visualization/sections/pgfmanual-zh-dv-backend}
