@@ -1,4 +1,4 @@
-% Copyright 2006 by Till Tantau
+% Copyright 2018 by Till Tantau
 %
 % This file may be distributed and/or modified
 %
@@ -8,164 +8,173 @@
 % See the file doc/generic/pgf/licenses/LICENSE for more details.
 
 
-\section{Installation}
+% \section{Installation}
+\section{安装}
 
-There are different ways of installing \pgfname, depending on your system and
-needs, and you may need to install other packages as well, see below. Before
-installing, you may wish to review the licenses under which the package is
-distributed, see Section~\ref{section-license}.
+% There are different ways of installing \pgfname, depending on your system and needs, and you may need to install other packages as well, see below. Before installing, you may wish to review the licenses under which the package is distributed, see Section~\ref{section-license}.
 
-Typically, the package will already be installed on your system. Naturally, in
-this case you do not need to worry about the installation process at all and
-you can skip the rest of this section.
+有不同的安装\pgfname 的方法，这取决于您的系统和需要，您可能还需要安装其他软件包，请参阅下面。在安装之前，您可能希望查看软件包发布所依据的许可证，请参阅\ref{section-license}节。
+
+% Typically, the package will already be installed on your system. Naturally, in this case you do not need to worry about the installation process at all and you can skip the rest of this section.
+
+通常，该软件包将已经安装在您的系统上。 自然，在这种情况下，您完全不必担心安装过程，可以跳过本节的其余部分。
 
 
-\subsection{Package and Driver Versions}
+% \subsection{Package and Driver Versions}
+\subsection{宏包和驱动程序版本}
 
-This documentation is part of version \pgfversion\ of the \pgfname\ package. In
-order to run \pgfname, you need a reasonably recent \TeX\ installation. When
-using \LaTeX, you need the following packages installed (newer versions should
-also work):
+% This documentation is part of version \pgfversion\ of the \pgfname\ package. In order to run \pgfname, you need a reasonably recent \TeX\ installation. When using \LaTeX, you need the following packages installed (newer versions should also work):
+
+该文档是\pgfname\ 宏包的\pgfversion\ 版本的一部分。为了运行\pgfname，您需要安装一个相当新的\TeX\ 。使用\LaTeX 时，您需要安装以下软件包（更新的版本也应正常工作）：
+
 %
 \begin{itemize}
-    \item |xcolor| version \xcolorversion.
+    % \item |xcolor| version \xcolorversion.
+    \item |xcolor| \xcolorversion 版本.
 \end{itemize}
 %
-With plain \TeX, |xcolor| is not needed, but you obviously do not get its
-(full) functionality.
-
-Currently, \pgfname\ supports the following backend drivers:
+% With plain \TeX, |xcolor| is not needed, but you obviously do not get its (full) functionality.
 %
-\begin{itemize}
-    \item |luatex| version 0.76 or higher. Most earlier versions also work.
-    \item |pdftex| version 0.14 or higher. Earlier versions do not work.
-    \item |dvips| version 5.94a or higher. Earlier versions may also work.
+使用Plain \TeX 时，不需要 |xcolor|，但您显然无法获得其（完整）功能。
 
-        For inter-picture connections, you need to process pictures using
-        |pdftex| version 1.40 or higher running in DVI mode.
-    \item |dvipdfm| version 0.13.2c or higher. Earlier versions may also
-        work.
+% Currently, \pgfname\ supports the following backend drivers:
 
-        For inter-picture connections, you need to process pictures using
-        |pdftex| version 1.40 or higher running in DVI mode.
-    \item |dvipdfmx| version 0.13.2c or higher. Earlier versions may also
-        work.
-    \item |dvisvgm| version 1.2.2 or higher. Earlier versions may also work.
-    \item |tex4ht| version 2003-05-05 or higher. Earlier versions may also
-        work.
-    \item |vtex| version 8.46a or higher. Earlier versions may also work.
-    \item |textures| version 2.1 or higher. Earlier versions may also work.
-    \item |xetex| version 0.996 or higher. Earlier versions may also work.
-\end{itemize}
-
-Currently, \pgfname\ supports the following formats:
+目前，\pgfname\ 支持以下后端驱动程序：
 %
 \begin{itemize}
-    \item |latex| with complete functionality.
-    \item |plain| with complete functionality, except for graphics inclusion,
-        which works only for pdf\TeX.
-    \item |context| with complete functionality, except for graphics
-        inclusion, which works only for pdf\TeX.
+    % \item |luatex| version 0.76 or higher. Most earlier versions also work.
+    \item |luatex| v0.76或更高版本。 大多数早期版本可能也可以使用。
+    % \item |pdftex| version 0.14 or higher. Earlier versions do not work.
+    \item |pdftex| v0.14或更高版本。 早期版本不起作用。
+    % \item |dvips| version 5.94a or higher. Earlier versions may also work.
+    \item |dvips| v5.94a或更高版本。 较早的版本可能也可以使用。
+    
+    % For inter-picture connections, you need to process pictures using |pdftex| version 1.40 or higher running in DVI mode.
+
+    对于图片间连接，需要使用在DVI模式下运行的 |pdftex| 版本1.40或更高版本处理图片。
+
+    % \item |dvipdfm| version 0.13.2c or higher. Earlier versions may also work.
+    \item |dvipdfm| v0.13.2c或更高版本。 较早的版本可能也可以使用。
+
+    % For inter-picture connections, you need to process pictures using |pdftex| version 1.40 or higher running in DVI mode.
+
+    对于图片间连接，需要使用在DVI模式下运行的 |pdftex| v1.40或更高版本处理图片。
+    % \item |dvipdfmx| version 0.13.2c or higher. Earlier versions may also work.
+    \item |dvipdfmx| v0.13.2c或更高版本。 较早的版本可能也可以使用。
+    % \item |dvisvgm| version 1.2.2 or higher. Earlier versions may also work.
+    \item |dvisvgm| v1.2.2或更高版本。 较早的版本可能也可以使用。
+    % \item |tex4ht| version 2003-05-05 or higher. Earlier versions may also work.
+    \item |tex4ht| v2003-05-05或更高版本。 较早的版本可能也可以使用。
+    % \item |vtex| version 8.46a or higher. Earlier versions may also work.
+    \item |vtex| v8.46a或更高版本。 较早的版本可能也可以使用。
+    % \item |textures| version 2.1 or higher. Earlier versions may also work.
+    \item |textures| v2.1或更高版本。 较早的版本可能也可以使用。
+    % \item |xetex| version 0.996 or higher. Earlier versions may also work.
+    \item |xetex| v0.996或更高版本。 较早的版本也可以使用。
 \end{itemize}
 
-For more details, see Section~\ref{section-formats}.
+% Currently, \pgfname\ supports the following formats:
+
+目前，\pgfname\ 支持以下格式：
+%
+\begin{itemize}
+    % \item |latex| with complete functionality.
+    \item 具有完整功能的 |latex|。
+    % \item |plain| with complete functionality, except for graphics inclusion, which works only for pdf\TeX.
+    \item 具有完整功能的 |plain|，除了图形的包含，它只适用于pdf\TeX。
+    % \item |context| with complete functionality, except for graphics inclusion, which works only for pdf\TeX.
+    \item 具有完整功能的 |context|，除了图形包含，它只适用于pdf\TeX。
+\end{itemize}
+
+% For more details, see Section~\ref{section-formats}.
+
+有关更多详细信息，请参见\ref{section-formats}节。
 
 
-\subsection{Installing Prebundled Packages}
+% \subsection{Installing Prebundled Packages}
+\subsection{安装预捆绑的软件包}
 
-I do not create or manage prebundled packages of \pgfname, but, fortunately,
-nice other people do. I cannot give detailed instructions on how to install
-these packages, since I do not manage them, but I \emph{can} tell you were to
-find them. If you have a problem with installing, you might wish to have a look
-at the Debian page or the MiK\TeX\ page first.
+% I do not create or manage prebundled packages of \pgfname, but, fortunately, nice other people do. I cannot give detailed instructions on how to install these packages, since I do not manage them, but I \emph{can} tell you were to find them. If you have a problem with installing, you might wish to have a look at the Debian page or the MiK\TeX\ page first.
+
+我不创建或管理\pgfname 的预捆绑宏包，但是，幸运的是，其他人也可以。 由于我不管理这些宏包，因此无法提供有关如何安装这些宏包的详细说明，但是我\emph{可以}告诉您要找到它们。 如果您在安装时遇到问题，则不妨先看一下Debian页面或MiK\TeX\ 的页面。
 
 
 \subsubsection{Debian}
 
-The command ``|aptitude install pgf|'' should do the trick. Sit back and relax.
+% The command ``|aptitude install pgf|'' should do the trick. Sit back and relax.
+
+命令``|aptitude install pgf|''应该可以解决问题。 高枕无忧。
 
 
 \subsubsection{MiKTeX}
 
-For MiK\TeX, use the update wizard to install the (latest versions of the)
-packages called |pgf| and |xcolor|.
+% For MiK\TeX, use the update wizard to install the (latest versions of the) packages called |pgf| and |xcolor|.
 
+对于MiK\TeX，请使用更新向导安装名为 |pgf| 和 |xcolor|的宏包（最新版本）。
 
-\subsection{Installation in a texmf Tree}
+% \subsection{Installation in a texmf Tree}
+\subsection{在texmf目录中安装}
 
-For a permanent installation, you place the files of the \textsc{pgf} package
-in an appropriate |texmf| tree.
+% For a permanent installation, you place the files of the \textsc{pgf} package in an appropriate |texmf| tree.
 
-When you ask \TeX\ to use a certain class or package, it usually looks for the
-necessary files in so-called |texmf| trees. These trees are simply huge
-directories that contain these files. By default, \TeX\ looks for files in
-three different |texmf| trees:
+对于永久安装，可以将\textsc{pgf}包的文件放在适当的 |texmf| 树中。
+
+% When you ask \TeX\ to use a certain class or package, it usually looks for the necessary files in so-called |texmf| trees. These trees are simply huge directories that contain these files. By default, \TeX\ looks for files in three different |texmf| trees:
+
+当您要求\TeX\ 使用某个类或程序包时，它通常会在所谓的 |texmf| 目录中查找必要的文件。 这些树只是包含这些文件的巨大目录。 默认情况下，\TeX\ 在三个不同的 |texmf| 目录中查找文件：
+
 %
 \begin{itemize}
-    \item The root |texmf| tree, which is usually located at
-        |/usr/share/texmf/| or |c:\texmf\| or somewhere similar.
-    \item The local  |texmf| tree, which is usually located at
-        |/usr/local/share/texmf/| or |c:\localtexmf\| or somewhere similar.
-    \item Your personal  |texmf| tree, which is usually located in your home
-        directory at |~/texmf/| or |~/Library/texmf/|.
+    % \item The root |texmf| tree, which is usually located at |/usr/share/texmf/| or |c:\texmf\| or somewhere similar.
+    \item 根 |texmf| 目录，通常位于 |/usr/share/texmf/| 或 |c:\texmf\| 或类似的地方。
+    % \item The local  |texmf| tree, which is usually located at |/usr/local/share/texmf/| or |c:\localtexmf\| or somewhere similar.
+    \item 本地 |texmf| 目录，通常位于 |/usr/local/share/texmf/| 或 |c:\localtexmf\| 或类似的地方。
+    % \item Your personal |texmf| tree, which is usually located in your home directory at |~/texmf/| or |~/Library/texmf/|.
+    \item 您的个人 |texmf| 目录，通常位于您的主目录中 |~/texmf/| 或 |~/Library/texmf/| 目录。
 \end{itemize}
 
-You should install the packages either in the local tree or in your personal
-tree, depending on whether you have write access to the local tree.
-Installation in the root tree can cause problems, since an update of the whole
-\TeX\ installation will replace this whole tree.
+% You should install the packages either in the local tree or in your personal tree, depending on whether you have write access to the local tree. Installation in the root tree can cause problems, since an update of the whole \TeX\ installation will replace this whole tree.
+
+您应该将软件包安装在本地目录还是个人目录中，具体取决于您是否具有对本地树的写访问权。 在根目录树中进行安装可能会导致问题，因为整个\TeX\ 安装程序的更新将替换整个目录。
 
 
-\subsubsection{Installation that Keeps Everything Together}
+% \subsubsection{Installation that Keeps Everything Together}
+\subsubsection{可以将所有内容整合在一起的安装}
 
-Once you have located the right texmf tree, you must decide whether you want to
-install \pgfname\ in such a way that ``all its files are kept in one place'' or
-whether you want to be ``\textsc{tds}-compliant'', where \textsc{tds} means
-``\TeX\ directory structure''.
+% Once you have located the right texmf tree, you must decide whether you want to install \pgfname\ in such a way that ``all its files are kept in one place'' or whether you want to be ``\textsc{tds}-compliant'', where \textsc{tds} means ``\TeX\ directory structure''.
 
-If you want to keep ``everything in one place'', inside the |texmf| tree that
-you have chosen create a sub-sub-directory called |texmf/tex/generic/pgf| or
-|texmf/tex/generic/pgf-|\texttt{\pgfversion}, if you prefer. Then place all
-files of the |pgf| package in this directory. Finally, rebuild \TeX's filename
-database. This is done by running the command |texhash| or |mktexlsr| (they are
-the same). In MiK\TeX, there is a menu option to do this.
+找到正确的texmf目录后，必须确定是否要以``将其所有文件都保存在一个位置''的方式来安装\pgfname\ ，还是要成为``适用于\textsc{tds}''，其中\textsc{tds}表示``\TeX\ 目录结构''。
+
+% If you want to keep ``everything in one place'', inside the |texmf| tree that you have chosen create a sub-sub-directory called |texmf/tex/generic/pgf| or |texmf/tex/generic/pgf-|\texttt{\pgfversion}, if you prefer. Then place all files of the |pgf| package in this directory. Finally, rebuild \TeX's filename database. This is done by running the command |texhash| or |mktexlsr| (they are the same). In MiK\TeX, there is a menu option to do this.
+
+如果您想将``一切都保留在一个地方''，请在所选的 |texmf| 目录内创建一个名为 |texmf/tex/generic/pgf| |texmf/tex/generic/pgf-|\texttt{\pgfversion}的子目录，如果你想这么做的话。 然后将 |pgf| 包的所有文件放在此目录中。 最后，重建\TeX 的文件数据库。 这是通过运行 |texhash| 或 |mktexlsr| 命令（它们相同）来完成的。 在MiK\TeX 中，有一个菜单选项可以执行此操作。
 
 
-\subsubsection{Installation that is TDS-Compliant}
+% \subsubsection{Installation that is TDS-Compliant}
+\subsubsection{适用于TDS的安装}
 
-While the above installation process is the most ``natural'' one and although I
-would like to recommend it since it makes updating and managing the \pgfname\
-package easy, it is not \textsc{tds}-compliant. If you want to be
-\textsc{tds}-compliant, proceed as follows: (If you do not know what
-\textsc{tds}-compliant means, you probably do not want to be
-\textsc{tds}-compliant.)
+% While the above installation process is the most ``natural'' one and although I would like to recommend it since it makes updating and managing the \pgfname\ package easy, it is not \textsc{tds}-compliant. If you want to be \textsc{tds}-compliant, proceed as follows: (If you do not know what \textsc{tds}-compliant means, you probably do not want to be \textsc{tds}-compliant.)
 
-The |.tar| file of the |pgf| package contains the following files and
-directories at its root: |README|, |doc|,  |generic|, |plain|, and |latex|. You
-should ``merge'' each of the four directories with the following directories
-|texmf/doc|, |texmf/tex/generic|, |texmf/tex/plain|, and |texmf/tex/latex|. For
-example, in the |.tar| file the |doc| directory contains just the directory
-|pgf|, and this directory has to be moved to |texmf/doc/pgf|. The root |README|
-file can be ignored since it is reproduced in |doc/pgf/README|.
+虽然上述安装过程是最``自然''的过程，但我还是建议您这样做，因为它使 |pgf| 宏包的更新和管理变得容易，但它不适用于\textsc{tds}。 如果要适用于\textsc{tds}的要求，请按照下列步骤操作：（如果您不了解\textsc{tds}的含义，则可能不希望适用于\textsc{tds}的要求。）
 
-You may also consider keeping everything in one place and using symbolic links
-to point from the \textsc{tds}-compliant directories to the central
-installation.
+% The |.tar| file of the |pgf| package contains the following files and directories at its root: |README|, |doc|,  |generic|, |plain|, and |latex|. You should ``merge'' each of the four directories with the following directories |texmf/doc|, |texmf/tex/generic|, |texmf/tex/plain|, and |texmf/tex/latex|. For example, in the |.tar| file the |doc| directory contains just the directory |pgf|, and this directory has to be moved to |texmf/doc/pgf|. The root |README| file can be ignored since it is reproduced in |doc/pgf/README|.
 
-\vskip1em For a more detailed explanation of the standard installation process
-of packages, you might wish to consult
-\href{http://www.ctan.org/installationadvice/}{|http://www.ctan.org/installationadvice/|}.
-However, note that the \pgfname\ package does not come with a |.ins| file
-(simply skip that part).
+|pgf| 宏包的 |.tar| 文件在其根目录中包含以下文件和目录：|README|， |doc|，  |generic|， |plain| 和 |latex|。 您应将``四个''目录中的每一个``合并''到以下目录：|texmf/doc|， |texmf/tex/generic|， |texmf/tex/plain| 和 |texmf/tex/latex|。 例如，在 |.tar| 文件中，|doc| 目录仅包含目录 |pgf|，并且该目录必须移至 |texmf/doc/pgf|。根 |README| 文件可以忽略，因为它是在 |doc/pgf/README| 中复制的。
+
+% You may also consider keeping everything in one place and using symbolic links to point from the \textsc{tds}-compliant directories to the central installation.
+
+您也可以考虑将所有内容都放在一个位置，并使用符号链接将适用于\textsc{tds}的目录指向主安装目录。
+
+% \vskip1em For a more detailed explanation of the standard installation process of packages, you might wish to consult \href{http://www.ctan.org/installationadvice/}{|http://www.ctan.org/installationadvice/|}. However, note that the \pgfname\ package does not come with a |.ins| file (simply skip that part).
+
+\vskip1em 有关宏包标准安装过程的更详细说明，您可能希望参考 \href{http://www.ctan.org/installationadvice/}{|http://www.ctan.org/installationadvice/|}。 但是，请注意 |pgf| 宏包没有 |.ins| 文件（只需跳过该部分）。
 
 
-\subsection{Updating the Installation}
+% \subsection{Updating the Installation}
+\subsection{更新安装}
 
-To update your installation from a previous version, all you need to do is to
-replace everything in the directory |texmf/tex/generic/pgf| with the files of
-the new version (or in all the directories where |pgf| was installed, if you
-chose a \textsc{tds}-compliant installation). The easiest way to do this is to
-first delete the old version and then proceed as described above. Sometimes,
-there are changes in the syntax of certain commands from version to version. If
-things no longer work that used to work, you may wish to have a look at the
-release notes and at the change log.
+% To update your installation from a previous version, all you need to do is to replace everything in the directory |texmf/tex/generic/pgf| with the files of the new version (or in all the directories where |pgf| was installed, if you chose a \textsc{tds}-compliant installation). The easiest way to do this is to first delete the old version and then proceed as described above. Sometimes, there are changes in the syntax of certain commands from version to version. If things no longer work that used to work, you may wish to have a look at the release notes and at the change log.
+
+要从以前的版本更新安装，您需要做的就是用新版本的文件（或如果安装了pgf的所有目录）替换 |texmf/tex/generic/pgf| 目录中的所有内容，或适用于\textsc{tds}的安装）。 最简单的方法是先删除旧版本，然后按如上所述进行操作。 有时，某些命令的语法会因版本而异。 如果事情不像过去那样工作，则不妨查看发行说明和更改日志。
+
+\clearpage

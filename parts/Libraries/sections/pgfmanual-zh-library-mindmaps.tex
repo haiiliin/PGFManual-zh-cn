@@ -1,4 +1,4 @@
-% Copyright 2006 by Till Tantau
+% Copyright 2019 by Till Tantau
 %
 % This file may be distributed and/or modified
 %
@@ -8,45 +8,42 @@
 % See the file doc/generic/pgf/licenses/LICENSE for more details.
 
 
-\section{Mindmap Drawing Library}
+% \section{Mindmap Drawing Library}
+\section{思维导图图形库}
 
 \begin{tikzlibrary}{mindmap}
-    This packages provides styles for drawing mindmap diagrams.
+   % This packages provides styles for drawing mindmap diagrams.
+
+    该包提供了用于绘制思维导图的样式。
 \end{tikzlibrary}
 
+% \subsection{Overview}
+\subsection{概述}
 
-\subsection{Overview}
+% This library is intended to make the creation of mindmaps or concept maps easier. A \emph{mindmap} is a graphical representation of a concept together with related concepts and annotations. Mindmaps are, essentially, trees, possibly with a few extra edges added, but they are usually drawn in a special way: The root concept is placed in the middle of the page and is drawn as a huge circle, ellipse, or cloud. The related concepts then ``leave'' this root concept via branch-like tendrils.
 
-This library is intended to make the creation of mindmaps or concept maps
-easier. A \emph{mindmap} is a graphical representation of a concept together
-with related concepts and annotations. Mindmaps are, essentially, trees,
-possibly with a few extra edges added, but they are usually drawn in a special
-way: The root concept is placed in the middle of the page and is drawn as a
-huge circle, ellipse, or cloud. The related concepts then ``leave'' this root
-concept via branch-like tendrils.
+该库旨在简化思维导图或概念图的创建。 \emph{思维导图} 是一个用于表示概念和相关概念以及注释的图形。 思维导图本质上是树，可能添加了一些额外的边，但通常以特殊的方式绘制：根概念位于页面的中间，并绘制为巨大的圆形，椭圆形或云形。 然后，相关的概念通过类似树枝的卷须``离开''这个根概念。
 
-The |mindmap| library of \tikzname\ produces mindmaps that look a bit different
-from the standard mindmaps: While the big root concept is still a circle,
-related concepts are also depicted as (smaller) circles. The related concepts
-are linked to the root concept via organic-looking connections. The overall
-effect is visually rather pleasing, but readers may not immediately think of a
-mindmap when they see a picture created with this library.
+% The |mindmap| library of \tikzname\ produces mindmaps that look a bit different from the standard mindmaps: While the big root concept is still a circle, related concepts are also depicted as (smaller) circles. The related concepts are linked to the root concept via organic-looking connections. The overall effect is visually rather pleasing, but readers may not immediately think of a mindmap when they see a picture created with this library.
 
-Although it is not strictly necessary, you will usually create mindmaps using
-\tikzname's tree mechanism and some of the styles and macros of the package
-work best when used inside trees. However, it is still possible and sometimes
-necessary to treat parts of a mindmap as a graph with arbitrary edges and this
-is also possible.
+由\tikzname 的 |mindmap| 库绘制的思维导图看起来与标准思维导图有些不同：虽然大根概念仍然是一个圆，相关概念也被描述为（较小）圆。 相关概念通过外观相似的连接链接到根概念。 总体效果在视觉上令人愉悦，但是当读者看到使用此库创建的图片时，可能不会立即想到思维导图。
+
+% Although it is not strictly necessary, you will usually create mindmaps using \tikzname's tree mechanism and some of the styles and macros of the package work best when used inside trees. However, it is still possible and sometimes necessary to treat parts of a mindmap as a graph with arbitrary edges and this is also possible.
+
+尽管不是绝对必要的，但是通常您会使用\tikzname 的树机制来创建思维导图，并且在树内使用时，包的某些样式和宏效果最佳。 但是，仍然可能并且有时有必要将思维导图的各个部分视为具有任意边的图，这也是可能的。
 
 
-\subsection{The Mindmap Style}
+% \subsection{The Mindmap Style}
+\subsection{思维导图样式}
 
-Every mindmap should be put in a scope or a picture where the |mindmap| style
-is used. This style installs some internal settings.
+% Every mindmap should be put in a scope or a picture where the |mindmap| style is used. This style installs some internal settings.
+
+每个思维导图都应放在使用 |mindmap| 样式的作用域或图片环境中。 此样式将加载一些内部设置。
 
 \begin{stylekey}{/tikz/mindmap}
-    Use this style with all pictures or at least scopes that contain a mindmap.
-    It installs a whole bunch of settings that are useful for drawing mindmaps.
+    % Use this style with all pictures or at least scopes that contain a mindmap. It installs a whole bunch of settings that are useful for drawing mindmaps.
+
+    对所有图片或至少包含思维导图的图片使用这种风格。它安装了一大堆对绘制思维导图有用的设置。
     %
 \begin{codeexample}[preamble={\usetikzlibrary{mindmap}}]
 \tikz[mindmap,concept color=red!50]
@@ -54,12 +51,14 @@ is used. This style installs some internal settings.
     child[grow=right] {node[concept] {Child concept}};
 \end{codeexample}
     %
-    The sizes of concepts are predefined in such a way that a medium-size
-    mindmap will fit on an A4 page (more or less).
+    %The sizes of concepts are predefined in such a way that a medium-size mindmap will fit on an A4 page (more or less).
+    
+    预定义概念的大小，以使中型思维导图适合A4页面（或多或少）。
     %
     \begin{stylekey}{/tikz/every mindmap}
-        This style is included by the |mindmap| style. Change this style to add
-        special settings to your mindmaps.
+        % This style is included by the |mindmap| style. Change this style to add special settings to your mindmaps.
+
+        这种样式包含在 |mindmap| 样式中。改变这种样式，为你的思维导图添加特殊设置。
         %
 \begin{codeexample}[preamble={\usetikzlibrary{mindmap}}]
 \tikz[large mindmap,concept color=red!50]
@@ -68,89 +67,89 @@ is used. This style installs some internal settings.
 \end{codeexample}
     \end{stylekey}
 
-    \paragraph{Remark:}
-    Note that |mindmap| redefines |font| sizes and |sibling angle| depending on
-    the current concept level (i.e. inside of |level 1 concept|,
-    |level 2 concept| etc.). Thus, if you need to redefine these variables, use
+    % \paragraph{Remark:}
+    % Note that |mindmap| redefines |font| sizes and |sibling angle| depending on the current concept level (i.e. inside of |level 1 concept|, |level 2 concept| etc.). Thus, if you need to redefine these variables, use
+
+    \paragraph{备注}
+    注意 |mindmap| 重新定义 |font| 大小和 |sibling angle|，取决于当前概念级别（即 |level 1 concept|，|level 2 concept| 等中的概念）。 因此，如果您需要重新定义这些变量，请使用
 
     |level 1 concept/.append style={font=\small}|
 
-    \noindent or
+    % \noindent or
+    \noindent 或
 
     |level 2 concept/.append style={sibling distance=90}|
 
-    \noindent \emph{after} the |mindmap| style.
+    % \noindent \emph{after} the |mindmap| style.
+
+    应在 |mindmap| 样式\emph{之后}使用。
 \end{stylekey}
 
 \begin{stylekey}{/tikz/small mindmap}
-    This style includes the |mindmap| style, but additionally changes the
+    % This style includes the |mindmap| style, but additionally changes the
     default size of concepts, fonts and distances so that a medium-sized
-    mindmap will fit on an A5 page (A5 pages are half as large as A4 pages).
-    Mindmaps with |small mindmap| will also fit onto a standard frame of the
-    |beamer| package.
+    mindmap will fit on an A5 page (A5 pages are half as large as A4 pages). Mindmaps with |small mindmap| will also fit onto a standard frame of the |beamer| package.
+
+    此样式包含 |mindmap| 样式，但另外会更改概念，字体和距离的默认大小，以使中型思维导图适合A5页面（A5页面的大小是A4页面的一半）。 具有 |small mindmap| 的思维导图适合| beamer | 宏包的标准框架。
 \end{stylekey}
 
 \begin{stylekey}{/tikz/large mindmap}
-    This style includes the |mindmap| style, but additionally changes the
-    default size of concepts, fonts and distances so that a medium-sized
-    mindmap will fit on an A3 page (A3 pages are twice as large as A4 pages).
+    % This style includes the |mindmap| style, but additionally changes the default size of concepts, fonts and distances so that a medium-sized mindmap will fit on an A3 page (A3 pages are twice as large as A4 pages).
+
+    此样式包含 |mindmap| 样式，但另外会更改概念，字体和距离的默认大小，以使中型思维导图适合A3页面（A3页面的大小是A4页面的两倍）。
 \end{stylekey}
 
 \begin{stylekey}{/tikz/huge mindmap}
-    This style causes concepts to be even bigger and it is best used with A2
-    paper and above.
+    % This style causes concepts to be even bigger and it is best used with A2 paper and above.
+
+    这种样式会使概念更大，最好与A2纸及更高版本一起使用。
 \end{stylekey}
 
 
-\subsection{Concepts Nodes}
+% \subsection{Concepts Nodes}
+\subsection{概念节点}
 
-The basic entities of mindmaps are called \emph{concepts} in \tikzname. A
-concept is a node of style |concept| and it must be circular for some of the
-connection macros to work.
+% The basic entities of mindmaps are called \emph{concepts} in \tikzname. A concept is a node of style |concept| and it must be circular for some of the connection macros to work.
 
+思维导图的基本实体在\tikzname 中被称为\emph{概念}。 概念是样式为 |concept| 的节点，它必须是圆形的，这样一些连接宏才能正常工作。
 
-\subsubsection{Isolated Concepts}
+% \subsubsection{Isolated Concepts}
+\subsubsection{孤立的概念}
 
-The following styles influence how isolated concepts are rendered:
+% The following styles influence how isolated concepts are rendered:
+
+以下样式影响孤立概念的呈现方式：
 
 \begin{stylekey}{/tikz/concept}
-    This style should be used with all nodes that are concepts, although some
-    styles like |extra concept| install this style automatically.
+    % This style should be used with all nodes that are concepts, although some styles like |extra concept| install this style automatically.
 
-    Basically, this style makes the concept node circular and installs a
-    uniform color called |concept color|, see below. Additionally, the style
-    |every concept| is called.
+    尽管某些样式（如 |extra concept|）自动加载此样式，该样式应与所有作为概念的节点一起使用。
+
+    % Basically, this style makes the concept node circular and installs a uniform color called |concept color|, see below. Additionally, the style |every concept| is called.
+
+    基本上，这种样式使概念节点成为圆形，并加载被称为 |concept color| 的统一颜色，请参见下文。 此外，样式 |every concept| 被自动加载。
     %
 \begin{codeexample}[preamble={\usetikzlibrary{mindmap}}]
 \tikz[mindmap,concept color=red!50] \node [concept] {Some concept};
 \end{codeexample}
 
     \begin{stylekey}{/tikz/every concept}
-        In order to change the appearance of concept nodes, you should change
-        this style. Note, however, that the color of a concept should be
-        uniform for some of the connection bar stuff to work, so you should not
-        change the color or the draw/fill state of concepts using this option.
-        It is mostly useful for changing the text color and font.
+        % In order to change the appearance of concept nodes, you should change this style. Note, however, that the color of a concept should be uniform for some of the connection bar stuff to work, so you should not change the color or the draw/fill state of concepts using this option. It is mostly useful for changing the text color and font.
+
+        为了更改概念节点的外观，您应该更改此样式。 但是请注意，对于某些连接带来说，概念的颜色应该统一，因此您不应使用此选项更改概念的颜色或绘制/填充状态。 它对于更改文本颜色和字体很有用。
     \end{stylekey}
 
     \begin{key}{/tikz/concept color=\meta{color}}
-        This option tells \tikzname\ which color should be used for filling and
-        stroking concepts. The difference between this option and just setting
-        |every concept| to the desired color is that this option allows
-        \tikzname\ to keep track of the colors used for concepts. This is
-        important when you \emph{change} the color between two connected
-        concepts. In this case, \tikzname\ can automatically create a shading
-        that provides a smooth transition between the old and the new concept
-        color; we will come back to this in the next section.
+        % This option tells \tikzname\ which color should be used for filling and stroking concepts. The difference between this option and just setting |every concept| to the desired color is that this option allows \tikzname\ to keep track of the colors used for concepts. This is important when you \emph{change} the color between two connected concepts. In this case, \tikzname\ can automatically create a shading that provides a smooth transition between the old and the new concept color; we will come back to this in the next section.
+
+        这个选项告诉\tikzname\ 哪种颜色应该用于填充和描边概念。此选项与直接将 |every concept| 设置为所需颜色的区别在于，此选项允许\tikzname\ 跟踪用于概念的颜色。当你在两个相连的概念之间改变颜色时，这一点很重要。在这种情况下，\tikzname\ 可以自动创建阴影，提供新旧概念颜色之间的平滑过渡;我们将在下一节中回到这个问题。
     \end{key}
 \end{stylekey}
 
 \begin{stylekey}{/tikz/extra concept}
-    This style is intended for concepts that are not part of the ``mindmap
-    tree'', but stand beside it. Typically, they will have a subdued color or
-    be smaller. In order to have these concepts appear in a uniform way and in
-    order to indicate in the code that these concepts are additional, you can
-    use this style.
+    % This style is intended for concepts that are not part of the ``mindmap tree'', but stand beside it. Typically, they will have a subdued color or be smaller. In order to have these concepts appear in a uniform way and in order to indicate in the code that these concepts are additional, you can use this style.
+
+    此样式适用于不属于``思维导图''但位于其旁边的概念。 通常，它们将具有更淡的颜色或更小的尺寸。 为了绘制这些概念并在代码中指出这些概念是附加的，可以使用此样式。
     %
 \begin{codeexample}[preamble={\usetikzlibrary{mindmap}}]
 \begin{tikzpicture}[mindmap,concept color=blue!80]
@@ -160,20 +159,24 @@ The following styles influence how isolated concepts are rendered:
 \end{codeexample}
     %
     \begin{stylekey}{/tikz/every extra concept}
-        Change this style to change the appearance of extra concepts.
+        % Change this style to change the appearance of extra concepts.
+
+        更改此样式可更改其他概念的外观。
     \end{stylekey}
 \end{stylekey}
 
 
-\subsubsection{Concepts in Trees}
+% \subsubsection{Concepts in Trees}
+\subsubsection{树中的概念}
 
-As pointed out earlier, \tikzname\ assumes that your mindmap is built using the
-|child| facilities of \tikzname. There are numerous options that influence how
-concepts are rendered at the different levels of a tree.
+% As pointed out earlier, \tikzname\ assumes that your mindmap is built using the |child| facilities of \tikzname. There are numerous options that influence how concepts are rendered at the different levels of a tree.
+
+正如前面指出的，\tikzname\ 假设您的思维导图是使用 \tikzname 的 |child| 工具构建的。有许多选项影响如何在树的不同级别上呈现概念。
 
 \begin{stylekey}{/tikz/root concept}
-    This style is used for the roots of mindmap trees. By adding something to
-    this, you can change how the root of a mindmap will be rendered.
+    % This style is used for the roots of mindmap trees. By adding something to this, you can change how the root of a mindmap will be rendered.
+
+    此样式用于思维导图树的根节点。 通过添加一些东西，您可以更改思维导图的根节点的渲染方式。
     %
 \begin{codeexample}[preamble={\usetikzlibrary{mindmap}}]
 \tikz
@@ -182,13 +185,15 @@ concepts are rendered at the different levels of a tree.
   \node [concept] {Root concept};
 \end{codeexample}
 
-    Note that styles like |large mindmap| redefine these styles, so you should
-    add something to this style only inside the picture.
+    % Note that styles like |large mindmap| redefine these styles, so you should add something to this style only inside the picture.
+
+    请注意 |large mindmap| 重新定义这些样式，因此您应该仅在图片内向此样式添加一些内容。
 \end{stylekey}
 
 \begin{stylekey}{/tikz/level 1 concept}
-    The |mindmap| style adds this style to the |level 1| style. This means that
-    the first level children of a mindmap tree will use this style.
+    % The |mindmap| style adds this style to the |level 1| style. This means that the first level children of a mindmap tree will use this style.
+
+    |mindmap| 样式将此样式添加到 |level 1| 样式，这意味着思维导图树的第一级子代将使用此样式。
     %
 \begin{codeexample}[preamble={\usetikzlibrary{mindmap}}]
 \tikz
@@ -202,28 +207,31 @@ concepts are rendered at the different levels of a tree.
 \end{stylekey}
 
 \begin{stylekey}{/tikz/level 2 concept}
-    Works like |level 1 concept|, only for second level children.
+    % Works like |level 1 concept|, only for second level children.
+
+    类似于 |level 1 concept|，仅适用于第二级子代。
 \end{stylekey}
 
 \begin{stylekey}{/tikz/level 3 concept}
-    Works like |level 1 concept|.
+    % Works like |level 1 concept|.
+
+    类似于 |level 1 concept|。
 \end{stylekey}
 
 \begin{stylekey}{/tikz/level 4 concept}
-    Works like |level 1 concept|. Note that there are no fifth and higher level
-    styles, you need to modify |level 5| directly in such cases.
+    % Works like |level 1 concept|. Note that there are no fifth and higher level styles, you need to modify |level 5| directly in such cases.
+
+    类似于 |level 1 concept|。注意，没有第五种和更高级别的样式，在这种情况下您需要直接修改 |level 5|。
 \end{stylekey}
 
 \begin{key}{/tikz/concept color=\meta{color}}
-    We saw already that this option is used to change the color of concepts. We
-    now have a look at its effect when used on child nodes of a concept.
-    Normally, this option simply changes the color of the children. However,
-    when the option is given as an option to the |child| operation (and not to
-    the |node| operation and also not as an option to all children via the
-    |level 1| style), \tikzname\ will smoothly change the concept color from
-    the parent's color to the color of the child concept.
+    % We saw already that this option is used to change the color of concepts. We now have a look at its effect when used on child nodes of a concept. Normally, this option simply changes the color of the children. However, when the option is given as an option to the |child| operation (and not to the |node| operation and also not as an option to all children via the |level 1| style), \tikzname\ will smoothly change the concept color from the parent's color to the color of the child concept.
 
-    Here is an example:
+    我们已经看到该选项用于更改概念的颜色。 现在我们来看看它在概念的子节点上使用时的效果。 通常，此选项仅更改子项的颜色。 但是，当将该选项作为 |child| 操作的选项（而不是对 |node| 操作的选项，也不是通过 |level 1| 样式给所有子级提供的选项），\tikzname\ 将平滑地将概念颜色从父级概念颜色过渡为子级概念的颜色。
+
+    % Here is an example:
+
+    这是一个例子：
     %
 \begin{codeexample}[preamble={\usetikzlibrary{mindmap}}]
 \tikz[mindmap,concept color=blue!80]
@@ -232,8 +240,10 @@ concepts are rendered at the different levels of a tree.
     child[concept color=orange,grow=0]  {node[concept] {Child concept}};
 \end{codeexample}
 
-    In order to have a concept color which changes with the hierarchy level, a
-    tiny bit of magic is needed:
+    % In order to have a concept color which changes with the hierarchy level, a tiny bit of magic is needed:
+
+    为了使概念颜色随层次结构级别而变化，需要一点魔法：
+
 % FIXME: is this a bug in the software!? The root concept is black!?
 \begin{codeexample}[preamble={\usetikzlibrary{mindmap}}]
 \tikz[mindmap,text=white,
@@ -248,24 +258,25 @@ concepts are rendered at the different levels of a tree.
 \end{key}
 
 
-\subsection{Connecting Concepts}
+% \subsection{Connecting Concepts}
+\subsection{连接概念}
 
-\subsubsection{Simple Connections}
+% \subsubsection{Simple Connections}
+\subsubsection{简单连接}
 
-The easiest way to connect two concepts is to draw a line between them. In
-order to give such lines a consistent appearance, it is recommendable to use
-the following style when drawing such lines:
+% The easiest way to connect two concepts is to draw a line between them. In order to give such lines a consistent appearance, it is recommendable to use the following style when drawing such lines:
+
+连接两个概念的最简单方法是在它们之间画一条线。 为了使此类线条具有一致的外观，建议在绘制此类线条时使用以下样式：
 
 \begin{stylekey}{/tikz/concept connection}
-    This style can be used for lines between two concepts. Feel free to
-    redefine this style.
+    % This style can be used for lines between two concepts. Feel free to redefine this style.
+
+    此样式可用于两个概念之间的线条。可随意重新定义此样式。
 \end{stylekey}
 
-A problem arises when you need to connect concepts after the main mindmap has
-been drawn. In this case you will want the connection lines to lie
-\emph{behind} the main mindmap. However, you can draw the lines only after the
-coordinates of the concepts have been determined. In this case you should place
-the connecting lines on a background layer as in the following example:
+% A problem arises when you need to connect concepts after the main mindmap has been drawn. In this case you will want the connection lines to lie \emph{behind} the main mindmap. However, you can draw the lines only after the coordinates of the concepts have been determined. In this case you should place the connecting lines on a background layer as in the following example:
+
+在绘制主思维导图之后需要连接概念时，会出现问题。 在这种情况下，您将希望连接线位于主思维导图的\emph{后面}。 但是，仅在确定概念的坐标之后才能绘制线。 在这种情况下，应将连接线放在背景层上，如以下示例所示：
 
 \begin{codeexample}[preamble={\usetikzlibrary{backgrounds,mindmap}}]
 \begin{tikzpicture}
@@ -286,40 +297,44 @@ the connecting lines on a background layer as in the following example:
 \end{codeexample}
 
 
-\subsubsection{The Circle Connection Bar Decoration}
+% \subsubsection{The Circle Connection Bar Decoration}
+\subsubsection{圆形带连接}
 
-Instead of a simple line between two concepts, you can also add a bar between
-the two nodes that has slightly organic ends. These bars are also used by
-default as the edges from parents in the mindmap tree.
+% Instead of a simple line between two concepts, you can also add a bar between the two nodes that has slightly organic ends. These bars are also used by default as the edges from parents in the mindmap tree.
 
-For the drawing of the bars a special decoration is used, which is defined in
-the |mindmap| library:
+除了在两个概念之间创建简单的线条外，您还可以在两个节点之间添加一条稍微带有一点有机末端的带状图。 默认情况下，这些带也用作思维导图树中父级概念的边。
+
+% For the drawing of the bars a special decoration is used, which is defined in the |mindmap| library:
+
+对于带的绘制，使用了特殊的修饰，该修饰在 |mindmap| 库中定义：
 
 \begin{decoration}{circle connection bar}
-    This decoration can be used to connect two circles. The start of the
-    to-be-decorated path should lie on the border of the first circle, the end
-    should lie on the border of the second circle. The following two decoration
-    keys should be initialized with the sizes of the circles:
+    % This decoration can be used to connect two circles. The start of the
+    to-be-decorated path should lie on the border of the first circle, the end should lie on the border of the second circle. The following two decoration keys should be initialized with the sizes of the circles:
+
+    此修饰可用于连接两个圆。 待修饰路径的起点应在第一个圆的边界上，终点应在第二个圆的边界上。 以下两个修饰键应使用圆的大小初始化：
     %
     \begin{itemize}
         \item |start radius|
         \item |end radius|
     \end{itemize}
     %
-    Furthermore, the following two decoration keys influence the decoration:
+    % Furthermore, the following two decoration keys influence the decoration:
+    % 
+    此外，以下两个修饰键会影响修饰：
     %
     \begin{itemize}
         \item |amplitude|
         \item |angle|
     \end{itemize}
     %
-    The decoration turns a straight line into a path that starts on the border
-    of the first circle at the specified angle relative to the line connecting
-    the centers of the circles. The path then changes into a rectangle whose
-    thickness is given by the amplitude. Finally, the path ends with the same
-    angles on the second circle.
+    % The decoration turns a straight line into a path that starts on the border of the first circle at the specified angle relative to the line connecting the centers of the circles. The path then changes into a rectangle whose thickness is given by the amplitude. Finally, the path ends with the same angles on the second circle.
 
-    Here is an example that should make this clearer:
+    该修饰将直线转变为路径，该路径从第一个圆的边界开始，相对于连接圆的圆心的线的指定角度。然后，路径变成一个矩形，其厚度由幅度给定。最后，路径以第二个圆上相同的角度结束。
+
+    % Here is an example that should make this clearer:
+
+    这是一个应该更清楚地说明示例：
     %
 \begin{codeexample}[preamble={\usetikzlibrary{mindmap}}]
 \begin{tikzpicture}
@@ -332,9 +347,9 @@ the |mindmap| library:
 \end{tikzpicture}
 \end{codeexample}
 
-    As can be seen, the decorated path consists of three parts and is not
-    really useful for drawing. However, if you fill the decorated path only,
-    and if you use the same color as for the circles, the result is better.
+    % As can be seen, the decorated path consists of three parts and is not really useful for drawing. However, if you fill the decorated path only, and if you use the same color as for the circles, the result is better.
+
+    可以看出，修饰的路径由三部分组成，对于绘图并没有真正的用处。 但是，如果仅填充修饰的路径，并且使用与圆相同的颜色，则效果会更好。
     %
 \begin{codeexample}[preamble={\usetikzlibrary{mindmap}}]
 \begin{tikzpicture}
@@ -347,15 +362,9 @@ the |mindmap| library:
 \end{tikzpicture}
 \end{codeexample}
 
-    In the above example you may notice the small white line between the
-    circles and the decorated path. This is due to rounding errors.
-    Unfortunately, for larger distances, the errors can accumulate quite
-    strongly, especially since \tikzname\ and \TeX\ are not very good at
-    computing square roots. For this reason, it is a good idea to make the
-    circles slightly larger to cover up such problems. When using nodes of
-    shape |circle|, you can just add the |draw| option with a |line width| of
-    one or two points (for very large distances you may need line width up to
-    4pt).
+    % In the above example you may notice the small white line between the circles and the decorated path. This is due to rounding errors. Unfortunately, for larger distances, the errors can accumulate quite strongly, especially since \tikzname\ and \TeX\ are not very good at computing square roots. For this reason, it is a good idea to make the circles slightly larger to cover up such problems. When using nodes of shape |circle|, you can just add the |draw| option with a |line width| of one or two points (for very large distances you may need line width up to 4pt).
+
+    在上面的示例中，您可能会注意到圆和修饰路径之间的白色小线。 这是由于舍入误差造成的。 不幸的是，对于更大的距离，错误会累积得非常强烈，特别是因为\tikzname\ 和\TeX\ 不太善于计算平方根。 因此，最好使圆稍大一些以掩盖此类问题。 当使用形状为 |circ| 的节点时，只需添加 |draw| 的 |line width| 的选项增加1pt或2pt（对于非常长的距离，您可能需要最大4pt的线宽）。
     %
 \begin{codeexample}[preamble={\usetikzlibrary{mindmap}}]
 \begin{tikzpicture}
@@ -377,29 +386,27 @@ the |mindmap| library:
 \end{decoration}
 
 
-\subsubsection{The Circle Connection Bar To-Path}
+% \subsubsection{The Circle Connection Bar To-Path}
+\subsubsection{圆形连接带的To-Path}
 
-The |circle connection bar| decoration is a bit complicated to use. Especially
-specifying the radii is quite bothersome (the amplitude and the angle can be
-set once and for all). For this reason, the |mindmap| library defines a special
-to-path that performs the necessary computations for you.
+% The |circle connection bar| decoration is a bit complicated to use. Especially specifying the radii is quite bothersome (the amplitude and the angle can be set once and for all). For this reason, the |mindmap| library defines a special to-path that performs the necessary computations for you.
+
+|circle connection bar| 修饰使用起来有点复杂。 特别是指定半径非常麻烦（可以一劳永逸地设置幅度和角度）。因此， |mindmap| 库定义了一个特殊的to-path，可以为您执行必要的计算。
 
 \begin{stylekey}{/tikz/circle connection bar}
-    This style installs a rather involved to-path. Unlike normal to-paths, this
-    path requires that the start and the target of the to-path are named nodes
-    of shape |circle| -- if this is not the case, this path will produce
-    errors.
+    % This style installs a rather involved to-path. Unlike normal to-paths, this path requires that the start and the target of the to-path are named nodes of shape |circle| -- if this is not the case, this path will produce errors.
 
-    Assuming that the start and the target are circles, the to-path will first
-    compute the radii of these circles (by measuring the distance from the
-    |center| anchor to some anchor on the border) and will set the
-    |start circle| keys accordingly. Next, the |fill| option is set to the
-    |concept color| while |draw=none| is set. The decoration is set to
-    |circle connection bar|. Finally, the following style is included:
+    这种样式会加载相当复杂的to-path。 与正常的to-path不同，此路径要求to-path的起点和目标为被其形状命名为 |circle| 的节点。 如果不是这种情况，该路径将产生错误。
+
+    % Assuming that the start and the target are circles, the to-path will first compute the radii of these circles (by measuring the distance from the |center| anchor to some anchor on the border) and will set the |start circle| keys accordingly. Next, the |fill| option is set to the |concept color| while |draw=none| is set. The decoration is set to |circle connection bar|. Finally, the following style is included:
+
+    假设起点和目标是圆，则to-path将首先计算这些圆的半径（通过测量从 |center| 锚点到边界上某个锚点的距离）并设置 |start circle| 键。 接下来，及时当 |draw=none| 选项被设置时 |fill| 选项也被设置为 |concept color|。 修饰设置为 |circle connection bar|。 最后，该样式包含以下样式：
+
     %
     \begin{stylekey}{/tikz/every circle connection bar}
-        Redefine this style to change the appearance of circle connection bar
-        to-paths.
+        % Redefine this style to change the appearance of circle connection bar to-paths.
+
+        重新定义此样式将改变圆形连接带路径的to-path。
     \end{stylekey}
     %
 \begin{codeexample}[preamble={\usetikzlibrary{mindmap}}]
@@ -411,22 +418,19 @@ to-path that performs the necessary computations for you.
 \end{tikzpicture}
 \end{codeexample}
     %
-    Note that it is not a good idea to have more than one |to| operation
-    together with the option |circle connection bar| in a single |\path|. Use
-    the |edge| operation, instead, for creating multiple connections and this
-    operation creates a new scope for each edge.
+    % Note that it is not a good idea to have more than one |to| operation together with the option |circle connection bar| in a single |\path|. Use the |edge| operation, instead, for creating multiple connections and this operation creates a new scope for each edge.
+
+    注意，在一个 |\path| 中同时使用多个 |to| 操作和 |circle connection bar| 选项不是一个好主意。相反，使用 |edge| 操作创建多个连接，该操作为每条边创建一个新的范围。
 \end{stylekey}
 
-In a mindmap we sometimes want colors to change from one concept color to
-another. Then, the connection bar should, ideally, consist of a smooth
-transition between these two colors. Getting this right using shadings is a bit
-tricky if you try this ``by hand'', so the  |mindmap| library provides a
-special option for facilitating this procedure.
+% In a mindmap we sometimes want colors to change from one concept color to another. Then, the connection bar should, ideally, consist of a smooth transition between these two colors. Getting this right using shadings is a bit tricky if you try this ``by hand'', so the  |mindmap| library provides a special option for facilitating this procedure.
 
-\begin{key}{/tikz/circle connection bar switch color=|from (|\meta{first color}|) to (|\meta{second color}|)|}
-    This style works similarly to the |circle connection bar|. The only
-    difference is that instead of filling the path with a single color a
-    shading is used.
+在思维导图中，有时我们希望概念的颜色从一种颜色变为另一种。 然后，理想情况下，连接带应由这两种颜色之间的平滑过渡组成。 如果您``手工''尝试使用阴影完成这项工作，会有些棘手，因此 |mindmap| 库提供了一个特殊的选项来简化此过程。
+
+\begin{key}{/tikz/circle connection bar switch color=|from (|\meta{first color}|) to (|\meta{second color}|)|} 
+    % This style works similarly to the |circle connection bar|. The only difference is that instead of filling the path with a single color a shading is used.
+
+    此样式的作用类似于 |circle connection bar|。 唯一的区别是，它不是使用单色填充路径，而是使用阴影。
     %
 \begin{codeexample}[preamble={\usetikzlibrary{mindmap}}]
 \begin{tikzpicture}[outer sep=0pt]
@@ -440,24 +444,20 @@ special option for facilitating this procedure.
 \end{key}
 
 
-\subsubsection{Tree Edges}
+% \subsubsection{Tree Edges}
+\subsubsection{树的边}
 
-Most of the time, concepts in a mindmap are connected automatically when the
-mindmap is built as a tree. The reason is that the |mindmap| installs a
-|circle connection bar| path as the |edge from parent path|. Also, the
-|mindmap| option takes care of things like setting the correct |draw| and
-|outer sep| settings and some other stuff.
+% Most of the time, concepts in a mindmap are connected automatically when the mindmap is built as a tree. The reason is that the |mindmap| installs a |circle connection bar| path as the |edge from parent path|. Also, the |mindmap| option takes care of things like setting the correct |draw| and |outer sep| settings and some other stuff.
 
-In detail, the |mindmap| option sets the |edge from parent path| to a path that
-uses the to-path |circle connection bar| to connect the parent node and the
-child node. The |concept color| option (locally) changes this by using
-|circle connection bar switch color| instead with the from-color set to the old
-(parent's) concept color and the to-color set to the new (child's) concept
-color. This means that when you provide the |concept color| option to a |child|
-command, the color will change from the parent's concept color to the specified
-color.
+在大多数情况下，将思维导图构建为树时，思维导图中的概念会自动连接。 原因是 |mindmap| 加载了一个 |circle connection bar| 路径作为 |edge from parent path| 。 另外，|mindmap| 选项还可以处理诸如设置正确的 |draw| 和 |outer sep| 设置之类的事情。
 
-Here is an example of a tree built in this way:
+% In detail, the |mindmap| option sets the |edge from parent path| to a path that uses the to-path |circle connection bar| to connect the parent node and the child node. The |concept color| option (locally) changes this by using |circle connection bar switch color| instead with the from-color set to the old (parent's) concept color and the to-color set to the new (child's) concept color. This means that when you provide the |concept color| option to a |child| command, the color will change from the parent's concept color to the specified color.
+
+详细地说，|mindmap| 选项将 |edge from parent path| 设置为使用to-path |circle connection bar| 连接父节点和子节点的路径。|concept color| 选项（本地）通过使用 |circle connection bar switch color| 来改变这一点，而不是使用从颜色设置为旧的（父节点的）概念颜色和到颜色设置为新的（子节点的）概念颜色。这意味着，当您向一个 |child| 命令提供 |concept color| 选项时，颜色将从父节点概念颜色更改为指定的颜色。
+
+% Let us now build a tree that way. Please note that we pass the |concept color| to the respective |child| and not to a |node| under it.
+
+现在让我们用这种方法来构建一棵树。请注意，我们将 |concept color| 传递给相应的 |child|，而不是它下面的 |node|。
 %
 \begin{codeexample}[preamble={\usetikzlibrary{mindmap}}]
 \begin{tikzpicture}
@@ -474,6 +474,7 @@ Here is an example of a tree built in this way:
       child { node[concept] {pro\-gramming languages} }
       child { node[concept] {software engineer\-ing} }
     }
+    % note that the `concept color' is passed to the `child'(!)
     child[concept color=blue] {
       node[concept] {applied}
       [clockwise from=-30]
@@ -486,17 +487,17 @@ Here is an example of a tree built in this way:
 \end{codeexample}
 
 
-\subsection{Adding Annotations}
+% \subsection{Adding Annotations}
+\subsection{添加注释}
 
-An \emph{annotation} is some text outside a mindmap that, unlike an extra
-concept, simply explains something in the mindmap. The following style is
-mainly intended to help readers of the code see that a node in an annotation
-node.
+% An \emph{annotation} is some text outside a mindmap that, unlike an extra concept, simply explains something in the mindmap. The following style is mainly intended to help readers of the code see that a node in an annotation node.
+
+\emph{注释}是思维导图之外的一些文本，与其他概念不同，它只是解释了思维导图中的某些内容。 下面的样式主要用于帮助代码的读者查看注释节点中的节点。
 
 \begin{stylekey}{/tikz/annotation}
-    This style indicates that a node is an annotation node. It includes the
-    style |every annotation|, which allows you to change this style in a
-    convenient fashion.
+    % This style indicates that a node is an annotation node. It includes the style |every annotation|, which allows you to change this style in a convenient fashion.
+
+    此样式表示节点是注释节点。 它包含 |every annotation| 样式，这使您可以方便地更改此样式。
     %
 \begin{codeexample}[preamble={\usetikzlibrary{mindmap}}]
 \begin{tikzpicture}
@@ -510,10 +511,13 @@ node.
 \end{codeexample}
     %
     \begin{stylekey}{/tikz/every annotation}
-        This style is included by |annotation|.
+        %This style is included by |annotation|.
+
+        此样式被 |annotation| 包含。
     \end{stylekey}
 \end{stylekey}
 
+\clearpage
 
 %%% Local Variables:
 %%% mode: latex

@@ -58,6 +58,14 @@ keepspaces = true,
 
 % \usepackage{minted}
 
+% breaklines for in-line verbatim
+\RequirePackage{etoolbox}
+\makeatletter
+\def\@xobeysp{\hspace{0pt}\mbox{}\hspace{0pt}}
+\appto\verbatim@font{\hyphenchar\font`-\relax}
+\makeatother 
+
+
 \iffalse
 % Hyperlinks for text to contents
 \RequirePackage{xparse}

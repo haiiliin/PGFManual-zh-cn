@@ -4,7 +4,7 @@ Chinese translation of [PGFManual v3.1.6a](https://github.com/pgf-tikz/pgf/relea
 
 
 
-## Progress
+## Translation Progress
 
 - [x] Introduction
 - [x] Tutorials and Guidelines
@@ -16,10 +16,10 @@ Chinese translation of [PGFManual v3.1.6a](https://github.com/pgf-tikz/pgf/relea
   - [x] Tutorial: Diagrams as Simple Graphs
   - [x] Tutorial: A Lecture Map for Johannes
   - [x] Guidelines on Graphics
-- [ ] Installation and Configuration
-  - [ ] Installation
-  - [ ] Licenses and Copyright
-  - [ ] Supported Formats
+- [x] Installation and Configuration
+  - [x] Installation
+  - [x] Licenses and Copyright
+  - [x] Supported Formats
 - [ ] TikZ ist kein Zeichenprogramm
   - [ ] Design Principles
   - [ ] Hierarchical Structures: Package, Environments, Scopes, and Styles

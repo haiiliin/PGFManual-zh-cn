@@ -1,4 +1,4 @@
-% Copyright 2006 by Till Tantau
+% Copyright 2019 by Till Tantau
 %
 % This file may be distributed and/or modified
 %
@@ -8,43 +8,41 @@
 % See the file doc/generic/pgf/licenses/LICENSE for more details.
 
 
-\section{Supported Formats}
+% \section{Supported Formats}
+\section{支持的格式}
 \label{section-formats}
 
-\TeX\ was designed to be a flexible system. This is true both for the
-\emph{input} for \TeX\ as well as for the \emph{output}. The present section
-explains which input formats there are and how they are supported by \pgfname.
-It also explains which different output formats can be produced.
+% \TeX\ was designed to be a flexible system. This is true both for the \emph{input} for \TeX\ as well as for the \emph{output}. The present section explains which input formats there are and how they are supported by \pgfname. It also explains which different output formats can be produced.
+
+\TeX\ 被设计为一个灵活的系统。 无论是对于\TeX\ 的\emph{输入}还是\emph{输出}，都是如此。 本节说明了哪些输入格式以及\pgfname 如何支持它们。还说明了可以产生哪些不同的输出格式。
 
 
-\subsection{Supported Input Formats: \LaTeX, Plain \TeX, Con\TeX t}
+% \subsection{Supported Input Formats: \LaTeX, Plain \TeX, Con\TeX t}
+\subsection{支持的输入格式：\LaTeX，Plain \TeX ，Con\TeX t}
 
-\TeX\ does not prescribe exactly how your input should be formatted. While it
-is \emph{customary} that, say, an opening brace starts a scope in \TeX, this is
-by no means necessary. Likewise, it is \emph{customary} that environments start
-with |\begin|, but \TeX\ could not really care less about the exact command
-name.
+% \TeX\ does not prescribe exactly how your input should be formatted. While it is \emph{customary} that, say, an opening brace starts a scope in \TeX, this is by no means necessary. Likewise, it is \emph{customary} that environments start with |\begin|, but \TeX\ could not really care less about the exact command name.
 
-Even though \TeX\ can be reconfigured, users can not. For this reason, certain
-\emph{input formats} specify a set of commands and conventions how input for
-\TeX\ should be formatted. There are currently three ``major'' formats: Donald
-Knuth's original |plain| \TeX\ format, Leslie Lamport's popular \LaTeX\ format,
-and Hans Hangen's Con\TeX t format.
+\TeX\ 并未明确规定应如何格式化输入。 例如，\emph{通常}在\TeX\ 中使用开括号来启动绘图作用于，但这绝不是必需的。同样，环境\emph{通常}以 |\begin| 开头，但是\TeX\ 并不太在乎确切的命令名称。
 
 
-\subsubsection{Using the \LaTeX\ Format}
+% Even though \TeX\ can be reconfigured, users can not. For this reason, certain \emph{input formats} specify a set of commands and conventions how input for \TeX\ should be formatted. There are currently three ``major'' formats: Donald Knuth's original |plain| \TeX\ format, Leslie Lamport's popular \LaTeX\ format, and Hans Hangen's Con\TeX t format.
 
-Using \pgfname\ and \tikzname\ with the \LaTeX\ format is easy: You say
-|\usepackage{pgf}| or |\usepackage{tikz}|. Usually, that is all you need to do,
-all configuration will be done automatically and (hopefully) correctly.
+即使可以重新配置\TeX\ ，用户也不能这样做。 因此，某些\emph{输入格式}指定了一组命令和约定，应如何格式化\TeX\ 的输入。 目前有三种``主要''格式：Donald Knuth的原始普通\TeX\ 格式，Leslie Lamport受欢迎的\LaTeX\ 格式和Hans Hangen的Con\TeX t格式。
 
-The style files used for the \LaTeX\ format reside in the subdirectory
-|latex/pgf/| of the \pgfname-system. Mainly, what these files do is to include
-files in the directory |generic/pgf|. For example, here is the content of the
-file |latex/pgf/frontends/tikz.sty|:
+
+% \subsubsection{Using the \LaTeX\ Format}
+\subsubsection{使用\LaTeX\ 格式}
+
+% Using \pgfname\ and \tikzname\ with the \LaTeX\ format is easy: You say |\usepackage{pgf}| or |\usepackage{tikz}|. Usually, that is all you need to do, all configuration will be done automatically and (hopefully) correctly.
+
+使用具有\LaTeX\ 格式的\pgfname\ 和\tikzname\ 很容易：您可以使用 |\usepackage{pgf}| 或 |\usepackage{tikz}|。通常，这就是您所需要做的，所有配置将自动完成（至少我们希望如此）。
+
+% The style files used for the \LaTeX\ format reside in the subdirectory |latex/pgf/| of the \pgfname-system. Mainly, what these files do is to include files in the directory |generic/pgf|. For example, here is the content of the file |latex/pgf/frontends/tikz.sty|:
+
+用于\LaTeX\ 格式的样式文件位于\pgfname 系统的子目录 |latex/pgf/| 中。 这些文件的主要作用是将文件包含在 |generic/pgf| 目录中。 例如，以下是 |latex/pgf/frontends/tikz.sty| 文件的内容： 
 %
 \begin{codeexample}[code only]
-% Copyright 2006 by Till Tantau
+% Copyright 2019 by Till Tantau
 %
 % This file may be distributed and/or modified
 %
@@ -61,223 +59,205 @@ file |latex/pgf/frontends/tikz.sty|:
 \endinput
 \end{codeexample}
 
-The files in the |generic/pgf| directory do the actual work.
+% The files in the |generic/pgf| directory do the actual work.
+
+|generic/pgf| 目录中的文件承担实际的绘图工作。
 
 
-\subsubsection{Using the Plain \TeX\ Format}
+% \subsubsection{Using the Plain \TeX\ Format}
+\subsubsection{使用Plain \TeX\ 格式}
 
-When using the plain \TeX\ format, you say |\input{pgf.tex}| or
-|\input{tikz.tex}|. Then, instead of  |\begin{pgfpicture}| and
-|\end{pgfpicture}| you use |\pgfpicture| and |\endpgfpicture|.
+%　When using the plain \TeX\ format, you say |\input{pgf.tex}| or |\input{tikz.tex}|. Then, instead of  |\begin{pgfpicture}| and |\end{pgfpicture}| you use |\pgfpicture| and |\endpgfpicture|.
 
-Unlike for the \LaTeX\ format, \pgfname\ is not as good at discerning the
-appropriate configuration for the plain \TeX\ format. In particular, it can
-only automatically determine the correct output format if you use |pdftex| or
-|tex| plus |dvips|. For all other output formats you need to set the macro
-|\pgfsysdriver| to the correct value. See the description of using output
-formats later on.
+当我们使用plain \TeX\ 时，你可以使用 |\input{pgf.tex}| 或 |\input{tikz.tex}|。 接下来，使用 |\pgfpicture| 和 |\endpgfpicture| 来代替 |\begin{pgfpicture}| 和 |\end{pgfpicture}|。
 
-Like the \LaTeX\ style files, the plain \TeX\ files like |tikz.tex| also just
-include the correct |tikz.code.tex| file.
+% Unlike for the \LaTeX\ format, \pgfname\ is not as good at discerning the appropriate configuration for the plain \TeX\ format. In particular, it can only automatically determine the correct output format if you use |pdftex| or |tex| plus |dvips|. For all other output formats you need to set the macro |\pgfsysdriver| to the correct value. See the description of using output formats later on.
 
+与\LaTeX 格式不同的是，\pgfname\ 不能很好地识别Plain \TeX　格式的适当配置。 特别是如果使用 |pdftex| 或 |tex| 加 |dvips| 时，它只能自动确定正确的输出格式。 对于所有其他输出格式，您需要将宏 |\pgfsysdriver| 设置为正确的值。 请参阅稍后使用输出格式的描述。
 
-\subsubsection{Using the Con\TeX t Format}
+% Like the \LaTeX\ style files, the plain \TeX\ files like |tikz.tex| also just include the correct |tikz.code.tex| file.
 
-When using the Con\TeX t format, you say |\usemodule[pgf]| or
-|\usemodule[tikz]|. As for the plain \TeX\ format you also have to replace the
-start- and end-of-environment tags as follows: Instead of |\begin{pgfpicture}|
-and |\end{pgfpicture}| you use |\startpgfpicture| and |\stoppgfpicture|;
-similarly, instead of |\begin{tikzpicture}| and |\end{tikzpicture}| you use
-must now use |\starttikzpicture| and |\stoptikzpicture|; and so on for other
-environments.
-
-The Con\TeX t support is very similar to the plain \TeX\ support, so the same
-restrictions apply: You may have to set the output format directly and graphics
-inclusion may be a problem.
-
-In addition to |pgf| and |tikz| there also exist modules like |pgfcore| or
-|pgfmodulematrix|. To use them, you may need to include the module |pgfmod|
-first (the modules |pgf| and |tikz| both include |pgfmod| for you, so typically
-you can skip this). This special module is necessary since old versions of
-Con\TeX t~MkII before 2005 satanically restricted the length of module names to
-8 characters and \pgfname's long names are mapped to cryptic 6-letter-names for
-you by the module |pgfmod|.  This restriction was never in place in
-Con\TeX t~MkIV and the |pgfmod| module can be safely ignored nowadays.
+像\LaTeX\ 样式文件一样，像 |tikz.tex| 的 plain \TeX\ 文件也只是正常包含 |tikz.code.tex| 文件。
 
 
-\subsection{Supported Output Formats}
+% \subsubsection{Using the Con\TeX t Format}
+\subsubsection{使用 Con\TeX t 格式}
+
+% When using the Con\TeX t format, you say |\usemodule[pgf]| or |\usemodule[tikz]|. As for the plain \TeX\ format you also have to replace the start- and end-of-environment tags as follows: Instead of |\begin{pgfpicture}| and |\end{pgfpicture}| you use |\startpgfpicture| and |\stoppgfpicture|; similarly, instead of |\begin{tikzpicture}| and |\end{tikzpicture}| you use must now use |\starttikzpicture| and |\starttikzpicture|; and so on for other environments.
+
+使用Con\TeX t格式时，请使用 |\usemodule[pgf]| 或 |\usemodule[tikz]|。对于plain \TeX\ 格式，还必须按如下方式替换环境开始和结束标签：使用 |\startpgfpicture| 和 |\stoppgfpicture| 代替 |\begin{pgfpicture}| 和 |\end{pgfpicture}|；同样地，现在必须使用 |\starttikzpicture| 和 |\starttikzpicture| 代替 |\begin {tikzpicture}| 和 |\end {tikzpicture}|；对于其他环境亦是如此。
+
+% The Con\TeX t support is very similar to the plain \TeX\ support, so the same restrictions apply: You may have to set the output format directly and graphics inclusion may be a problem.
+
+Con\TeX t支持与普通\TeX\ 支持非常相似，因此存在相同的限制：您可能必须直接设置输出格式，并且图形包含可能是一个问题。
+
+% In addition to |pgf| and |tikz| there also exist modules like |pgfcore| or |pgfmodulematrix|. To use them, you may need to include the module |pgfmod| first (the modules |pgf| and |tikz| both include |pgfmod| for you, so typically you can skip this). This special module is necessary since old versions of Con\TeX t~MkII before 2005 satanically restricted the length of module names to 8 characters and \pgfname's long names are mapped to cryptic 6-letter-names for you by the module |pgfmod|.  This restriction was never in place in Con\TeX t~MkIV and the |pgfmod| module can be safely ignored nowadays.
+
+除了 |pgf| 和 |tikz| 之外，还存在诸如 |pgfcore| 或 |pgfmodulematrix| 之类的模块。 要使用它们，您可能需要首先包括模块 |pgfmod|（模块 |pgf| 和 |tikz| 都为您包括 |pgfmod|，因此通常可以跳过此步骤）。 这个特殊的模块是必需的，因为2005年之前的旧版Con\TeX t~MkII讽刺地将模块名称的长度限制为8个字符，而 |pgf| 的长名称则由模块 |pgfmod| 映射为神秘的6个字母的名称。 在 Con\TeX t~MkIV中从来没有这个限制，并且现在可以安全地忽略 |pgfmod| 模块。
+
+
+% \subsection{Supported Output Formats}
+\subsection{支持的输出格式}
 \label{section-drivers}
 
-An output format is a format in which \TeX\ outputs the text it has typeset.
-Producing the output is (conceptually) a two-stage process:
+% An output format is a format in which \TeX\ outputs the text it has typeset. Producing the output is (conceptually) a two-stage process:
+
+输出格式是\TeX\ 输出其已排版的文本的格式。 产生输出是一个（从概念上）分两个阶段的过程：
 %
 \begin{enumerate}
-    \item \TeX\ typesets your text and graphics. The result of this
-        typesetting is mainly a long list of letter--coordinate pairs, plus
-        (possibly) some ``special'' commands. This long list of pairs is
-        written to something called a |.dvi|-file (informally known as
-        ``device-independent file'').
-    \item Some other program reads this |.dvi|-file and translates the
-        letter--coordinate pairs into, say, PostScript commands for placing
-        the given letter at the given coordinate.
+    % \item \TeX\ typesets your text and graphics. The result of this typesetting is mainly a long list of letter--coordinate pairs, plus (possibly) some ``special'' commands. This long list of pairs is written to something called a |.dvi|-file (informally known as ``device-independent file'').
+    \item \TeX\ 排版文本和图形。 这种排版的结果主要是一长串字母坐标对，再加上（可能的）一些``特殊''的命令。 如此长的字母坐标对被写入 |.dvi| 文件（非正式地称为``与设备无关的文件''）中。
+    % \item Some other program reads this |.dvi|-file and translates the letter--coordinate pairs into, say, PostScript commands for placing the given letter at the given coordinate.
+    \item 其他一些程序读取此 |.dvi| 文件，并将字母坐标对转换为PostScript命令，以便将给定字母放置在给定坐标处。
 \end{enumerate}
 
-The classical example of this process is the combination of |latex| and
-|dvips|. The |latex| program (which is just the |tex| program called with the
-\LaTeX-macros preinstalled) produces a |.dvi|-file as its output. The |dvips|
-program takes this output and produces a |.ps|-file (a PostScript file).
-Possibly, this file is further converted using, say, |ps2pdf|, whose name is
-supposed to mean ``PostScript to PDF''. Another example of programs using this
-process is the combination of |tex| and |dvipdfm|. The |dvipdfm| program takes
-a |.dvi|-file as input and translates the letter--coordinate pairs therein into
-\pdf-commands, resulting in a |.pdf| file directly. Finally, the |tex4ht| is
-also a program that takes a |.dvi|-file and produces an output, this time it is
-a |.html| file. The programs |pdftex| and |pdflatex| are special: They directly
-produce a |.pdf|-file without the intermediate |.dvi|-stage. However, from the
-programmer's point of view they behave exactly as if there was an intermediate
-stage.
+% The classical example of this process is the combination of |latex| and |dvips|. The |latex| program (which is just the |tex| program called with the \LaTeX-macros preinstalled) produces a |.dvi|-file as its output. The |dvips| program takes this output and produces a |.ps|-file (a PostScript file). Possibly, this file is further converted using, say, |ps2pdf|, whose name is supposed to mean ``PostScript to PDF''. Another example of programs using this process is the combination of |tex| and |dvipdfm|. The |dvipdfm| program takes a |.dvi|-file as input and translates the letter--coordinate pairs therein into \pdf-commands, resulting in a |.pdf| file directly. Finally, the |tex4ht| is also a program that takes a |.dvi|-file and produces an output, this time it is a |.html| file. The programs |pdftex| and |pdflatex| are special: They directly produce a |.pdf|-file without the intermediate |.dvi|-stage. However, from the programmer's point of view they behave exactly as if there was an intermediate stage.
 
-Normally, \TeX\ only produces letter--coordinate pairs as its ``output''. This
-obviously makes it difficult to draw, say, a curve. For this, ``special''
-commands can be used. Unfortunately, these special commands are not the same
-for the different programs that process the |.dvi|-file. Indeed, every program
-that takes a |.dvi|-file as input has a totally different syntax for the
-special commands.
+这个过程的经典例子是 |latex| 和 |dvips| 的结合。|latex| 程序（它是使用预安装的\LaTeX 宏调用的 |tex| 程序）生成 |.dvi| 文件作为其输出。|dvips| 程序接受此输出并生成一个 |.ps|文件（一个PostScript文件）。这个文件可以使用 |ps2pdf| 进一步转换，它的名字应该是``PostScript to PDF''的意思。使用这个过程的另一个例子是 |tex| 和 |dvipdfm| 的结合。|dvipdfm| 程序接受 |.dvi| 文件作为输入，并将其中的字母坐标对转换为\pdf-命令，直接生成 |.pdf| 文件。最后，|tex4ht| 也是一个接受 |.dvi| 文件，并产生一个输出，这次它是 |.html文件|。|pdftex|和 |pdflatex| 很特别：它们直接生成没有中间 |.dvi|阶段的 |pdf| 文件。然而，从程序员的角度来看，它们的行为就好像有一个中间阶段一样。
 
-One of the main jobs of \pgfname\ is to ``abstract away'' the difference in the
-syntax of the different programs. However, this means that support for each
-program has to be ``programmed'', which is a time-consuming and complicated
-process.
+% Normally, \TeX\ only produces letter--coordinate pairs as its ``output''. This obviously makes it difficult to draw, say, a curve. For this, ``special'' commands can be used. Unfortunately, these special commands are not the same for the different programs that process the |.dvi|-file. Indeed, every program that takes a |.dvi|-file as input has a totally different syntax for the special commands.
+
+通常，\TeX\ 只产生字母坐标对作为它的''输出"。很明显，这使得画曲线变得很困难。为此，可以使用''特殊'命令。不幸的是，对于处理 |.dvi| 文件的不同程序，这些特殊命令并不相同。实际上，每个接受 |.dvi| 文件作为输入的程序对特殊命令有完全不同的语法。
+
+% One of the main jobs of \pgfname\ is to ``abstract away'' the difference in the syntax of the different programs. However, this means that support for each program has to be ``programmed'', which is a time-consuming and complicated process.
+
+\pgfname\ 的主要工作之一是``抽象''不同程序语法中的差异。然而，这意味着对每个项目的支持都必须被``编程''，这是一个耗时而复杂的过程。
 
 
-\subsubsection{Selecting the Backend Driver}
+% \subsubsection{Selecting the Backend Driver}
+\subsubsection{选择后端驱动}
 
-When \TeX\ typesets your document, it does not know which program you are going
-to use to transform the |.dvi|-file. If your |.dvi|-file does not contain any
-special commands, this would be fine; but these days almost all |.dvi|-files
-contain lots of special commands. It is thus necessary to tell \TeX\ which
-program you are going to use later on.
+% When \TeX\ typesets your document, it does not know which program you are going to use to transform the |.dvi|-file. If your |.dvi|-file does not contain any special commands, this would be fine; but these days almost all |.dvi|-files contain lots of special commands. It is thus necessary to tell \TeX\ which program you are going to use later on.
 
-Unfortunately, there is no ``standard'' way of telling this to \TeX. For the
-\LaTeX\ format a sophisticated mechanism exists inside the |graphics| package
-and \pgfname\ plugs into this mechanism. For other formats and when this
-plugging does not work as expected, it is necessary to tell \pgfname\ directly
-which program you are going to use. This is done by redefining the macro
-|\pgfsysdriver| to an appropriate value \emph{before} you load |pgf|. If you
-are going to use the |dvips| program, you set this macro to the value
-|pgfsys-dvips.def|; if you use |pdftex| or |pdflatex|, you set it to
-|pgfsys-pdftex.def|; and so on. In the following, details of the support of the
-different programs are discussed.
+当\TeX\ 排版您的文档时，它不知道您将使用哪个程序来转换 |.dvi| 文件。如果你的 |.dvi| 文件不包含任何特殊命令，这样也就可以完成工作；但现在 |.dvi| 文件几乎都包含许多特殊命令。因此，有必要告诉\TeX\ 以后将使用哪个程序。
+
+% Unfortunately, there is no ``standard'' way of telling this to \TeX. For the \LaTeX\ format a sophisticated mechanism exists inside the |graphics| package and \pgfname\ plugs into this mechanism. For other formats and when this plugging does not work as expected, it is necessary to tell \pgfname\ directly which program you are going to use. This is done by redefining the macro |\pgfsysdriver| to an appropriate value \emph{before} you load |pgf|. If you are going to use the |dvips| program, you set this macro to the value |pgfsys-dvips.def|; if you use |pdftex| or |pdflatex|, you set it to |pgfsys-pdftex.def|; and so on. In the following, details of the support of the different programs are discussed.
+
+不幸的是，没有``标准''方法来告诉\TeX 。对于\LaTeX\ 格式，在 |graphics| 包和\pgfname\ 插件中存在一种复杂的机制。对于其他格式，当此插件不能按预期工作时，有必要直接告诉\pgfname\ 您将使用哪个程序。这是通过在加载 |pgf| \emph{之前}将宏 |\pgfsysdriver| 重新定义为适当的值来实现的。如果您要使用 |dvips| 程序，您将该宏设置为值 |pgfsys-dvip.def|；如果你使用 |pdftex| 或 |pdflatex|，你可以将其设置为 |pgfsys-pdftex.def|；等等。下面将详细讨论不同程序的支持。
 
 
-\subsubsection{Producing PDF Output}
+% \subsubsection{Producing PDF Output}
+\subsubsection{输出PDF格式的文件}
 
-\pgfname\ supports three programs that produce \pdf\ output (\pdf\ means
-``portable document format'' and was invented by the Adobe company): |dvipdfm|,
-|pdftex|, and |vtex|. The |pdflatex| program is the same as the |pdftex|
-program: it uses a different input format, but the output is exactly the same.
+% \pgfname\ supports three programs that produce \pdf\ output (\pdf\ means ``portable document format'' and was invented by the Adobe company): |dvipdfm|, |pdftex|, and |vtex|. The |pdflatex| program is the same as the |pdftex| program: it uses a different input format, but the output is exactly the same.
+
+\pgfname\ 支持三个程序产生\pdf\ 输出（\pdf\ 意思是''便携式文档格式"，由Adobe公司发明）:|dvipdfm|，|pdftex| 和 |vtex|。|pdflatex| 程序与 |pdftex| 程序相同：它使用不同的输入格式，但输出完全相同。
 
 \begin{filedescription}{pgfsys-pdftex.def}
-    This is the driver file for use with pdf\TeX, that is, with the |pdftex| or
-    |pdflatex| command. It includes |pgfsys-common-pdf.def|.
+    % This is the driver file for use with pdf\TeX, that is, with the |pdftex| or |pdflatex| command. It includes |pgfsys-common-pdf.def|.
 
-    This driver has a lot of functionality. (Almost) everything \pgfname\ ``can
-    do at all'' is implemented in this driver.
+    这是用于pdf\TeX 的驱动程序文件，即使用 |pdftex| 或 |pdflatex| 的命令。它包含 |pgfsys-common-pdf.def|。
+
+    % This driver has a lot of functionality. (Almost) everything \pgfname\ ``can do at all'' is implemented in this driver.
+
+    这个驱动程序有很多功能。（几乎）所有\pgfname\ ``能做的事情''都在这个驱动程序中实现了。
 \end{filedescription}
 
 \begin{filedescription}{pgfsys-dvipdfm.def}
-    This is a driver file for use with (|la|)|tex| followed by |dvipdfm|. It
-    includes |pgfsys-common-pdf.def|.
+    % This is a driver file for use with (|la|)|tex| followed by |dvipdfm|. It includes |pgfsys-common-pdf.def|.
 
-    This driver supports most of \pgfname's features, but there are some
-    restrictions:
+    这是一个驱动程序文件，用于 |(la)tex| 和 |dvipdfm|。该文件包含 |pgfsys-common-pdf.def|。
+
+    % This driver supports most of \pgfname's features, but there are some restrictions:
+
+    这个驱动程序支持大多数\pgfname 的功能，但有一些限制：
     %
     \begin{enumerate}
-        \item In \LaTeX\ mode it uses |graphicx| for the graphics inclusion
-            and does not support masking.
-        \item In plain \TeX\ mode it does not support image inclusion.
+        % \item In \LaTeX\ mode it uses |graphicx| for the graphics inclusion and does not support masking.
+        \item 在\LaTeX\ 模式下，它使用 |graphicx| 插图机制，不支持屏蔽\ref{error}。
+        % \item In plain \TeX\ mode it does not support image inclusion.
+        \item 在Plain \TeX\ 模式下，它 不支持插图机制。
     \end{enumerate}
 \end{filedescription}
 
 \begin{filedescription}{pgfsys-xetex.def}
-    This is a driver file for use with |xe|(|la|)|tex| followed by |xdvipdfmx|.
-    This driver supports largely the same operations as the |dvipdfm| driver.
+    % This is a driver file for use with |xe|(|la|)|tex| followed by |xdvipdfmx|. This driver supports largely the same operations as the |dvipdfm| driver.
+
+    这是一个驱动程序文件，用于 |xe(la)tex| 和 |xdvipdfmx|。这个驱动程序支持与 |dvipdfm| 驱动程序基本相同的操作。
 \end{filedescription}
 
 \begin{filedescription}{pgfsys-vtex.def}
-    This is the driver file for use with the commercial \textsc{vtex} program.
-    Even though it produces  \textsc{pdf} output, it includes
-    |pgfsys-common-postscript.def|. Note that the \textsc{vtex} program can
-    produce \emph{both} Postscript and \textsc{pdf} output, depending on the
-    command line parameters. However, whether you produce Postscript or
-    \textsc{pdf} output does not change anything with respect to the driver.
+    % This is the driver file for use with the commercial \textsc{vtex} program. Even though it produces  \textsc{pdf} output, it includes |pgfsys-common-postscript.def|. Note that the \textsc{vtex} program can produce \emph{both} Postscript and \textsc{pdf} output, depending on the command line parameters. However, whether you produce Postscript or \textsc{pdf} output does not change anything with respect to the driver.
 
-    This driver supports most of \pgfname's features, except for the following
-    restrictions:
+    这是用于商业 \textsc{vtex} 程序的驱动程序文件。即使它产生 \textsc{pdf} 输出，它也包含 |pgfsys-common-postscript.def|。请注意，根据命令行参数，\textsc{vtex}程序可以同时产生\emph{Postscript}和\textsc{pdf}输出。然而，无论你产生Postscript或\textsc{pdf}输出不会改变任何与驱动有关的东西。
+
+    % This driver supports most of \pgfname's features, except for the following restrictions:
+
+    这个驱动程序支持大多数\pgfname 的特性，除了以下限制:
     %
     \begin{enumerate}
-        \item In \LaTeX\ mode it uses |graphicx| for the graphics inclusion
-            and does not support masking.
-        \item In plain \TeX\ mode it does not support image inclusion.
-        \item Shading is fully implemented, but yields the same quality as
-            the implementation for |dvips|.
-        \item Opacity is not supported.
-        \item Remembering of pictures (inter-picture connections) is not
-            supported.
+        % \item In \LaTeX\ mode it uses |graphicx| for the graphics inclusion and does not support masking.
+        \item 在\LaTeX\ 模式下，它使用 |graphicx| 作为图形机制，不支持屏蔽\ref{error}。
+        % \item In plain \TeX\ mode it does not support image inclusion.
+        \item 在Plain \TeX\ 模式下，它 不支持插图机制。
+        % \item Shading is fully implemented, but yields the same quality as the implementation for |dvips|.
+        \item 阴影被完全实现，但是产生与 |dvips| 的实现相同的质量。
+        % \item Opacity is not supported.
+        \item 不支持透明度。
+        % \item Remembering of pictures (inter-picture connections) is not supported.
+        \item 不能记住图形在页面上的位置。
     \end{enumerate}
 \end{filedescription}
 
-It is also possible to produce a |.pdf|-file by first producing a PostScript
-file (see below) and then using a PostScript-to-\pdf\ conversion program like
-|ps2pdf| or the Acrobat Distiller.
+% It is also possible to produce a |.pdf|-file by first producing a PostScript file (see below) and then using a PostScript-to-\pdf\ conversion program like |ps2pdf| or Acrobat Distiller.
+
+也可以通过首先生成PostScript文件（参见下文），然后使用诸如 |ps2pdf| 或Acrobat Distille 之类的PostScript to \pdf\ 转换程序来生成 |.pdf| 文件。
 
 
-\subsubsection{Producing PostScript Output}
+% \subsubsection{Producing PostScript Output}
+\subsubsection{输出 PostScript 格式的文件}
 
 \begin{filedescription}{pgfsys-dvips.def}
-    This is a driver file for use with (|la|)|tex| followed by |dvips|. It
-    includes |pgfsys-common-postscript.def|.
+    % This is a driver file for use with (|la|)|tex| followed by |dvips|. It includes |pgfsys-common-postscript.def|.
 
-    This driver also supports most of \pgfname's features, except for the
-    following restrictions:
+    这是一个驱动程序文件，用于 |(la)tex| 和 |dvips|。它包含 |pgfsys-common-postscript.def|。
+
+    % This driver also supports most of \pgfname's features, except for the following restrictions:
+
+    该驱动程序还支持\pgfname 的大多数功能，但有以下限制：
     %
     \begin{enumerate}
-        \item In \LaTeX\ mode it uses |graphicx| for the graphics inclusion
-            and does not support masking.
-        \item In plain \TeX\ mode it does not support image inclusion.
-        \item Shading is fully implemented, but the results will not be as
-            good as with a driver producing |.pdf| as output.
-        \item Opacity works only in conjunction with newer versions of
-            Ghostscript.
-        \item For remembering of pictures (inter-picture connections) you
-            need to use a recent version of |pdftex| running in DVI-mode.
+        % \item In \LaTeX\ mode it uses |graphicx| for the graphics inclusion. Image masking is supported if the PostScript output is further processed with |ps2pdf| to produce \textsc{pdf}.
+        \item 在\LaTeX\ 模式下，它使用 |graphicx| 用于图形包含。 如果使用 |ps2pdf| 进一步处理PostScript输出产生\textsc{pdf}，则支持图像屏蔽。
+        % \item In plain \TeX\ mode it does not support image inclusion.
+        \item 在Plain \TeX\ 模式下，它 不支持插图机制。
+        % \item Functional shadings are approximated with Type-0 functions (sampled functions), because Type-4 functions are not available in the latest (version 3) PostScript language definition. Due to their fixed resolution, Type-0 functional shadings are of lesser quality at higher zoom levels as compared to functional shadings from \textsc{pdf} producing drivers. Axial and radial shadings are fully supported. The same output quality (smooth shadings) is achieved as with drivers that produce \textsc{pdf} output.
+        \item 阴影功能是用Type-0函数（采样函数）来近似的，因为Type-4函数在最新的（V3）PostScript语言定义中不可用。 由于其固定的分辨率，与来自\textsc{pdf}生成驱动程序的阴影功能相比，Type-0型阴影功能在较高的缩放级别上的质量较低。 完全支持轴向和径向阴影。 与产生\textsc{pdf}输出的驱动程序一样，可以获得相同的输出质量（平滑的阴影）。
+        % \item Although fully supported, opacity and fadings are \textsc{pdf} features that become visible only after further processing the PostScript output with |ps2pdf|. Note that newer Ghostscript versions are necessary for producing opacity in the \textsc{pdf} output. Also, beginning with version 9.52 of Ghostscript, command line option |-dALLOWPSTRANSPARENCY| must be added:
+        
+        尽管完全支持不透明度和淡入淡出是\textsc{pdf}的功能，这些功能仅在用 |ps2pdf| 进一步处理PostScript输出后才可见。 请注意，更新的Ghostscript版本对于在\textsc{pdf}输出中产生不透明度是必需的。 另外，从Ghostscript的9.52版开始，命令行选项|-dALLOWPSTRANSPARENCY| 必须添加：
+\begin{codeexample}[code only]
+ps2pdf -dALLOWPSTRANSPARENCY example.ps
+\end{codeexample}
+        % \item For remembering of pictures (inter-picture connections) you need to use a recent version of |pdftex| running in DVI-mode.
+        \item 为了记住图片（图片间的连接），您需要以DVI模式运行 |pdftex| 的最新版本。 
     \end{enumerate}
 \end{filedescription}
 
 \begin{filedescription}{pgfsys-textures.def}
-    This is a driver file for use with the \textsc{textures} program. It
-    includes |pgfsys-common-postscript.def|.
+    % This is a driver file for use with the \textsc{textures} program. It includes |pgfsys-common-postscript.def|.
 
-    This driver has exactly the same restrictions as the driver for |dvips|.
+    这是用于\textsc{textures}程序的驱动程序文件。 它包含 |pgfsys-common-postscript.def|。
+
+    % This driver shares the restrictions of the |vtex| driver, but adds limited opacity support (no transparency groups, fadings and blend modes, though).
+
+    该驱动程序共享 |vtex| 驱动程序的限制，但增加了有限的不透明度支持（尽管没有透明度组，渐变和混合模式）。
 \end{filedescription}
 
-You can also use the |vtex| program together with |pgfsys-vtex.def| to produce
-Postscript output.
+You can also use the |vtex| program together with |pgfsys-vtex.def| to produce Postscript output.
 
 
-\subsubsection{Producing SVG Output}
+% \subsubsection{Producing SVG Output}
+\subsubsection{输出SVG格式的文件}
 
 \begin{filedescription}{pgfsys-dvisvgm.def}
-    This driver converts \textsc{dvi} files to \textsc{svg} file, including
-    text and fonts. When you select this driver, \pgfname\ will output the
-    required raw \textsc{svg} code for the pictures it produces.
+    % This driver converts \textsc{dvi} files to \textsc{svg} file, including text and fonts. When you select this driver, \pgfname\ will output the required raw \textsc{svg} code for the pictures it produces.
 
-    Since the |graphics| package does not (yet?) support this driver directly,
-    there is special rule for this driver in \LaTeX: If the option |dvisvgm| is
-    given to the |tikz| package, this driver gets selected (normally, the
-    driver selected by |graphics| would be used). For packages like |beamer|
-    that load \pgfname\ themselves, this means that the option |dvisvgm| should
-    be given to the document class.
+    此驱动程序将\textsc{dvi}文件转换为\textsc{svg}文件，包括文本和字体。 选择此驱动程序时， pgfname\ 将为其生成的图片输出所需的原始\textsc{svg}代码。
+
+    % Since the |graphics| package does not (yet?) support this driver directly, there is special rule for this driver in \LaTeX: If the option |dvisvgm| is given to the |tikz| package, this driver gets selected (normally, the driver selected by |graphics| would be used). For packages like |beamer| that load \pgfname\ themselves, this means that the option |dvisvgm| should be given to the document class.
+
+    由于 |graphics| 宏包尚（未？）直接支持该驱动程序，\LaTeX 中对此驱动程序有一条特殊规则：如果选项 |dvisvgm| 赋予 |tikz| 宏包中，将选择该驱动程序（通常使用 |graphics| 选择的驱动程序）。 对于像 |beamer| 本身加载\pgfname\ 的宏包，这意味着选项 |dvisvgm| 应该给文档类。
     %
 \begin{codeexample}[code only]
 % example.tex
@@ -290,107 +270,95 @@ Hello \tikz [baseline] \fill [fill=blue!80!black] (0,.75ex) circle[radius=.75ex]
 \end{document}
 \end{codeexample}
 
-    And then run
+    % And then run
+    然后运行
     %
 \begin{codeexample}[code only]
 latex example
 dvisvgm example
 \end{codeexample}
     %
-    or better
+    % or better
+    或
     %
 \begin{codeexample}[code only]
 lualatex --output-format=dvi example
 dvisvgm example
 \end{codeexample}
     %
-    (This is ``better'' since it gives you access to the full power of Lua\TeX\
-    inside your \TeX-file. In particular, \tikzname\ is able to run graph
-    drawing algorithms in this case.)
+    % (This is ``better'' since it gives you access to the full power of Lua\TeX\ inside your \TeX-file. In particular, \tikzname\ is able to run graph drawing algorithms in this case.)
 
-    Unlike the |tex4ht| driver below, this driver has full support of text
-    nodes.
+    （这是``更好的''，因为它使您可以访问\TeX 文件中的Lua \TeX\ 的全部功能。尤其是在这种情况下，\tikzname\ 能够运行图形绘制算法。）
+
+    % Unlike the |tex4ht| driver below, this driver has full support of text nodes.
+
+    与下面的 |tex4ht| 驱动程序不同，该驱动程序完全支持文本节点。
 \end{filedescription}
 
 \begin{filedescription}{pgfsys-tex4ht.def}
-    This is a driver file for use with the |tex4ht| program. It is selected
-    automatically when the |tex4ht| style or command is loaded. It includes
-    |pgfsys-common-svg.def|.
+    %This is a driver file for use with the |tex4ht| program. It is selected automatically when the |tex4ht| style or command is loaded. It includes |pgfsys-common-svg.def|.
 
-    The |tex4ht| program converts |.dvi|-files to |.html|-files. While the
-    \textsc{html}-format cannot be used to draw graphics, the
-    \textsc{svg}-format can. This driver will ask \pgfname\ to produce an
-    \textsc{svg}-picture for each \pgfname\ graphic in your text.
+    这是与 |tex4ht| 程序一起使用的驱动程序文件。它是在加载 |tex4ht| 样式或命令时自动包含的。它包含 |pgfsys-common-svg.def|。
 
-    When using this driver you should be aware of the following restrictions:
+    % The |tex4ht| program converts |.dvi|-files to |.html|-files. While the \textsc{html}-format cannot be used to draw graphics, the \textsc{svg}-format can. This driver will ask \pgfname\ to produce an \textsc{svg}-picture for each \pgfname\ graphic in your text.
+
+    |tex4ht| 程序转换 |．dvi| 为 |.html| 文件。虽然\textsc{html}格式不能用于绘制图形，但\textsc{svg}格式可以。此驱动程序将要求\pgfname\ 为文本中的每个\pgfname\ 图形生成一个\textsc{svg}图形
+
+    % When using this driver you should be aware of the following restrictions:
+
+    使用此驱动程序时，应注意以下限制：
     %
     \begin{enumerate}
-        \item In \LaTeX\ mode it uses |graphicx| for the graphics inclusion.
-        \item In plain \TeX\ mode it does not support image inclusion.
-        \item Remembering of pictures (inter-picture connections) is not
-            supported.
-        \item Text inside |pgfpicture|s is not supported very well. The
-            reason is that the \textsc{svg} specification currently does not
-            support text very well and, although it is  possible to ``escape
-            back'' to \textsc{html}, \tikzname\ has then to guess what size
-            the text rendered by the browser would have.
-        \item Unlike for other output formats, the bounding box of a picture
-            ``really crops'' the picture.
-        \item Matrices do not work.
-        \item Functional shadings are not supported.
+        % \item In \LaTeX\ mode it uses |graphicx| for the graphics inclusion.
+        \item 在  \LaTeX\ 下，它使用 |graphics| 的插图机制。
+        % \item In plain \TeX\ mode it does not support image inclusion.
+        \item 在 plain \TeX\ 下，不支持插图机制。
+        % \item Remembering of pictures (inter-picture connections) is not supported.
+        \item 不能记住图形在页面上的位置。
+        % \item Text inside |pgfpicture|s is not supported very well. The reason is that the \textsc{svg} specification currently does not support text very well and, although it is  possible to ``escape back'' to \textsc{html}, \tikzname\ has then to guess what size the text rendered by the browser would have.
+        \item 对 |pgfpicture| 环境内的文字的支持不是很好。 原因是\textsc{svg}规范当前不能很好地支持文本，尽管可以``转回''\textsc{html}，但是\textsc{html}不得不猜测浏览器渲染的文本的大小。
+        % \item Unlike for other output formats, the bounding box of a picture ``really crops'' the picture.
+        \item 与其他输出格式不同，图片的边框``确实裁剪''了图片。
+        % \item Matrices do not work.
+        \item 不支持矩阵。
+        % \item Functional shadings are not supported.
+        \item 不支持颜色渐变。
     \end{enumerate}
 
-    The driver basically works as follows: When a |{pgfpicture}| is started,
-    appropriate |\special| commands are used to directed the output of |tex4ht|
-    to a new file called |\jobname-xxx.svg|, where |xxx| is a number that is
-    increased for each graphic. Then, till the end of the picture, each (system
-    layer) graphic command creates a special that inserts appropriate
-    \textsc{svg} literal text into the output file. The exact details are a bit
-    complicated since the imaging model and the processing model of
-    PostScript/\pdf\ and \textsc{svg} are not quite the same; but they are
-    ``close enough'' for \pgfname's purposes.
+    % The driver basically works as follows: When a |{pgfpicture}| is started, appropriate |\special| commands are used to directed the output of |tex4ht| to a new file called |\jobname-xxx.svg|, where |xxx| is a number that is increased for each graphic. Then, till the end of the picture, each (system layer) graphic command creates a special that inserts appropriate \textsc{svg} literal text into the output file. The exact details are a bit complicated since the imaging model and the processing model of PostScript/\pdf\ and \textsc{svg} are not quite the same; but they are ``close enough'' for \pgfname's purposes.
 
-    Because text is not supported very well in the \textsc{svg} standard, you
-    may wish to use the following options to modify the way text is handled:
+    驱动程序的基本工作原理如下：启动 |{pgfpicture}| 时，将使用适当的 |\special| 命令将 |tex4ht| 的输出定向到名为 |\jobname-xxx.svg| 的新文件，其中 |xxx| 是每个图形增加的数字。然后，直到图片结束，每个（系统层）图形命令都会创建一个特殊的命令，该命令将适当的 |svg| 文字文本插入到输出文件。 由于PostScript/\pdf 和 \textsc{svg} 的成像模型和处理模型并不完全相同，因此确切的细节有些复杂。 但对于\pgfname 而言，它们``足够接近''。
 
-    \begin{key}{/pgf/tex4ht node/escape=\meta{boolean} (default |false|)}
-        Selects the rendering method for a text node with the tex4ht driver.
+    % Because text is not supported very well in the \textsc{svg} standard, you may wish to use the following options to modify the way text is handled:
 
-        When this key is set to |false|, text is translated into \textsc{svg}
-        text, which is somewhat limited: simple characters (letters, numerals,
-        punctuation, $\sum$, $\int$, \ldots), subscripts and superscripts (but
-        not subsubscripts) will display but everything else will be filtered
-        out, ignored or will produce invalid \textsc{html} code (in the worst
-        case). This means that two kind of texts render reasonably well:
+    由于\textsc{svg}标准不很好地支持文本，因此您可能希望使用以下选项来修改文本的处理方式：
+
+    \begin{key}{/pgf/tex4ht node/escape=\meta{boolean} (default |false|)} 
+        % Selects the rendering method for a text node with the |tex4ht| driver.
+
+        使用 |tex4ht| 驱动程序选择文本节点的渲染方法。
+
+        % When this key is set to |false|, text is translated into \textsc{svg} text, which is somewhat limited: simple characters (letters, numerals, punctuation, $\sum$, $\int$, \ldots), subscripts and superscripts (but not subsubscripts) will display but everything else will be filtered out, ignored or will produce invalid \textsc{html} code (in the worst case). This means that two kind of texts render reasonably well:
+
+        当此键设置为 |false| 时，文本将转换为\textsc{svg}文本，该文本在某种程度上受到限制：简单字符（字母，数字，标点，$ \sum $，$ \int $，\ldots），下标和上标（但不包括下下标）将显示，但其他所有内容将被过滤掉，忽略或产生的无效\textsc{html}代码（在最坏的情况下）。 这意味着两种文本表现得相当不错：
         %
         \begin{enumerate}
-            \item First, plain text without math mode, special characters or
-                anything else special.
-            \item Second, \emph{very} simple mathematical text that contains
-                subscripts or superscripts. Even then, variables are not
-                correctly set in italics and, in general, text simple does
-                not look very nice.
+            % \item First, plain text without math mode, special characters or anything else special.
+            \item 首先，没有数学模式，特殊字符或其他特殊字符的纯文本。
+            % \item Second, \emph{very} simple mathematical text that contains subscripts or superscripts. Even then, variables are not correctly set in italics and, in general, text simple does not look very nice.
+            \item 其次，\emph{非常}简单的数学文本，包含下标或上标。 即使那样，变量也不能正确设置为斜体，并且通常来说，简单文本看起来不是很好。
         \end{enumerate}
         %
-        If you use text that contains anything special, even something as
-        simple as |$\alpha$|, this may corrupt the graphic.
+        %If you use text that contains anything special, even something as simple as |$\alpha$|, this may corrupt the graphic.
+        如果您使用包含特殊内容的文本，即使是 |$\alpha$| 之类的简单内容，也可能会损坏图形。
         %
 \begin{codeexample}[code only]
 \tikz \node[draw,/pgf/tex4ht node/escape=false] {Example : $(a+b)^2=a^2+2ab+b^2$};
 \end{codeexample}
 
-    When you write |node[/pgf/tex4ht node/escape=true] {|\meta{text}|}|,
-    \pgfname\ escapes back to \textsc{html} to render the \meta{text}. This
-    method produces valid \textsc{html} code in most cases and the support for
-    complicated text nodes is much better since code that renders well outside
-    a |{pgfpicture}|, should also render well inside a text node. Another
-    advantage is that inside text nodes with fixed width, \textsc{html} will
-    produce line breaks for long  lines. On the other hand, you need a browser
-    with good \textsc{svg} support to display the picture. Also, the text will
-    display differently, depending on your browsers, the fonts you have on your
-    system and your settings. Finally, \pgfname\ has to guess the size of the
-    text rendered by the browser to scale it and prevent it from sticking from
-    the node. When it fails, the text will be either cropped or too small.
+    % When you write |node[/pgf/tex4ht node/escape=true] {|\meta{text}|}|, \pgfname\ escapes back to \textsc{html} to render the \meta{text}. This method produces valid \textsc{html} code in most cases and the support for complicated text nodes is much better since code that renders well outside a |{pgfpicture}|, should also render well inside a text node. Another advantage is that inside text nodes with fixed width, \textsc{html} will produce line breaks for long  lines. On the other hand, you need a browser with good \textsc{svg} support to display the picture. Also, the text will display differently, depending on your browsers, the fonts you have on your system and your settings. Finally, \pgfname\ has to guess the size of the text rendered by the browser to scale it and prevent it from sticking from the node. When it fails, the text will be either cropped or too small.
+
+    当您编写 |node[/pgf/tex4ht node/escape=true] {|\meta{文本}|}| 时，\pgfname\ 会转回到\textsc{html}以呈现 \meta{文本}。 在大多数情况下，此方法会产生有效的\textsc{html}代码，并且对复杂文本节点的支持要好得多，因为可以在 |{pgfpicture}| 外部很好地渲染的代码也应该在文本节点内部也可以很好地渲染。 另一个优点是，在具有固定宽度的文本节点内，\textsc{html}会为长行产生换行符。 另一方面，您需要具有良好\textsc{svg}支持的浏览器来显示图片。 此外，文本将显示不同，具体取决于您的浏览器，系统上的字体和设置。 最后，\pgfname\ 必须猜测浏览器呈现的文本的大小才能缩放文本并防止其从节点中粘贴。 当它失败时，文本不是太大被裁剪就是太小。
     %
 \begin{codeexample}[code only]
 \tikz \node[draw,/pgf/tex4ht node/escape=true]
@@ -400,52 +368,53 @@ dvisvgm example
     \end{key}
 
     \begin{key}{/pgf/tex4ht node/css=\meta{filename} (default |\string\jobname|)}
-        This option allows you to tell the browser what \textsc{css} file it
-        should  use to style the display of the node (only with 
-        |tex4ht node/escape=true|).
+        % This option allows you to tell the browser what \textsc{css} file it should  use to style the display of the node (only with  |tex4ht node/escape=true|).
+        此选项使您可以告诉浏览器应使用哪个\textsc{css}文件来设置节点显示的样式（仅当 |tex4ht node/escape=true|）。
     \end{key}
 
     \begin{key}{/pgf/tex4ht node/class=\meta{class name} (default foreignobject)}
-        This option allows you to give a class name to the node, allowing it to
-        be styled by a \textsc{css} file (only with |tex4ht node/escape=true|).
+        % This option allows you to give a class name to the node, allowing it to be styled by a \textsc{css} file (only with |tex4ht node/escape=true|).
+        此选项允许您为节点指定一个类名，从而允许它通过\textsc{css}文件设置样式（仅当 |tex4ht node/escape=true|）。
     \end{key}
 
     \begin{key}{/pgf/tex4ht node/id=\meta{id name} (default |\string\jobname\ picture number-node number|)}
-        This option allows you to give a unique id to the node, allowing
-        it to be styled by a \textsc{css} file (only with
-        |tex4ht node/escape=true|).
+        % This option allows you to give a unique id to the node, allowing it to be styled by a \textsc{css} file (only with |tex4ht node/escape=true|).
+        此选项允许您为节点提供唯一的ID，从而可以通过\textsc{css}文件设置其样式（仅当 |tex4ht node/escape=true|）。
     \end{key}
 \end{filedescription}
 
 
-\subsubsection{Producing Perfectly Portable DVI Output}
+% \subsubsection{Producing Perfectly Portable DVI Output}
+\subsubsection{输出完美便携式的DVI文件}
 
 \begin{filedescription}{pgfsys-dvi.def}
-    This is a driver file that can be used with any output driver, except for
-    |tex4ht|.
+    % This is a driver file that can be used with any output driver, except for |tex4ht|.
 
-    The driver will produce perfectly portable |.dvi| files by composing all
-    pictures entirely of black rectangles, the basic and only graphic shape
-    supported by the \TeX\ core. Even straight, but slanted lines are tricky to
-    get right in this model (they need to be composed of lots of little
-    squares).
+    这是一个可以与任何输出驱动程序一起使用的驱动程序文件，| tex4ht| 除外。
 
-    Naturally, \emph{very little} is possible with this driver. In fact, so
-    little is possible that it is easier to list what is possible:
+    % The driver will produce perfectly portable |.dvi| files by composing all pictures entirely of black rectangles, the basic and only graphic shape supported by the \TeX\ core. Even straight, but slanted lines are tricky to get right in this model (they need to be composed of lots of little squares).
+
+    该驱动程序将产生完美可移植的 |.dvi |。 通过将所有图片完全由黑色矩形组成文件，\TeX\ 核心支持该基本和唯一图形形状。 在此模型中，即使是直线但倾斜的线也很难正确设置（它们需要由许多小方块组成）。
+
+    % Naturally, \emph{very little} is possible with this driver. In fact, so little is possible that it is easier to list what is possible:
+
+    自然，使用此驱动程序\emph{几乎不可能}。 事实上，可能性是如此之小，所以列出什么是可能会更容易：
     %
     \begin{itemize}
-        \item Text boxes can be placed in the normal way.
-        \item Lines and curves can be drawn (stroked). If they are not
-            horizontal or vertical, they are composed of hundreds of small
-            rectangles.
-        \item Lines of different width are supported.
-        \item Transformations are supported.
+        % \item Text boxes can be placed in the normal way.
+        \item 可以按常规方式放置文本框。
+        % \item Lines and curves can be drawn (stroked). If they are not horizontal or vertical, they are composed of hundreds of small rectangles.
+        \item 可以绘制（描画）直线和曲线。 如果它们不是水平或垂直的，则它们由数百个小矩形组成。
+        % \item Lines of different width are supported.
+        \item 支持不同宽度的线。
+        % \item Transformations are supported.
+        \item 支持坐标转换。
     \end{itemize}
     %
-    Note that, say, even filling is not supported! (Let alone color or anything
-    fancy.)
+    % Note that, say, even filling is not supported! (Let alone color or anything fancy.)
+    请注意，它甚至不支持填充！（更不用说颜色或其他奇特的东西了。）
 
-    This driver has only one real application: It might be useful when you only
-    need horizontal or vertical lines in a picture. Then, the results are quite
-    satisfactory.
+    % This driver has only one real application: It might be useful when you only need horizontal or vertical lines in a picture. Then, the results are quite satisfactory.
+
+    该驱动程序只有一个实际的应用程序：当您只需要图片中的水平或垂直线时，它可能会很有用。 然后，结果是令人满意的。
 \end{filedescription}
