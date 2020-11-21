@@ -139,7 +139,7 @@
         为了更改概念节点的外观，您应该更改此样式。 但是请注意，对于某些连接带来说，概念的颜色应该统一，因此您不应使用此选项更改概念的颜色或绘制/填充状态。 它对于更改文本颜色和字体很有用。
     \end{stylekey}
 
-    \begin{key}{/tikz/concept color=\meta{color}}
+    \begin{key}{/tikz/concept color=\meta{颜色}}
         % This option tells \tikzname\ which color should be used for filling and stroking concepts. The difference between this option and just setting |every concept| to the desired color is that this option allows \tikzname\ to keep track of the colors used for concepts. This is important when you \emph{change} the color between two connected concepts. In this case, \tikzname\ can automatically create a shading that provides a smooth transition between the old and the new concept color; we will come back to this in the next section.
 
         这个选项告诉\tikzname\ 哪种颜色应该用于填充和描边概念。此选项与直接将 |every concept| 设置为所需颜色的区别在于，此选项允许\tikzname\ 跟踪用于概念的颜色。当你在两个相连的概念之间改变颜色时，这一点很重要。在这种情况下，\tikzname\ 可以自动创建阴影，提供新旧概念颜色之间的平滑过渡;我们将在下一节中回到这个问题。
@@ -224,7 +224,7 @@
     类似于 |level 1 concept|。注意，没有第五种和更高级别的样式，在这种情况下您需要直接修改 |level 5|。
 \end{stylekey}
 
-\begin{key}{/tikz/concept color=\meta{color}}
+\begin{key}{/tikz/concept color=\meta{颜色}}
     % We saw already that this option is used to change the color of concepts. We now have a look at its effect when used on child nodes of a concept. Normally, this option simply changes the color of the children. However, when the option is given as an option to the |child| operation (and not to the |node| operation and also not as an option to all children via the |level 1| style), \tikzname\ will smoothly change the concept color from the parent's color to the color of the child concept.
 
     我们已经看到该选项用于更改概念的颜色。 现在我们来看看它在概念的子节点上使用时的效果。 通常，此选项仅更改子项的颜色。 但是，当将该选项作为 |child| 操作的选项（而不是对 |node| 操作的选项，也不是通过 |level 1| 样式给所有子级提供的选项），\tikzname\ 将平滑地将概念颜色从父级概念颜色过渡为子级概念的颜色。
@@ -306,13 +306,13 @@
 
 % For the drawing of the bars a special decoration is used, which is defined in the |mindmap| library:
 
-对于带的绘制，使用了特殊的修饰，该修饰在 |mindmap| 库中定义：
+对于带的绘制，使用了特殊的装饰，该装饰在 |mindmap| 库中定义：
 
 \begin{decoration}{circle connection bar}
     % This decoration can be used to connect two circles. The start of the
     to-be-decorated path should lie on the border of the first circle, the end should lie on the border of the second circle. The following two decoration keys should be initialized with the sizes of the circles:
 
-    此修饰可用于连接两个圆。 待修饰路径的起点应在第一个圆的边界上，终点应在第二个圆的边界上。 以下两个修饰键应使用圆的大小初始化：
+    此装饰可用于连接两个圆。 待装饰路径的起点应在第一个圆的边界上，终点应在第二个圆的边界上。 以下两个装饰键应使用圆的大小初始化：
     %
     \begin{itemize}
         \item |start radius|
@@ -321,7 +321,7 @@
     %
     % Furthermore, the following two decoration keys influence the decoration:
     % 
-    此外，以下两个修饰键会影响修饰：
+    此外，以下两个装饰键会影响装饰：
     %
     \begin{itemize}
         \item |amplitude|
@@ -330,7 +330,7 @@
     %
     % The decoration turns a straight line into a path that starts on the border of the first circle at the specified angle relative to the line connecting the centers of the circles. The path then changes into a rectangle whose thickness is given by the amplitude. Finally, the path ends with the same angles on the second circle.
 
-    该修饰将直线转变为路径，该路径从第一个圆的边界开始，相对于连接圆的圆心的线的指定角度。然后，路径变成一个矩形，其厚度由幅度给定。最后，路径以第二个圆上相同的角度结束。
+    该装饰将直线转变为路径，该路径从第一个圆的边界开始，相对于连接圆的圆心的线的指定角度。然后，路径变成一个矩形，其厚度由幅度给定。最后，路径以第二个圆上相同的角度结束。
 
     % Here is an example that should make this clearer:
 
@@ -349,7 +349,7 @@
 
     % As can be seen, the decorated path consists of three parts and is not really useful for drawing. However, if you fill the decorated path only, and if you use the same color as for the circles, the result is better.
 
-    可以看出，修饰的路径由三部分组成，对于绘图并没有真正的用处。 但是，如果仅填充修饰的路径，并且使用与圆相同的颜色，则效果会更好。
+    可以看出，装饰的路径由三部分组成，对于绘图并没有真正的用处。 但是，如果仅填充装饰的路径，并且使用与圆相同的颜色，则效果会更好。
     %
 \begin{codeexample}[preamble={\usetikzlibrary{mindmap}}]
 \begin{tikzpicture}
@@ -364,7 +364,7 @@
 
     % In the above example you may notice the small white line between the circles and the decorated path. This is due to rounding errors. Unfortunately, for larger distances, the errors can accumulate quite strongly, especially since \tikzname\ and \TeX\ are not very good at computing square roots. For this reason, it is a good idea to make the circles slightly larger to cover up such problems. When using nodes of shape |circle|, you can just add the |draw| option with a |line width| of one or two points (for very large distances you may need line width up to 4pt).
 
-    在上面的示例中，您可能会注意到圆和修饰路径之间的白色小线。 这是由于舍入误差造成的。 不幸的是，对于更大的距离，错误会累积得非常强烈，特别是因为\tikzname\ 和\TeX\ 不太善于计算平方根。 因此，最好使圆稍大一些以掩盖此类问题。 当使用形状为 |circ| 的节点时，只需添加 |draw| 的 |line width| 的选项增加1pt或2pt（对于非常长的距离，您可能需要最大4pt的线宽）。
+    在上面的示例中，您可能会注意到圆和装饰路径之间的白色小线。 这是由于舍入误差造成的。 不幸的是，对于更大的距离，错误会累积得非常强烈，特别是因为\tikzname\ 和\TeX\ 不太善于计算平方根。 因此，最好使圆稍大一些以掩盖此类问题。 当使用形状为 |circ| 的节点时，只需添加 |draw| 的 |line width| 的选项增加1pt或2pt（对于非常长的距离，您可能需要最大4pt的线宽）。
     %
 \begin{codeexample}[preamble={\usetikzlibrary{mindmap}}]
 \begin{tikzpicture}
@@ -391,7 +391,7 @@
 
 % The |circle connection bar| decoration is a bit complicated to use. Especially specifying the radii is quite bothersome (the amplitude and the angle can be set once and for all). For this reason, the |mindmap| library defines a special to-path that performs the necessary computations for you.
 
-|circle connection bar| 修饰使用起来有点复杂。 特别是指定半径非常麻烦（可以一劳永逸地设置幅度和角度）。因此， |mindmap| 库定义了一个特殊的to-path，可以为您执行必要的计算。
+|circle connection bar| 装饰使用起来有点复杂。 特别是指定半径非常麻烦（可以一劳永逸地设置幅度和角度）。因此， |mindmap| 库定义了一个特殊的to-path，可以为您执行必要的计算。
 
 \begin{stylekey}{/tikz/circle connection bar}
     % This style installs a rather involved to-path. Unlike normal to-paths, this path requires that the start and the target of the to-path are named nodes of shape |circle| -- if this is not the case, this path will produce errors.
@@ -400,7 +400,7 @@
 
     % Assuming that the start and the target are circles, the to-path will first compute the radii of these circles (by measuring the distance from the |center| anchor to some anchor on the border) and will set the |start circle| keys accordingly. Next, the |fill| option is set to the |concept color| while |draw=none| is set. The decoration is set to |circle connection bar|. Finally, the following style is included:
 
-    假设起点和目标是圆，则to-path将首先计算这些圆的半径（通过测量从 |center| 锚点到边界上某个锚点的距离）并设置 |start circle| 键。 接下来，及时当 |draw=none| 选项被设置时 |fill| 选项也被设置为 |concept color|。 修饰设置为 |circle connection bar|。 最后，该样式包含以下样式：
+    假设起点和目标是圆，则to-path将首先计算这些圆的半径（通过测量从 |center| 锚点到边界上某个锚点的距离）并设置 |start circle| 键。 接下来，及时当 |draw=none| 选项被设置时 |fill| 选项也被设置为 |concept color|。 装饰设置为 |circle connection bar|。 最后，该样式包含以下样式：
 
     %
     \begin{stylekey}{/tikz/every circle connection bar}

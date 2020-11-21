@@ -93,7 +93,7 @@ Chinese translation of [PGFManual v3.1.6a](https://github.com/pgf-tikz/pgf/relea
   - [ ] Turtle Graphics Library
   - [ ] Views Library
 - [ ] Data Visualization
-  - [ ] Introduction to Data Visualization
+  - [x] Introduction to Data Visualization
   - [ ] Creating Data Visualizations
   - [ ] Providing Data for a Data Visualization
   - [ ] Axes

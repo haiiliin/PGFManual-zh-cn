@@ -105,6 +105,18 @@ keepspaces = true,
   \end{pgfmanualentry}
 }
 
+\renewenvironment{decoration}[1]{
+  \begin{pgfmanualentry}
+    \pgfmanualentryheadline{\textbf{装饰} {\ttfamily\declare{#1}}}%
+    \index{#1@\protect\texttt{#1} decoration}%
+    \index{Decorations!#1@\protect\texttt{#1}}
+    \pgfmanualbody
+}
+{
+  \end{pgfmanualentry}
+}
+
+
 \iffalse
 % Hyperlinks for text to contents
 \RequirePackage{xparse}
