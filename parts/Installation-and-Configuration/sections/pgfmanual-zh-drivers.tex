@@ -333,7 +333,7 @@ dvisvgm example
 
     由于\textsc{svg}标准不很好地支持文本，因此您可能希望使用以下选项来修改文本的处理方式：
 
-    \begin{key}{/pgf/tex4ht node/escape=\meta{boolean} (default |false|)} 
+    \begin{key}{/pgf/tex4ht node/escape=\meta{布尔值} (default |false|)} 
         % Selects the rendering method for a text node with the |tex4ht| driver.
 
         使用 |tex4ht| 驱动程序选择文本节点的渲染方法。
@@ -367,17 +367,17 @@ dvisvgm example
     %
     \end{key}
 
-    \begin{key}{/pgf/tex4ht node/css=\meta{filename} (default |\string\jobname|)}
+    \begin{key}{/pgf/tex4ht node/css=\meta{文件名} (default |\string\jobname|)}
         % This option allows you to tell the browser what \textsc{css} file it should  use to style the display of the node (only with  |tex4ht node/escape=true|).
         此选项使您可以告诉浏览器应使用哪个\textsc{css}文件来设置节点显示的样式（仅当 |tex4ht node/escape=true|）。
     \end{key}
 
-    \begin{key}{/pgf/tex4ht node/class=\meta{class name} (default foreignobject)}
+    \begin{key}{/pgf/tex4ht node/class=\meta{类名} (default foreignobject)}
         % This option allows you to give a class name to the node, allowing it to be styled by a \textsc{css} file (only with |tex4ht node/escape=true|).
         此选项允许您为节点指定一个类名，从而允许它通过\textsc{css}文件设置样式（仅当 |tex4ht node/escape=true|）。
     \end{key}
 
-    \begin{key}{/pgf/tex4ht node/id=\meta{id name} (default |\string\jobname\ picture number-node number|)}
+    \begin{key}{/pgf/tex4ht node/id=\meta{ID名} (default |\string\jobname\ picture number-node number|)}
         % This option allows you to give a unique id to the node, allowing it to be styled by a \textsc{css} file (only with |tex4ht node/escape=true|).
         此选项允许您为节点提供唯一的ID，从而可以通过\textsc{css}文件设置其样式（仅当 |tex4ht node/escape=true|）。
     \end{key}

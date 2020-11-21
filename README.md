@@ -21,8 +21,8 @@ Chinese translation of [PGFManual v3.1.6a](https://github.com/pgf-tikz/pgf/relea
   - [x] Licenses and Copyright
   - [x] Supported Formats
 - [ ] TikZ ist kein Zeichenprogramm
-  - [ ] Design Principles
-  - [ ] Hierarchical Structures: Package, Environments, Scopes, and Styles
+  - [x] Design Principles
+  - [x] Hierarchical Structures: Package, Environments, Scopes, and Styles
   - [ ] Specifying Coordinates
   - [ ] Syntax for Path Specifications
   - [ ] Actions on Paths
@@ -73,7 +73,7 @@ Chinese translation of [PGFManual v3.1.6a](https://github.com/pgf-tikz/pgf/relea
   - [ ] Lindenmayer System Drawing Library
   - [ ] Math Library
   - [ ] Matrix Library
-  - [ ] Mindmap Drawing Library
+  - [x] Mindmap Drawing Library
   - [ ] Paper-Folding Diagrams Library
   - [ ] Pattern Library
   - [ ] Three Point Perspective Drawing Library

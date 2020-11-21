@@ -65,6 +65,45 @@ keepspaces = true,
 \appto\verbatim@font{\hyphenchar\font`-\relax}
 \makeatother 
 
+\def\extractenvironement#1#2\@@{%
+  \pgfmanualentryheadline{%
+    \pgfmanualpdflabel{#1}{}%
+    {\ttfamily\char`\\begin\char`\{\declare{#1}\char`\}}#2%
+  }%
+  \pgfmanualentryheadline{{\ttfamily\ \ }\meta{环境内容}}%
+  \pgfmanualentryheadline{{\ttfamily\char`\\end\char`\{\declare{#1}\char`\}}}%
+  \index{#1@\protect\texttt{#1} environment}%
+  \index{Environments!#1@\protect\texttt{#1}}
+}
+
+\def\extractplainenvironement#1#2\@@{%
+  \pgfmanualentryheadline{{\ttfamily\declare{\char`\\#1}}#2}%
+  \pgfmanualentryheadline{{\ttfamily\ \ }\meta{环境内容}}%
+  \pgfmanualentryheadline{{\ttfamily\declare{\char`\\end#1}}}%
+  \index{#1@\protect\texttt{#1} environment}%
+  \index{Environments!#1@\protect\texttt{#1}}%
+}
+
+\def\extractcontextenvironement#1#2\@@{%
+  \pgfmanualentryheadline{{\ttfamily\declare{\char`\\start#1}}#2}%
+  \pgfmanualentryheadline{{\ttfamily\ \ }\meta{环境内容}}%
+  \pgfmanualentryheadline{{\ttfamily\declare{\char`\\stop#1}}}%
+  \index{#1@\protect\texttt{#1} environment}%
+  \index{Environments!#1@\protect\texttt{#1}}}
+
+\def\example{\par\smallskip\noindent\textit{示例: }}
+\def\themeauthor{\par\smallskip\noindent\textit{主题作者: }}
+
+\renewenvironment{filedescription}[1]{
+  \begin{pgfmanualentry}
+    \pgfmanualentryheadline{文件~ {\ttfamily\declare{#1}}}%
+    \index{#1@\protect\texttt{#1} file}%
+    \index{Packages and files!#1@\protect\texttt{#1}}%
+    \pgfmanualbody
+}
+{
+  \end{pgfmanualentry}
+}
 
 \iffalse
 % Hyperlinks for text to contents

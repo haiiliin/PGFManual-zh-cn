@@ -408,7 +408,7 @@ help lines/.style={color=blue!50,very thin}
 %
 %The effect of this ``style setter'' is that in the current scope or environment the |help lines| option has the same effect as |color=blue!50,very thin|.
 
-这种“样式设置器”的作用是，在当前作用域或环境中 |help lines| 选项与 |color=blue!50,very thin| 的效果相同。
+这种``样式设置器''的作用是，在当前分组或环境中 |help lines| 选项与 |color=blue!50,very thin| 的效果相同。
 
 % Using styles makes your graphics code more flexible. You can change the way things look easily in a consistent manner. Normally, styles are defined at the beginning of a picture. However, you may sometimes wish to define a style globally, so that all pictures of your document can use this style. Then you can easily change the way all graphics look by changing this one style. In this situation you can use the |\tikzset| command at the beginning of the document as in
 
@@ -894,7 +894,7 @@ A sine \tikz \draw[x=1ex,y=1ex] (0,0) sin (1.57,1); curve.
 
 
 % \subsection{Scoping}
-\subsection{作用域}
+\subsection{分组}
 
 % Karl saw already that there are numerous graphic options that affect how paths are rendered. Often, he would like to apply certain options to a whole set of graphic commands. For example, Karl might wish to draw three paths using a |thick| pen, but would like everything else to be drawn ``normally''.
 
@@ -922,7 +922,7 @@ A sine \tikz \draw[x=1ex,y=1ex] (0,0) sin (1.57,1); curve.
 
 % Scoping has another interesting effect: Any changes to the clipping area are local to the scope. Thus, if you say |\clip| somewhere inside a scope, the effect of the |\clip| command ends at the end of the scope. This is useful since there is no other way of ``enlarging'' the clipping area.
 
-作用域还有另一个有趣的作用:裁剪区域的任何更改都是该作用域的局部更改。因此，如果您用 |\clip| 在某个作用域内的某个地方，|\clip| 命令的效果将在作用域的末尾结束。这是有用的，因为没有其他方式``扩大''剪切区域。
+分组还有另一个有趣的作用:裁剪区域的任何更改都是该分组的局部更改。因此，如果您用 |\clip| 在某个分组内的某个地方，|\clip| 命令的效果将在分组的末尾结束。这是有用的，因为没有其他方式``扩大''剪切区域。
 
 % Karl has also already seen that giving options to commands like |\draw| apply only to that command. It turns out that the situation is slightly more complex. First, options to a command like |\draw| are not really options to the command, but they are ``path options'' and can be given anywhere on the path. So, instead of |\draw[thin] (0,0) -- (1,0);| one can also write |\draw (0,0) [thin] -- (1,0);| or |\draw (0,0) -- (1,0) [thin];|; all of these have the same effect. This might seem strange since in the last case, it would appear that the |thin| should take effect only ``after'' the line from $(0,0)$ to $(1,0)$ has been drawn. However, most graphic options only apply to the whole path. Indeed, if you say both |thin| and |thick| on the same path, the last option given will ``win''.
 

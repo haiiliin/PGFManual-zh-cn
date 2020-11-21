@@ -1,4 +1,4 @@
-% Copyright 2006 by Till Tantau
+% Copyright 2019 by Till Tantau
 %
 % This file may be distributed and/or modified
 %
@@ -8,137 +8,107 @@
 % See the file doc/generic/pgf/licenses/LICENSE for more details.
 
 
-\section[Hierarchical Structures: Package, Environments, Scopes, and Styles]
-        {Hierarchical Structures:\\
-         Package, Environments, Scopes, and Styles}
+% \section[Hierarchical Structures: Package, Environments, Scopes, and Styles]
+% \        {Hierarchical Structures:\\
+% \         Package, Environments, Scopes, and Styles}
+\section[层次结构：宏包，环境，分组和样式]
+        {层次结构：\\
+        宏包，环境，分组和样式}
 
-The present section explains how your files should be structured when you use
-\tikzname. On the top level, you need to include the |tikz| package. In the
-main text, each graphic needs to be put in a |{tikzpicture}| environment.
-Inside these environments, you can use |{scope}| environments to create
-internal groups. Inside the scopes you use |\path| commands to actually draw
-something. On all levels (except for the package level), graphic options can be
-given that apply to everything within the environment.
+% The present section explains how your files should be structured when you use \tikzname. On the top level, you need to include the |tikz| package. In the main text, each graphic needs to be put in a |{tikzpicture}| environment. Inside these environments, you can use |{scope}| environments to create internal groups. Inside the scopes you use |\path| commands to actually draw something. On all levels (except for the package level), graphic options can be given that apply to everything within the environment.
+
+本节解释了当您使用\tikzname 时应该如何构造文件。在顶层，您需要包含 |tikz| 包。在正文中，每个图形都需要放在 |{tikzpicture}| 环境中。在这些环境中，您可以使用 |{scope}| 环境来创建内部组。在分组内，您使用 |\path| 命令来实际绘制一些东西。在所有级别（包级别除外）上，都可以提供适用于环境中的所有内容的图形选项。
 
 
-\subsection{Loading the Package and the Libraries}
+% \subsection{Loading the Package and the Libraries}
+\subsection{加载宏包和库}
 
 \begin{package}{tikz}
-    This package does not have any options.
+    % This package does not have any options.
 
-    This will automatically load the \pgfname\ and the |pgffor| package.
+    该宏包没有任何选项。
 
-    \pgfname\ needs to know what \TeX\ driver you are intending to use. In most
-    cases \pgfname\ is clever enough to determine the correct driver for you;
-    this is true in particular if you use \LaTeX. One situation where \pgfname\
-    cannot know the driver ``by itself'' is when you use plain \TeX\ or Con\TeX
-    t together with |dvipdfm|. In this case, you have to write
-    |\def\pgfsysdriver{pgfsys-dvipdfm.def}| \emph{before} you input |tikz.tex|.
+    % This will automatically load the \pgfname\ and the |pgffor| package.
+
+    这将自动加载\pgfname\ 和 |pgffor| 包。
+
+    % \pgfname\ needs to know what \TeX\ driver you are intending to use. In most cases \pgfname\ is clever enough to determine the correct driver for you; this is true in particular if you use \LaTeX. One situation where \pgfname\ cannot know the driver ``by itself'' is when you use plain \TeX\ or Con\TeX t together with |dvipdfm|. In this case, you have to write |\def\pgfsysdriver{pgfsys-dvipdfm.def}| \emph{before} you input |tikz.tex|.
+
+    \pgfname\ 需要知道您打算使用什么\TeX\ 驱动程序。在大多数情况下\pgfname\ 足够聪明，可以为您确定正确的驱动程序；如果您使用\LaTeX ，尤其如此。当您将普通\TeX\ 或Con\TeX t与 |dvipdfm| 一起使用时，\pgfname\ 不能``自己''知道驱动程序。在这种情况下，您必须在输入 |tikz.tex| \emph{之前}使用 |\def\pgfsysdriver{pgfsys- dvipdfs .def}| 告诉\pgfname\ 您要使用什么驱动程序。
 \end{package}
 
-\begin{command}{\usetikzlibrary\marg{list of libraries}}
-    Once \tikzname\ has been loaded, you can use this command to load further
-    libraries. The list of libraries should contain the names of libraries
-    separated by commas. Instead of curly braces, you can also use square
-    brackets, which is something Con\TeX t users will like. If you try to load
-    a library a second time, nothing will happen.
+\begin{command}{\usetikzlibrary\marg{库列表}}
+    % Once \tikzname\ has been loaded, you can use this command to load further libraries. The list of libraries should contain the names of libraries separated by commas. Instead of curly braces, you can also use square brackets, which is something Con\TeX t users will like. If you try to load a library a second time, nothing will happen.
+
+    加载\tikzname\ 之后，可以使用此命令加载其他库。库列表应该是包含用逗号分隔的库的名称。除了花括号，您还可以使用方括号，这会是Con\TeX t用户想要的。如果尝试第二次加载一个库，不会发生任何错误。
 
     \example |\usetikzlibrary{arrows.meta}|
 
-    The above command will load a whole bunch of extra arrow tip definitions.
+    % The above command will load a whole bunch of extra arrow tip definitions.
 
-    What this command does is to load the file
-    |tikzlibrary|\meta{library}|.code.tex| for each \meta{library} in the
-    \meta{list of libraries}. If this file does not exist, the file
-    |pgflibrary|\meta{library}|.code.tex| is loaded instead. If this file also
-    does not exist, an error message is printed. Thus, to write your own
-    library file, all you need to do is to place a file of the appropriate name
-    somewhere where \TeX\ can find it. \LaTeX, plain \TeX, and Con\TeX t users
-    can then use your library.
+    上面的命令将加载一大堆额外的箭头提示的定义。
+
+    % What this command does is to load the file |tikzlibrary|\meta{library}|.code.tex| for each \meta{library} in the \meta{list of libraries}. If this file does not exist, the file |pgflibrary|\meta{library}|.code.tex| is loaded instead. If this file also does not exist, an error message is printed. Thus, to write your own library file, all you need to do is to place a file of the appropriate name somewhere where \TeX\ can find it. \LaTeX, plain \TeX, and Con\TeX t users can then use your library.
+
+    该命令的作用是为``库列表''中的每个``库''加载文件 |tikzlibrary|\meta{库}|.code.tex|。 如果此文件不存在，则改为加载文件 |pgflibrary|\meta{库}|.code.tex|。 如果该文件也不存在，则会显示一条错误消息。 因此，要编写自己的库文件，您要做的就是将一个具有适当名称的文件放在\TeX 可以找到它的地方。 然后，\LaTeX 、Plain \TeX 和Con\TeX t就用户可以使用您的库。
 \end{command}
 
 
-\subsection{Creating a Picture}
+% \subsection{Creating a Picture}
+\subsection{创建图片}
 
-\subsubsection{Creating a Picture Using an Environment}
+% \subsubsection{Creating a Picture Using an Environment}
+\subsubsection{使用环境创建图片}
 
-The ``outermost'' scope of \tikzname\ is the |{tikzpicture}| environment. You
-may give drawing commands only inside this environment, giving them outside (as
-is possible in many other packages) will result in chaos.
+% The ``outermost'' scope of \tikzname\ is the |{tikzpicture}| environment. You may give drawing commands only inside this environment, giving them outside (as is possible in many other packages) will result in chaos.
 
-In \tikzname, the way graphics are rendered is strongly influenced by graphic
-options. For example, there is an option for setting the color used for
-drawing, another for setting the color used for filling, and also more obscure
-ones like the option  for setting the prefix used in the filenames of temporary
-files written while plotting functions using an external program. The graphic
-options are specified in \emph{key lists}, see
-Section~\ref{section-graphic-options} below for details. All graphic options
-are local to the |{tikzpicture}| to which they apply.
+\tikzname\ 的``最外层''分组是 |{tikzpicture}| 环境。您可以只在这个环境中提供绘图命令，而在外部提供绘图命令（在许多其他包中都是可能的）将导致混乱。
 
-\begin{environment}{{tikzpicture}\opt{\meta{animations spec}}\opt{\oarg{options}}}
-    All \tikzname\ commands should be given inside this environment, except for
-    the |\tikzset| command. You cannot use graphics commands like the low-level
-    command |\pgfpathmoveto| outside this environment and doing so will result
-    in chaos. For \tikzname, commands like |\path| are only defined inside this
-    environment, so there is little chance that you will do something wrong
-    here.
+% In \tikzname, the way graphics are rendered is strongly influenced by graphic options. For example, there is an option for setting the color used for drawing, another for setting the color used for filling, and also more obscure ones like the option  for setting the prefix used in the filenames of temporary files written while plotting functions using an external program. The graphic options are specified in \emph{key lists}, see Section~\ref{section-graphic-options} below for details. All graphic options are local to the |{tikzpicture}| to which they apply.
 
-    When this environment is encountered, the \meta{options} are parsed, see
-    Section~\ref{section-graphic-options}. All options given here will apply to
-    the whole picture. Before the options you can specify animation commands,
-    provided that the |animations| library is loaded, see
-    Section~\ref{section-tikz-animations} for details.
+在\tikzname 中，图形的呈现方式受到图形选项的强烈影响。例如，有一个选项用于设置用于绘图的颜色，另一个选项用于设置用于填充的颜色，还有一些更模糊的选项，如设置在使用外部程序绘制函数时写入的临时文件的文件名中使用的前缀。图形选项在\emph{键列表}中指定，请参阅下面的第\ref{section-graphic-options}节了解详细信息。所有图形选项都是适用于 |{tikzpicture}| 的本地选项。
 
-    Next, the contents of the environment is processed and the graphic commands
-    therein are put into a box. Non-graphic text is suppressed as well as
-    possible, but non-\pgfname\ commands inside a |{tikzpicture}| environment
-    should not produce any ``output'' since this may totally scramble the
-    positioning system of the backend drivers. The suppressing of normal text,
-    by the way, is done by temporarily switching the font to |\nullfont|. You
-    can, however, ``escape back'' to normal \TeX\ typesetting. This happens,
-    for example, when you specify a node.
+\begin{environment}{{tikzpicture}\opt{\meta{动画规则}}\opt{\oarg{选项}}}
+    % All \tikzname\ commands should be given inside this environment, except for the |\tikzset| command. You cannot use graphics commands like the low-level command |\pgfpathmoveto| outside this environment and doing so will result in chaos. For \tikzname, commands like |\path| are only defined inside this environment, so there is little chance that you will do something wrong here.
 
-    At the end of the environment, \pgfname\ tries to make a good guess at the
-    size of a bounding box of the graphic and then resizes the picture box such
-    that the box has this size. To ``make its guess'', every time \pgfname\
-    encounters a coordinate, it updates the bounding box's size such that it
-    encompasses all these coordinates. This will usually give a good
-    approximation of the bounding box, but will not always be accurate. First,
-    the line thickness of diagonal lines is not taken into account correctly.
-    Second, control points of a curve often lie far ``outside'' the curve and
-    make the bounding box too large. In this case, you should use the 
-    |[use as bounding box]| option.
+    除了 |\tikzset| 命令之外，所有\tikzname\ 命令都应该在这个环境中提供。您不能在此环境之外使用像低级命令 |\pgfpathmoveto| 这样的图形命令，这样做会导致混乱。对于\tikzname ，像 |\path| 这样的命令只在这个环境中定义，所以在这里很少有出错的可能。
 
-    The following key influences the baseline of the resulting picture:
+    % When this environment is encountered, the \meta{options} are parsed, see Section~\ref{section-graphic-options}. All options given here will apply to the whole picture. Before the options you can specify animation commands, provided that the |animations| library is loaded, see Section~\ref{section-tikz-animations} for details.
+
+    遇到此环境时，解析\meta{选项}请参见\ref{section-graphic-options}节。这里给出的所有选项将适用于整个情况。如果 |animations| 库已经加载，在指定选项之前，请参阅\ref{section-tikz-animations}节以了解详细信息。
+
+    % Next, the contents of the environment is processed and the graphic commands therein are put into a box. Non-graphic text is suppressed as well as possible, but non-\pgfname\ commands inside a |{tikzpicture}| environment should not produce any ``output'' since this may totally scramble the positioning system of the backend drivers. The suppressing of normal text, by the way, is done by temporarily switching the font to |\nullfont|. You can, however, ``escape back'' to normal \TeX\ typesetting. This happens, for example, when you specify a node.
+
+    接下来，处理环境的内容，并将其中的图形命令放入一个框中。非图形文本也可能被抑制，但 |{tikzpicture}| 环境中的非\pgfname\ 命令不应该产生任何``输出''，因为这可能会完全扰乱后端驱动程序的定位系统。顺便说一下，抑制普通文本是通过临时将字体切换为 |\nullfont| 来实现的。但是，您可以``跳回''到正常的\TeX\ 排版。例如，当您指定一个节点时，就会发生这种情况。
+
+    % At the end of the environment, \pgfname\ tries to make a good guess at the size of a bounding box of the graphic and then resizes the picture box such that the box has this size. To ``make its guess'', every time \pgfname\ encounters a coordinate, it updates the bounding box's size such that it encompasses all these coordinates. This will usually give a good approximation of the bounding box, but will not always be accurate. First, the line thickness of diagonal lines is not taken into account correctly. Second, control points of a curve often lie far ``outside'' the curve and make the bounding box too large. In this case, you should use the  |[use as bounding box]| option.
+
+    在环境结束时，\pgfname\ 尝试猜测图形边框的大小，然后调整图片框的大小，使其具有此大小。为了``猜测''，每次\pgfname\ 遇到一个新坐标时，它都会更新边界框的大小，以便包含所有这些坐标。这通常会给出一个很好的边界框近似值，但并不总是准确的。首先，斜线的线宽没有被正确考虑。第二，曲线的控制点经常在曲线的``外''，使边界框太大。在这种情况下，您应该使用 |[use as bounding box]| 选项。
+
+    % The following key influences the baseline of the resulting picture:
+
+    以下关键因素会影响生成图像的基线:
     %
-    \begin{key}{/tikz/baseline=\meta{dimension or coordinate or \texttt{default}} (default 0pt)}
-        Normally, the lower end of the picture is put on the baseline of the
-        surrounding text. For example, when you give the code
-        |\tikz\draw(0,0)circle(.5ex);|, \pgfname\ will find out that the lower
-        end of the picture is at $-.5\mathrm{ex} - 0.2\mathrm{pt}$ (the 0.2pt
-        are half the line width, which is 0.4pt) and that the upper end is at
-        $.5\mathrm{ex}+.5\mathrm{pt}$. Then, the lower end will be put on the
-        baseline, resulting in the following: \tikz\draw(0,0)circle(.5ex);.
+    \begin{key}{/tikz/baseline=\meta{尺寸或坐标或 \texttt{默认值}} (default 0pt)}
+        % Normally, the lower end of the picture is put on the baseline of the surrounding text. For example, when you give the code |\tikz\draw(0,0)circle(.5ex);|, \pgfname\ will find out that the lower end of the picture is at $-.5\mathrm{ex} - 0.2\mathrm{pt}$ (the 0.2pt are half the line width, which is 0.4pt) and that the upper end is at $.5\mathrm{ex}+.5\mathrm{pt}$. Then, the lower end will be put on the baseline, resulting in the following: \tikz\draw(0,0)circle(.5ex);.
 
-        Using this option, you can specify that the picture should be raised or
-        lowered such that the height \meta{dimension} is on the baseline. For
-        example, |\tikz[baseline=0pt]\draw(0,0)circle(.5ex);| yields
-        \tikz[baseline=0pt]\draw(0,0)circle(.5ex); since, now, the baseline is
-        on the height of the $x$-axis.
+        通常，图片的下端放在周围文字的基线上。例如，当您给出代码 |\tikz\draw(0,0)circle(.5ex);|， \pgfname\ 会发现图片的下端是$-.5\mathrm{ex} - 0.2\mathrm{pt}$ （0.2pt是线宽0.4pt的一半），上端为$.5\mathrm{ex}+.5\mathrm{pt}$。然后，下端将被放在基线上，导致如下结果：\tikz\draw(0,0)circle(.5ex);。
 
-        This options is often useful for ``inlined'' graphics as in
+        % Using this option, you can specify that the picture should be raised or lowered such that the height \meta{dimension} is on the baseline. For example, |\tikz[baseline=0pt]\draw(0,0)circle(.5ex);| yields \tikz[baseline=0pt]\draw(0,0)circle(.5ex); since, now, the baseline is on the height of the $x$-axis.
+
+        使用此选项，您可以指定应该升高或降低图片，使其 \meta{尺寸} 高度位于基线上。例如，我们可以使用 |\tikz[baseline=0pt]\draw(0,0)circle(.5ex);| 因为现在，基线在$x$轴的高度上。
+
+        % This options is often useful for ``inlined'' graphics as in
+
+        此选项通常对于``内联''图形很有用，如
         %
 \begin{codeexample}[]
 $A \mathbin{\tikz[baseline] \draw[->>] (0pt,.5ex) -- (3ex,.5ex);} B$
 \end{codeexample}
 
-        Instead of a \meta{dimension} you can also provide a coordinate in
-        parentheses. Then the effect is to put the baseline on the
-        $y$-coordinate that the given \meta{coordinate} has \emph{at the end of
-        the picture}. This means that, at the end of the picture, the
-        \meta{coordinate} is evaluated and then the baseline is set to the
-        $y$-coordinate of the resulting point. This makes it easy to reference
-        the $y$-coordinate of, say, the baseline of nodes.
+        % Instead of a \meta{dimension} you can also provide a coordinate in parentheses. Then the effect is to put the baseline on the $y$-coordinate that the given \meta{coordinate} has \emph{at the end of the picture}. This means that, at the end of the picture, the \meta{coordinate} is evaluated and then the baseline is set to the $y$-coordinate of the resulting point. This makes it easy to reference the $y$-coordinate of, say, the baseline of nodes.
+
+        除了\meta{尺寸}，您还可以在括号中提供坐标。这样做的效果是将基线放在\emph{在图片末尾}给定的``坐标''的$y$坐标上。这意味着，在图片的最后，将计算\meta{坐标}，然后将基线设置为结果点的$y$坐标。这使得引用节点基线的$y$坐标变得很容易。
         %
 \begin{codeexample}[preamble={\usetikzlibrary{shapes.misc}}]
 Hello
@@ -152,26 +122,25 @@ Top align:
   \draw (0,0) rectangle (1cm,1ex);
 \end{codeexample}
 
-        Use |baseline=default| to reset the |baseline| option to its initial
-        configuration.
+        % Use |baseline=default| to reset the |baseline| option to its initial configuration.
+
+        使用 |baseline=default| 将 |baseline| 选项重置为初始设置。
     \end{key}
 
-    \begin{key}{/tikz/execute at begin picture=\meta{code}}
-        This option causes \meta{code} to be executed at the beginning of the
-        picture. This option must be given in the argument of the
-        |{tikzpicture}| environment itself since this option will not have an
-        effect otherwise. After all, the picture has already ``started'' later
-        on. The effect of multiply setting this option accumulates.
+    \begin{key}{/tikz/execute at begin picture=\meta{代码}}
+        % This option causes \meta{code} to be executed at the beginning of the picture. This option must be given in the argument of the |{tikzpicture}| environment itself since this option will not have an effect otherwise. After all, the picture has already ``started'' later on. The effect of multiply setting this option accumulates.
 
-        This option is mainly used in styles like the |every picture| style to
-        execute certain code at the start  of a picture.
+        此选项将导致在图片的开头执行\meta{代码}。这个选项必须在 |{tikzpicture}| 环境本身的参数中给出，否则这个选项将不起作用。毕竟，这幅图后来已经``开始''了。多重设置此选项的效果会累积。
+
+        % This option is mainly used in styles like the |every picture| style to execute certain code at the start of a picture.
+
+        此选项主要用于像 |every picture| 这样的样式中，以在图片开始时执行某些代码。
     \end{key}
 
-    \begin{key}{/tikz/execute at end picture=\meta{code}}
-        This option installs \meta{code} that will be executed at the end of
-        the picture. Using this option multiple times will cause the code to
-        accumulate. This option must also be given in the optional argument of
-        the |{tikzpicture}| environment.
+    \begin{key}{/tikz/execute at end picture=\meta{代码}}
+        % This option installs \meta{code} that will be executed at the end of the picture. Using this option multiple times will cause the code to accumulate. This option must also be given in the optional argument of the |{tikzpicture}| environment.
+
+        此选项安装将在图片末尾执行的\meta{代码}。多次使用此选项将导致代码累积。这个选项也必须在 |{tikzpicture}| 环境的可选参数中提供。
         %
 \begin{codeexample}[preamble={\usetikzlibrary{backgrounds}}]
 \begin{tikzpicture}[execute at end picture=%
@@ -188,105 +157,120 @@ Top align:
 \end{codeexample}
     \end{key}
 
-    All options ``end'' at the end of the picture. To set an option
+    % All options ``end'' at the end of the picture. To set an option
     ``globally'' change the following style:
+
+    所有选项均在图片末尾``结束''。 要``全局''设置选项，请更改以下样式：
     %
     \begin{stylekey}{/tikz/every picture (initially \normalfont empty)}
-        This style is installed at the beginning of each picture.
+        % This style is installed at the beginning of each picture.
+
+        此样式安装在每张图片的开头。
         %
 \begin{codeexample}[code only]
 \tikzset{every picture/.style=semithick}
 \end{codeexample}
     \end{stylekey}
 
-    Note that you should not use |\tikzset| to set options directly. For
-    instance, if you want to use a line width of |1pt| by default, do not try
-    to say |\tikzset{line width=1pt}| at the beginning of your document. This
-    will not work since the line width is changed in many places. Instead, say
+    % Note that you should not use |\tikzset| to set options directly. For instance, if you want to use a line width of |1pt| by default, do not try to say |\tikzset{line width=1pt}| at the beginning of your document. This will not work since the line width is changed in many places. Instead, say
+
+    注意，不应该使用 |\tikzset| 直接设置选项。例如，如果您想在默认情况下使用 |1pt| 的行宽，请不要尝试在文档的开头使用 |\tikzset{line width=1pt}|。由于在许多地方更改了线宽，因此无法使用。相反，使用
     %
 \begin{codeexample}[code only]
 \tikzset{every picture/.style={line width=1pt}}
 \end{codeexample}
     %
-    This will have the desired effect.
+    %This will have the desired effect.
+    %
+    这将达到预期的效果。
 \end{environment}
 
-In other \TeX\ formats, you should use the following commands instead:
+% In other \TeX\ formats, you should use the following commands instead:
 
-\begin{plainenvironment}{{tikzpicture}\opt{\oarg{options}}}
-    This is the plain \TeX\ version of the environment.
+在其他\TeX\ 格式中，应改为使用以下命令：
+
+\begin{plainenvironment}{{tikzpicture}\opt{\oarg{选项}}}
+    % This is the plain \TeX\ version of the environment.
+
+    这是环境的Plain \TeX\ 版本。
 \end{plainenvironment}
 
-\begin{contextenvironment}{{tikzpicture}\opt{\oarg{options}}}
-    This is the Con\TeX t version of the environment.
+\begin{contextenvironment}{{tikzpicture}\opt{\oarg{选项}}}
+    % This is the Con\TeX t version of the environment.
+
+    这是环境的Con\TeX t 版本。
 \end{contextenvironment}
 
 
-\subsubsection{Creating a Picture Using a Command}
+% \subsubsection{Creating a Picture Using a Command}
+\subsubsection{使用命令创建图片}
 
-The following command is an alternative to |{tikzpicture}| that is particular
-useful for graphics consisting of a single or few commands.
+% The following command is an alternative to |{tikzpicture}| that is particular useful for graphics consisting of a single or few commands.
 
-\begin{command}{\tikz\opt{\meta{animations spec}}\opt{\oarg{options}}\marg{path commands}}
-    This command places the \meta{path commands} inside a |{tikzpicture}|
-    environment. The \meta{path commands} may contain paragraphs and fragile
-    material (like verbatim text).
+下面的命令是 |{tikzpicture}| 的另一种选择，它对于由单个或几个命令组成的图形特别有用。
 
-    If there is only one path command, it need not be surrounded by curly
-    braces, if there are several, you need to add them (this is similar to the
-    |\foreach| statement and also to the rules in programming languages like
-    Java or C concerning the placement of curly braces).
+\begin{command}{\tikz\opt{\meta{动画规则}}\opt{\oarg{选项}}\marg{路径命令}}
+    % This command places the \meta{path commands} inside a |{tikzpicture}| environment. The \meta{path commands} may contain paragraphs and fragile material (like verbatim text).
 
-    \example |\tikz{\draw (0,0) rectangle (2ex,1ex);}| yields
+    该命令将 \meta{路径命令} 放在 |{tikzpicture}| 环境中 \meta{路径命令} 可能包含段落和脆弱命令（如抄录文本）。
+
+    % If there is only one path command, it need not be surrounded by curly braces, if there are several, you need to add them (this is similar to the |\foreach| statement and also to the rules in programming languages like Java or C concerning the placement of curly braces).
+
+    如果只有一个路径命令，则不需要用花括号将其括起来，如果有多个，则需要添加它们（这类似于 |\foreach| 语句，也类似于Java或C等编程语言中有关花括号位置的规则）。
+
+    % \example |\tikz{\draw (0,0) rectangle (2ex,1ex);}| yields
+    % \tikz{\draw (0,0) rectangle (2ex,1ex);}
+
+    \example |\tikz{\draw (0,0) rectangle (2ex,1ex);}| 生成
     \tikz{\draw (0,0) rectangle (2ex,1ex);}
 
-    \example |\tikz \draw (0,0) rectangle (2ex,1ex);| yields
+    % \example |\tikz \draw (0,0) rectangle (2ex,1ex);| yields
+    % \tikz \draw (0,0) rectangle (2ex,1ex);
+
+    \example |\tikz \draw (0,0) rectangle (2ex,1ex);| 生成
     \tikz \draw (0,0) rectangle (2ex,1ex);
 \end{command}
 
 
-\subsubsection{Handling Catcodes and the Babel Package}
+% \subsubsection{Handling Catcodes and the Babel Package}
+\subsubsection{处理类别代号和Babel宏包}
 
-Inside a \tikzname\ picture, most symbols need to have the category code 12
-(normal text) in order to ensure that the parser works properly. This is
-typically not the case when packages like |babel| are used, which change
-catcodes aggressively.
+% Inside a \tikzname\ picture, most symbols need to have the category code 12 (normal text) in order to ensure that the parser works properly. This is typically not the case when packages like |babel| are used, which change catcodes aggressively.
 
-To solve this problem, \tikzname\ provides a small library also called |babel|
-(which can, however, also be used together with any other package that globally
-changes category codes). What it does is to reset the category codes at the
-beginning of every |{tikzpicture}| and to restore them at the beginning of
-every node. In almost all cases, this is exactly what you would expect and
-need, so I recommend to always load this library by saying
-|\usetikzlibrary{babel}|. For details on what, exactly, happens with the
-category codes, see Section~\ref{section-library-babel}.
+在\tikzname\ 图片中，大多数符号需要有类别代码12（普通文本），以确保解析器正常工作。当使用像 |babel| 这样的宏包时，通常不会出现这种情况，因为这些包会积极地更改类别代号。
+
+% To solve this problem, \tikzname\ provides a small library also called |babel| (which can, however, also be used together with any other package that globally changes category codes). What it does is to reset the category codes at the beginning of every |{tikzpicture}| and to restore them at the beginning of every node. In almost all cases, this is exactly what you would expect and need, so I recommend to always load this library by saying |\usetikzlibrary{babel}|. For details on what, exactly, happens with the category codes, see Section~\ref{section-library-babel}.
+
+为了解决这个问题，\tikzname\ 提供了一个小型库，也称为 |babel| （但是，它也可以与任何其他全局更改类别代号的包一起使用）。它所做的是重置每个 |{tikzpicture}| 开始处的类别代号，并在每个节点开始处恢复它们。在几乎所有情况下，这正是您所期望和需要的，因此我建议始终通过使用 |\usetikzlibrary{babel}| 来加载此库。要了解类别代号到底发生了什么，请参阅第\ref{section-library-babel}节。
 
 
-\subsubsection{Adding a Background}
+% \subsubsection{Adding a Background}
+\subsubsection{添加背景}
 
-By default, pictures do not have any background, that is, they are
-``transparent'' on all parts on which you do not draw anything. You may instead
-wish to have a colored background behind your picture or a black frame around
-it or lines above and below it or some other kind of decoration.
+% By default, pictures do not have any background, that is, they are ``transparent'' on all parts on which you do not draw anything. You may instead wish to have a colored background behind your picture or a black frame around it or lines above and below it or some other kind of decoration.
 
-Since backgrounds are often not needed at all, the definition of styles for
-adding backgrounds has been put in the library package |backgrounds|. This
-package is documented in Section~\ref{section-tikz-backgrounds}.
+默认情况下，图片没有任何背景，也就是说，它们在你不绘制任何东西的所有部分都是``透明''的。相反，你可能希望在你的图片后面有一个彩色的背景，或者在它周围有一个黑色的框架，或者在它上面和下面有线条，或者其他一些装饰。
 
+% Since backgrounds are often not needed at all, the definition of styles for adding backgrounds has been put in the library package |backgrounds|. This package is documented in Section~\ref{section-tikz-backgrounds}.
 
-\subsection{Using Scopes to Structure a Picture}
-
-Inside a |{tikzpicture}| environment you can create scopes using the |{scope}|
-environment. This environment is available only inside the |{tikzpicture}|
-environment, so once more, there is little chance of doing anything wrong.
+由于背景通常是不需要的，添加背景的样式的定义已经放在 |background| 库中。这个库记录在\ref{section-tikz-backgrounds}节中。
 
 
-\subsubsection{The Scope Environment}
+% \subsection{Using Scopes to Structure a Picture}
+\subsection{使用分组构造图片}
 
-\begin{environment}{{scope}\opt{\meta{animations spec}}\opt{\oarg{options}}}
-    All \meta{options} are local to the \meta{environment contents}.
-    Furthermore, the clipping path is also local to the environment, that is,
-    any clipping done inside the environment ``ends'' at its end.
+% Inside a |{tikzpicture}| environment you can create scopes using the |{scope}| environment. This environment is available only inside the |{tikzpicture}| environment, so once more, there is little chance of doing anything wrong.
+
+在 |{tikzpicture}| 环境中，您可以使用 |{scope}| 环境创建分组。此环境仅在 |{tikzpicture}| 环境中可用，再次强调，所以再也没有机会做错任何事情。
+
+
+% \subsubsection{The Scope Environment}
+\subsubsection{Scope环境}
+
+\begin{environment}{{scope}\opt{\meta{动画规则}}\opt{\oarg{选项}}}
+    % All \meta{options} are local to the \meta{environment contents}. Furthermore, the clipping path is also local to the environment, that is, any clipping done inside the environment ``ends'' at its end.
+
+    所有的 \meta{选项} 对于 \meta{环境内容} 都是本地的。此外，剪切路径对于环境也是本地的，也就是说，在环境中完成的任何剪切都会在它的末尾结束。
     %
 \begin{codeexample}[]
 \begin{tikzpicture}[ultra thick]
@@ -303,60 +287,76 @@ environment, so once more, there is little chance of doing anything wrong.
 \end{tikzpicture}
 \end{codeexample}
 
-    \begin{key}{/tikz/name=\meta{scope name}}
-        Assigns a name to a scope reference in animations. The name is a
-        ``high-level'' name that drivers do not see, so you can use spaces,
-        number, letters, in a name, but you should \emph{not} use any
-        punctuation like a dot, a comma, or a colon.
+    \begin{key}{/tikz/name=\meta{分组名}}
+        % Assigns a name to a scope reference in animations. The name is a ``high-level'' name that drivers do not see, so you can use spaces, number, letters, in a name, but you should \emph{not} use any punctuation like a dot, a comma, or a colon.
+
+        在动画中为分组分配一个名称。这个名称是一个驱动程序看不到的``高级''名称，所以你可以在一个名称中使用空格、数字、字母，但是你应该\emph{不}使用任何标点符号，如点、逗号或冒号。
     \end{key}
 
-    The following style influences scopes:
+    % The following style influences scopes:
+
+    以下风格会影响分组：
     %
     \begin{stylekey}{/tikz/every scope (initially \normalfont empty)}
-        This style is installed at the beginning of every scope.
+        % This style is installed at the beginning of every scope.
+
+        这种样式安装在每个分组的开始处。
     \end{stylekey}
 
-    The following options are useful for scopes:
-    %
-    \begin{key}{/tikz/execute at begin scope=\meta{code}}
-        This option install some code that will be executed at the beginning of
-        the scope. This option must be given in the argument of the |{scope}|
-        environment.
+    % The following options are useful for scopes:
 
-        The effect applies only to the current scope, not to subscopes.
+    以下选项对分组很有用：
+    %
+    \begin{key}{/tikz/execute at begin scope=\meta{代码}}
+        % This option install some code that will be executed at the beginning of the scope. This option must be given in the argument of the |{scope}| environment.
+
+        这个选项安装了一些将在分组开始时执行的代码。这个选项必须在 |{scope}| 环境的参数中提供。
+
+        % The effect applies only to the current scope, not to subscopes.
+
+        此效果仅适用于当前分组，而不适用于子分组。
     \end{key}
 
-    \begin{key}{/tikz/execute at end scope=\meta{code}}
-        This option installs some code that will be executed at the end of the
-        current scope. Using this option multiple times will cause the code to
-        accumulate. This option must also be given in the optional argument of
-        the |{scope}| environment.
+    \begin{key}{/tikz/execute at end scope=\meta{代码}}
+        % This option installs some code that will be executed at the end of the current scope. Using this option multiple times will cause the code to accumulate. This option must also be given in the optional argument of the |{scope}| environment.
 
-        Again, the effect applies only to the current scope, not to subscopes.
+        此选项安装将在当前范围的末尾执行的一些代码。多次使用此选项将导致代码累积。这个选项还必须在 |{scope}| 环境的可选参数中提供。
+
+        % Again, the effect applies only to the current scope, not to subscopes.
+
+        同样，该效果仅适用于当前分组，而不适用于子分组。
     \end{key}
 \end{environment}
 
-\begin{plainenvironment}{{scope}\opt{\meta{animations spec}}\opt{\oarg{options}}}
-    Plain \TeX\ version of the environment.
+\begin{plainenvironment}{{scope}\opt{\meta{动画规则}}\opt{\oarg{选项}}}
+    % Plain \TeX\ version of the environment.
+
+    环境的Plain \TeX\ 版本。
 \end{plainenvironment}
 
-\begin{contextenvironment}{{scope}\opt{\meta{animations spec}}\opt{\oarg{options}}}
-    Con\TeX t version of the environment.
+\begin{contextenvironment}{{scope}\opt{\meta{动画规则}}\opt{\oarg{选项}}}
+    % Con\TeX t version of the environment.
+
+    环境的Con\TeX t 版本。
 \end{contextenvironment}
 
 
-\subsubsection{Shorthand for Scope Environments}
+% \subsubsection{Shorthand for Scope Environments}
+\subsubsection{Scope环境的简写形式}
 
-There is a small library that makes using scopes a bit easier:
+% There is a small library that makes using scopes a bit easier:
+
+有一个小库可以使使用分组更容易:
 %
 \begin{tikzlibrary}{scopes}
-    This library defines a shorthand for starting and ending |{scope}|
-    environments.
+    % This library defines a shorthand for starting and ending |{scope}| environments.
+
+    这个库定义了启动和结束 |{scope}| 环境的简写形式。
 \end{tikzlibrary}
 
-When this library is loaded, the following happens: At certain places inside a
-\tikzname\ picture, it is allowed to start a scope just using a single brace,
-provided the single brace is followed by options in square brackets:
+% When this library is loaded, the following happens: At certain places inside a \tikzname\ picture, it is allowed to start a scope just using a single brace, provided the single brace is followed by options in square brackets:
+
+当加载此库时，会发生以下情况：在\tikzname\ 图片的某些地方，允许仅使用单大括号开始分组，前提是单大括号后面跟着方括号中的选项：
 %
 \begin{codeexample}[preamble={\usetikzlibrary{scopes}}]
 \begin{tikzpicture}
@@ -375,34 +375,26 @@ provided the single brace is followed by options in square brackets:
 \end{tikzpicture}
 \end{codeexample}
 
-In the above example, |{ [thick]| actually causes a |\begin{scope}[thick]| to
-be inserted, and the corresponding closing |}| causes an |\end{scope}| to be
-inserted.
+% +In the above example, |{ [ultra thick]| actually causes a |\begin{scope}[ultra thick]| to be inserted, and the corresponding closing |}| causes an |\end{scope}| to be inserted.
 
-The ``certain places'' where an opening brace has this special meaning are the
-following: First, right after the semicolon that ends a path. Second, right
-after the end of a scope. Third, right at the beginning of a scope, which
-includes the beginning of a picture. Also note that some square bracket must
-follow, otherwise the brace is treated as a normal \TeX\ scope.
+在上面的例子中，|{[ultra thick]| 实际上会插入一个 |\begin{scope}[ultra thick]|，对应的 |}| 会插入一个 |\end{scope}|。
+
+% The ``certain places'' where an opening brace has this special meaning are the following: First, right after the semicolon that ends a path. Second, right after the end of a scope. Third, right at the beginning of a scope, which includes the beginning of a picture. Also note that some square bracket must follow, otherwise the brace is treated as a normal \TeX\ scope.
+
+以下是具有特殊含义的开括号的``某些位置''：首先，紧跟在结束路径的分号之后。第二，正好在分组结束之后。第三，在分组的开始，包括一幅图的开始。还要注意，必须在后面加上一些方括号，否则大括号将被视为普通的\TeX\ 分组。
 
 
-\subsubsection{Single Command Scopes}
+% \subsubsection{Single Command Scopes}
+\subsubsection{单命令分组}
 
-In some situations it is useful to create a scope for a single command. For
-instance, when you wish to use algorithm graph drawing in order to layout a
-tree, the path of the tree needs to be surrounded by a scope whose only purpose
-is to take a key that selects a layout for the scope. Similarly, in order to
-put something on a background layer, a scope needs to be created. In such
-cases, where it will cumbersome to create a |\begin{scope}| and |\end{scope}|
-pair just for a single command, the |\scoped| command may be useful:
+% In some situations it is useful to create a scope for a single command. For instance, when you wish to use algorithm graph drawing in order to layout a tree, the path of the tree needs to be surrounded by a scope whose only purpose is to take a key that selects a layout for the scope. Similarly, in order to put something on a background layer, a scope needs to be created. In such cases, where it will cumbersome to create a |\begin{scope}| and |\end{scope}| pair just for a single command, the |\scoped| command may be useful:
 
-\begin{command}{\scoped\opt{\meta{animations spec}}\opt{\oarg{options}}\meta{path command}}
-    This command works like |\tikz|, only you can use it inside a
-    |{tikzpicture}|. It will take the following \meta{path command} and
-    put it inside a |{scope}| with the \meta{options} set. The
-    \meta{path command} may either be a single command ended by a
-    semicolon or it may contain multiple commands, but then they must be
-    surrounded by curly braces.
+在某些情况下，为单个命令创建分组是有用的。例如，当您希望使用算法绘制图形来布局树时，树的路径需要被一个分组包围，该分组的唯一目的是使用一个键来选择分组的布局。类似地，为了在背景层上放置一些东西，需要创建一个分组。在这种情况下，仅为单个命令创建 |\begin{scope}| 和 |\end{scope}| 对会很麻烦，|\scoped| 命令可能很有用：
+
+\begin{command}{\scoped\opt{\meta{动画规则}}\opt{\oarg{选项}}\meta{路径命令}}
+    % This command works like |\tikz|, only you can use it inside a |{tikzpicture}|. It will take the following \meta{path command} and put it inside a |{scope}| with the \meta{options} set. The \meta{path command} may either be a single command ended by a semicolon or it may contain multiple commands, but then they must be surrounded by curly braces.
+
+    这个命令类似于 |\tikz|，只是您可以在 |{tikzpicture}| 中使用它。它将采用下面的 \meta{路径命令}，并将其放在带有 \meta{选项} 集的 |{scope}| 中。\meta{路径命令}可以是一个以分号结束的单个命令，也可以包含多个命令，但是它们必须用大括号括起来。
     %
 \begin{codeexample}[preamble={\usetikzlibrary{backgrounds}}]
 \begin{tikzpicture}
@@ -415,12 +407,12 @@ pair just for a single command, the |\scoped| command may be useful:
 \end{command}
 
 
-\subsubsection{Using Scopes Inside Paths}
+% \subsubsection{Using Scopes Inside Paths}
+\subsubsection{在路径内部使用分组}
 
-The |\path| command, which is described in much more detail in later sections,
-also takes graphic options. These options are local to the path. Furthermore,
-it is possible to create local scopes within a path simply by using curly
-braces as in
+% The |\path| command, which is described in much more detail in later sections, also takes graphic options. These options are local to the path. Furthermore, it is possible to create local scopes within a path simply by using curly braces as in
+
+|\path| 命令（将在后面的部分中更详细地描述）也接受图形选项。这些选项是路径本地的。此外，可以像下面这样简单地使用花括号在路径内创建局部分组
 %
 \begin{codeexample}[]
 \tikz \draw (0,0) -- (1,1)
@@ -428,70 +420,68 @@ braces as in
            -- (3,0) -- (2,1);
 \end{codeexample}
 
-Note that many options apply only to the path as a whole and cannot be scoped
-in this way. For example, it is not possible to scope the |color| of the path.
-See the explanations in the section on paths for more details.
+% Note that many options apply only to the path as a whole and cannot be scoped in this way. For example, it is not possible to scope the |color| of the path. See the explanations in the section on paths for more details.
 
-Finally, certain elements that you specify in the argument to the |\path|
-command also take local options. For example, a node specification takes
-options. In this case, the options apply only to the node, not to the
-surrounding path.
+注意，许多选项仅应用于整个路径，不能以这种方式确定分组。例如，不可能限定路径的 |color| 的分组。有关路径的详细信息，请参阅有关路径部分的说明。
+
+% Finally, certain elements that you specify in the argument to the |\path| command also take local options. For example, a node specification takes options. In this case, the options apply only to the node, not to the surrounding path.
+
+最后，在 |\path| 命令的参数中指定的某些元素也接受本地选项。例如，指定节点接受选项。在这种情况下，选项仅应用于节点，而不应用于周围的路径。
 
 
-\subsection{Using Graphic Options}
+% \subsection{Using Graphic Options}
+\subsection{使用图形选项}
 \label{section-graphic-options}
 
-\subsubsection{How Graphic Options Are Processed}
+% \subsubsection{How Graphic Options Are Processed}
+\subsubsection{图形选项是如何处理的}
 
-Many commands and environments of \tikzname\ accept \emph{options}. These
-options are so-called \emph{key lists}. To process the options, the following
-command is used, which you can also call yourself. Note that it is usually
-better not to call this command directly, since this will ensure that the
-effect of options are local to a well-defined scope.
+% Many commands and environments of \tikzname\ accept \emph{options}. These options are so-called \emph{key lists}. To process the options, the following command is used, which you can also call yourself. Note that it is usually better not to call this command directly, since this will ensure that the effect of options are local to a well-defined scope.
 
-\begin{command}{\tikzset\marg{options}}
-    This command will process the \meta{options} using the |\pgfkeys| command,
-    documented in detail in Section~\ref{section-keys}, with the default path
-    set to |/tikz|. Under normal circumstances, the \meta{options} will be
-    lists of comma-separated pairs of the form \meta{key}|=|\meta{value}, but
-    more fancy things can happen when you use the power of the |pgfkeys|
-    mechanism, see Section~\ref{section-keys} once more.
+许多\tikzname\ 的命令和环境都接受\emph{选项}。这些选项称为\emph{键列表}。要处理这些选项，使用以下命令，您也可以自己调用。请注意，通常最好不要直接调用此命令，因为这将确保选项的作用仅限于定义良好的分组。
 
-    When a pair \meta{key}|=|\meta{value} is processed, the following happens:
+\begin{command}{\tikzset\marg{选项}}
+    % This command will process the \meta{options} using the |\pgfkeys| command, documented in detail in Section~\ref{section-keys}, with the default path set to |/tikz|. Under normal circumstances, the \meta{options} will be lists of comma-separated pairs of the form \meta{key}|=|\meta{value}, but more fancy things can happen when you use the power of the |pgfkeys| mechanism, see Section~\ref{section-keys} once more.
+
+    此命令将使用 |\pgfkeys| 命令处理 \meta{选项}，该命令的默认路径设置为 |/tikz| ，详细记录在第\ref{section-keys}节中。在正常情况下，\meta{选项} 将是 \meta{键}|=|\meta{值} 形式的逗号分隔对列表，但当您使用强大的 |pgfkeys| 机制时，可能会发生更奇妙的事情，请再次参阅第\ref{section-keys}节。
+
+    % When a pair \meta{key}|=|\meta{value} is processed, the following happens:
+
+    处理一对 \meta{键}|=|\meta{值} 时，会发生以下情况：
     %
     \begin{enumerate}
-        \item If the \meta{key} is a full key (starts with a slash) it is
-            handled directly as described in Section~\ref{section-keys}.
-        \item Otherwise (which is usually the case), it is checked whether
-            |/tikz/|\meta{key} is a key and, if so, it is executed.
-        \item Otherwise, it is checked whether |/pgf/|\meta{key} is a key
-            and, if so, it is executed.
-        \item Otherwise, it is checked whether \meta{key} is a color and, if
-            so, |color=|\meta{key} is executed.
-        \item Otherwise, it is checked whether \meta{key} contains a dash
-            and, if so, |arrows=|\meta{key} is executed.
-        \item Otherwise, it is checked whether \meta{key} is the name of a
-            shape and, if so, |shape=|\meta{key} is executed.
-        \item Otherwise, an error message is printed.
+        % \item If the \meta{key} is a full key (starts with a slash) it is handled directly as described in Section~\ref{section-keys}.
+        \item 如果 \meta{键} 是一个完整的键（以斜杠开始），它将被直接处理，如第\ref{section-keys}节所述。
+        % \item Otherwise (which is usually the case), it is checked whether |/tikz/|\meta{key} is a key and, if so, it is executed.
+        \item 否则（通常情况下），检查 |/tikz/|\meta{键} 是否是一个键，如果是，则执行它。
+        % \item Otherwise, it is checked whether |/pgf/|\meta{key} is a key and, if so, it is executed.
+        \item 否则，检查 |/pgf/|\meta{键} 是否是一个键，如果是，则执行它。
+        % \item Otherwise, it is checked whether \meta{key} is a color and, if so, |color=|\meta{key} is executed.
+        \item 否则，检查 \meta{键} 是否是一种颜色，如果是，则执行 |color=|\meta{键}。
+        % \item Otherwise, it is checked whether \meta{key} contains a dash and, if so, |arrows=|\meta{key} is executed.
+        \item 否则，检查 \meta{键} 是否包含连字符，如果是，则执行 |arrows=|\meta{键}。
+        % \item Otherwise, it is checked whether \meta{key} is the name of a shape and, if so, |shape=|\meta{key} is executed.
+        \item 否则，检查 \meta{键} 是否是形状的名称，如果是，则执行 |shape=|\meta{键}。
+        % \item Otherwise, an error message is printed.
+        \item 否则，将显示错误消息。
     \end{enumerate}
 
-    Note that by the above description, all keys starting with |/tikz| and also
-    all keys starting with |/pgf| can be used as \meta{key}s in an
-    \meta{options} list.
+    % Note that by the above description, all keys starting with |/tikz| and also all keys starting with |/pgf| can be used as \meta{key}s in an \meta{options} list.
+
+    注意，根据上面的描述，所有以 |/tikz| 开头的键以及所有以 |/pgf| 开头的键都可以在一个 \meta{选项} 列表中作为 \meta{键} 使用。
 \end{command}
 
 
-\subsubsection{Using Styles to Manage How Pictures Look}
+% \subsubsection{Using Styles to Manage How Pictures Look}
+\subsubsection{使用样式来管理图片的外观}
 
-There is a way of organizing sets of graphic options ``orthogonally'' to the
-normal scoping mechanism. For example, you might wish all your ``help lines''
-to be drawn in a certain way like, say, gray and thin (do \emph{not} dash them,
-that distracts). For this, you can use \emph{styles}.
+% There is a way of organizing sets of graphic options ``orthogonally'' to the normal scoping mechanism. For example, you might wish all your ``help lines'' to be drawn in a certain way like, say, gray and thin (do \emph{not} dash them, that distracts). For this, you can use \emph{styles}.
 
-A style is a key that, when used, causes a set of graphic options to be
-processed. Once a style has been defined, it can be used like any other key.
-For example, the predefined |help lines| style, which you should use for lines
-in the background like grid lines or construction lines.
+有一种组织图形选项集的方法与正常的分组机制``正交''。例如，您可能希望所有的``帮助线''都以某种特定的方式绘制，比如灰色和细的（做``竖线''，那会分散注意力）。为此，您可以使用\emph{样式}。
+
+% A style is a key that, when used, causes a set of graphic options to be processed. Once a style has been defined, it can be used like any other key. For example, the predefined |help lines| style, which you should use for lines in the background like grid lines or construction lines.
+
+样式是一个键，使用时会导致一组图形选项被处理。 定义样式后，就可以像使用其他任何键一样使用它。 例如，预定义的 |help lines| 样式，您应该将其用于背景中的线条，例如网格线或辅助线。
 %
 \begin{codeexample}[]
 \begin{tikzpicture}
@@ -500,22 +490,21 @@ in the background like grid lines or construction lines.
 \end{tikzpicture}
 \end{codeexample}
 
-Defining styles is also done using options. Suppose we wish to define a style
-called |my style| and when this style is used, we want the draw color to be set
-to |red| and the fill color be set to |red!20|. To achieve this, we use the
-following option:
+% Defining styles is also done using options. Suppose we wish to define a style called |my style| and when this style is used, we want the draw color to be set to |red| and the fill color be set to |red!20|. To achieve this, we use the following option:
+
+还可以使用选项来定义样式。假设我们希望定义一个名为 |my style| 的样式，当使用这个样式时，我们希望绘制颜色设置为 |red|，填充颜色设置为 |red!20|。为此，我们使用以下选项:
 %
 \begin{codeexample}[code only]
 my style/.style={draw=red,fill=red!20}
 \end{codeexample}
 
-The meaning of the curious |/.style| is the following: ``The key |my style|
-should not be used here but, rather, be defined. So, set up things such that
-using the key |my style| will, in the following, have the same effect as if we
-had written |draw=red,fill=red!20| instead.''
+% The meaning of the curious |/.style| is the following: ``The key |my style| should not be used here but, rather, be defined. So, set up things such that using the key |my style| will, in the following, have the same effect as if we had written |draw=red,fill=red!20| instead.''
 
-Returning to the help lines example, suppose we prefer blue help lines. This
-could be achieved as follows:
+|/.style| 的含义如下：``关键 |my style| 这里不是使用，而是定义。 因此，请使用 |my style| 键进行设置。 在下面，将具有与我们使用 |draw=red,fill=red!20| 相同的效果。''
+
+% Returning to the help lines example, suppose we prefer blue help lines. This could be achieved as follows:
+
+回到帮助线示例，假设我们更喜欢蓝色的帮助线。这方面可以实现如下：
 %
 \begin{codeexample}[]
 \begin{tikzpicture}[help lines/.style={blue!50,very thin}]
@@ -524,9 +513,9 @@ could be achieved as follows:
 \end{tikzpicture}
 \end{codeexample}
 
-Naturally, one of the main ideas behind styles is that they can be used in
-different pictures. In this case, we have to use the |\tikzset| command
-somewhere at the beginning.
+% Naturally, one of the main ideas behind styles is that they can be used in different pictures. In this case, we have to use the |\tikzset| command somewhere at the beginning.
+
+当然，样式背后的主要思想之一是它们可以被用于不同的图片。在本例中，我们必须在开头使用 |\tikzset| 命令。
 %
 \begin{codeexample}[]
 \tikzset{help lines/.style={blue!50,very thin}}
@@ -537,10 +526,9 @@ somewhere at the beginning.
 \end{tikzpicture}
 \end{codeexample}
 
-Since styles are just special cases of |pgfkeys|'s general style facility, you
-can actually do quite a bit more. Let us start with adding options to an
-already existing style. This is done using |/.append style| instead of
-|/.style|:
+% Since styles are just special cases of |pgfkeys|'s general style facility, you can actually do quite a bit more. Let us start with adding options to an already existing style. This is done using |/.append style| instead of |/.style|:
+
+由于样式只是 |pgfkeys| 通用样式工具的特殊情况，实际上您可以做的更多。让我们从向一个已经存在的样式添加选项开始。这是使用 |/.append style| 而不是 |/.style| 做到的：
 %
 \begin{codeexample}[]
 \begin{tikzpicture}[help lines/.append style=blue!50]
@@ -549,16 +537,13 @@ already existing style. This is done using |/.append style| instead of
 \end{tikzpicture}
 \end{codeexample}
 %
-In the above example, the option |blue!50| is appended to the style
-|help lines|, which now has the same effect as |black!50,very thin,blue!50|.
-Note that two colors are set, so the last one will ``win''. There also exists a
-handler called |/.prefix style| that adds something at the beginning of the
-style.
+% In the above example, the option |blue!50| is appended to the style |help lines|, which now has the same effect as |black!50,very thin,blue!50|. Note that two colors are set, so the last one will ``win''. There also exists a handler called |/.prefix style| that adds something at the beginning of the style.
 
-Just as normal keys, styles can be parameterized. This means that you write
-\meta{style}|=|\meta{value} when you use the style instead of just
-\meta{style}. In this case, all occurrences of |#1| in \meta{style} are
-replaced by \meta{value}. Here is an example that shows how this can be used.
+在上面的示例中，选项 |blue!50| 被附加到样式 |help lines|，它现在具有与 |black!50,very thin,blue!50| 相同的效果。注意，如果设置了两中颜色，最后一个会``赢得胜利''。还存在一个名为 |/.prefix style| 的样式，它在样式的开头添加了一些东西。
+
+% Just as normal keys, styles can be parameterized. This means that you write \meta{style}|=|\meta{value} when you use the style instead of just \meta{style}. In this case, all occurrences of |#1| in \meta{style} are replaced by \meta{value}. Here is an example that shows how this can be used.
+
+与普通键一样，样式也可以参数化。这意味着您需要在使用样式时使用 \meta{样式}|=|\meta{值}，而不只是 \meta{样式}。在本例中，\meta{样式} 中出现的所有 |#1| 都被\meta{值} 替换。下面是一个示例，展示了如何使用它。
 %
 \begin{codeexample}[]
 \begin{tikzpicture}[outline/.style={draw=#1,thick,fill=#1!50}]
@@ -567,8 +552,9 @@ replaced by \meta{value}. Here is an example that shows how this can be used.
 \end{tikzpicture}
 \end{codeexample}
 
-For parameterized styles you can also set a \emph{default} value using the
-|/.default| handler:
+% For parameterized styles you can also set a \emph{default} value using the |/.default| handler:
+
+对于参数化样式，您也可以使用 |/.default| 处理程序设置\emph{默认}值：
 %
 \begin{codeexample}[]
 \begin{tikzpicture}[outline/.style={draw=#1,thick,fill=#1!50},
@@ -578,5 +564,8 @@ For parameterized styles you can also set a \emph{default} value using the
 \end{tikzpicture}
 \end{codeexample}
 
-For more details on using and setting styles, see also
-Section~\ref{section-keys}.
+% For more details on using and setting styles, see also Section~\ref{section-keys}.
+
+有关使用和设置样式的更多细节，请参见第\ref{section-keys}节。
+
+\clearpage
