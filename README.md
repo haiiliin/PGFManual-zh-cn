@@ -95,7 +95,7 @@ Chinese translation of [PGFManual v3.1.6a](https://github.com/pgf-tikz/pgf/relea
 - [ ] Data Visualization
   - [x] Introduction to Data Visualization
   - [x] Creating Data Visualizations
-  - [ ] Providing Data for a Data Visualization
+  - [x] Providing Data for a Data Visualization
   - [ ] Axes
   - [ ] Visualizers
   - [ ] Style Sheets and Legends

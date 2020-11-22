@@ -109,7 +109,7 @@
     % \item Since the |fpu| library does not support advanced parsing, you currently \emph{cannot} write things like |3+2| in a data point number. This will result in an error.
     \item 由于 |fpu| 库不支持高级解析，您目前不可能在数据点编号中编写类似 |3+2| 的内容。这将导致一个错误。
     % \item However, there is a loop-hole: If a ``number'' in a data point starts with a parenthesis, the value between the parentheses \emph{is} parsed using the normal parser:
-    \item 但是，这里存在一个漏洞：如果数据点中的``数据''以圆括号开始，则使用普通解析器解析圆括号中的值：
+    \item 但是，这里存在一个漏洞：如果数据点中的``数据''以圆括号开始，则使用标准解析器解析圆括号中的值：
         %
         \begin{itemize}
             % \item |100000| is allowed.
@@ -119,12 +119,12 @@
             % \item |(2+3)| is allowed and evaluates to |5|.
             \item |(2+3)| 被允许，其结果等于 |5|。
             % \item |(100000)| yields an error since $100\,000$ is beyond the normal parser's precision.
-            \item |(100000)| 将产生错误，因为 $100\,000$ 超出了正常解析器的精度。
+            \item |(100000)| 将产生错误，因为 $100\,000$ 超出了标准解析器的精度。
         \end{itemize}
         %
         %The bottom line is that any normal calculations should be set inside round parentheses, while large numbers should not be surrounded by parentheses. Hopefully, in the future, these restrictions will be lifted.
         % 
-        底线是任何正常的计算都应该在圆括号内设置，而大的数字不应该被圆括号包围。希望在未来，这些限制将被取消。
+        结果是任何正常的计算都应该在圆括号内设置，而大的数字不应该被圆括号包围。希望在未来，这些限制将被取消。
 \end{enumerate}
 
 % Section~\ref{section-dv-formats} gives an in-depth coverage of the available data formats and explains how new data formats can be defined.
@@ -452,7 +452,7 @@
     %
 \end{key}
 
-\begin{datavisualizationoperation}{data group}{\opt{\oarg{选项}}\marg{名字}\opt{|+=|\marg{数据指定}}} % \begin{datavisualizationoperation}{data group}{\opt{\oarg{options}}\marg{name}\opt{|+=|\marg{data specifications}}}
+\begin{datavisualizationoperation}{data group}{\opt{\oarg{选项}}\marg{数据组名称}\opt{|+=|\marg{数据指定}}} % \begin{datavisualizationoperation}{data group}{\opt{\oarg{options}}\marg{name}\opt{|+=|\marg{data specifications}}}
     % You can store a whole \meta{data specification} in a \emph{data group}. This allows you to reuse data in multiple places without having to write the data to an external file.
 
     您可以将整个 \meta{数据指定} 存储在一个\emph{数据组}中。这允许您在多个地方重用数据，而不必将数据写入外部文件。
@@ -463,16 +463,16 @@
     %
     \begin{itemize}
         % \item |data group| \opt{\oarg{options}} \marg{name} |=| \marg{data specifications}
-        \item |data group| \opt{\oarg{选项}} \marg{名字} |=| \marg{数据指定}
+        \item |data group| \opt{\oarg{选项}} \marg{数据组名称} |=| \marg{数据指定}
         % \item |data group| \opt{\oarg{options}} \marg{name} |+=| \marg{data specifications}
-        \item |data group| \opt{\oarg{选项}} \marg{名字} |+=| \marg{数据指定}
+        \item |data group| \opt{\oarg{选项}} \marg{数据组名称} |+=| \marg{数据指定}
         % \item |data group| \opt{\oarg{options}} \marg{name}
-        \item |data group| \opt{\oarg{选项}} \marg{名字}
+        \item |data group| \opt{\oarg{选项}} \marg{数据组名称}
     \end{itemize}
     %
     % In the first case, a new data group called \meta{name} is created (an existing data group of the same name will be erased) and the following \meta{data specifications} is stored in this data group. The data group will not be fed to the rendering pipeline, but it is parsed at this point as if it were. The defined data group is defined globally, so you can used it in subsequent visualizations. The \meta{options} are saved with the parsed \meta{data specifications}.
     %
-    在第一种情况下，创建了一个名为 \meta{名字} 的新数据组（将擦除同名的现有数据组），并将以下 \meta{数据指定} 存储在该数据组中。数据组将不会被馈送到渲染管道，但此时它就像被解析一样被解析。所定义的数据组是全局定义的，因此可以在后续可视化中使用它。\meta{选项} 与解析的 \meta{数据指定} 一起保存。
+    在第一种情况下，创建了一个名为 \meta{数据组名称} 的新数据组（将擦除同名的现有数据组），并将以下 \meta{数据指定} 存储在该数据组中。数据组将不会被馈送到渲染管道，但此时它就像被解析一样被解析。所定义的数据组是全局定义的，因此可以在后续可视化中使用它。\meta{选项} 与解析的 \meta{数据指定} 一起保存。
 
     % In the second case, an already existing data group is extended by adding the \meta{data specifications} to it.
 
@@ -480,7 +480,7 @@
 
     % In the third case (detected by noting that the \meta{name} is neither followed by an equal sign nor a plus sign), the contents of the previously defined data group \meta{name} is inserted. The \meta{options} are also executed.
 
-    在第三种情况下（注意到 \meta{名字} 后面既没有等号也没有加号），插入先前定义的名为 \meta{名字} 的数据组的内容。还将执行 \meta{选项}。
+    在第三种情况下（注意到 \meta{数据组名称} 后面既没有等号也没有加号），插入先前定义的名为 \meta{数据组名称} 的数据组的内容。还将执行 \meta{选项}。
 
     % Let is now first create a data group. Note that nothing is drawn since the ``dummy'' data visualization is empty and used only for the definition of the data group.
 
@@ -775,3 +775,5 @@
         工作方式类似于 |arg1 from key|，只是键必须存储一个对象，而不是对象的对象的句柄被传递给构造函数。
     \end{key}
 \end{key}
+
+\clearpage

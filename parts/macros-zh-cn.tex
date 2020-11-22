@@ -158,6 +158,19 @@ keepspaces = true,
   \end{pgfmanualentry}
 }
 
+\renewenvironment{dataformat}[1]{
+  \begin{pgfmanualentry}
+    \pgfmanualentryheadline{%
+      \pgfmanualpdflabel{#1}{}%
+      \textbf{格式~} {\ttfamily\declare{#1}}}%
+    \index{#1@\protect\texttt{#1} format}%
+    \index{Formats!#1@\protect\texttt{#1}}
+    \pgfmanualbody
+}
+{
+  \end{pgfmanualentry}
+}
+
 
 \iffalse
 % Hyperlinks for text to contents
