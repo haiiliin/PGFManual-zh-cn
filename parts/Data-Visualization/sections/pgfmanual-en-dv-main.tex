@@ -1,0 +1,777 @@
+% Copyright 2019 by Till Tantau
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Free Documentation License.
+%
+% See the file doc/generic/pgf/licenses/LICENSE for more details.
+
+
+% \section{Creating Data Visualizations}
+\section{创建数据可视化}
+\label{section-dv-main}
+\label{section-dv-main-setup}
+
+% \subsection{Overview}
+\subsection{概述}
+
+% The \todosp{why two labels? The first doesn't seem to be used.} present section explains how a data visualization is created in \tikzname. For this, you need to include the |datavisualization| library and then use the command |\datavisualization| whose syntax is explained in the rest of the present section. This command is part of the following library: 
+
+本节 \todosp{为什么要两个标签？ 第一个似乎没有被使用。} 解释如何在\tikzname 中创建数据可视化。为此，您需要包含 |datavisualization| 库，然后使用命令 |\datavisualization| ，其语法将在本节的其余部分中解释。此命令是下述库的一部分：
+
+\begin{tikzlibrary}{datavisualization}
+    % This library must be loaded if you wish to use the |\datavisualization| command. It defines all styles needed to create basic data visualizations; additional, more specialized libraries need to be loaded for more advanced features.
+
+    如果您希望使用 |\datavisualization| 命令，则必须加载此库。它定义了创建基本数据可视化所需的所有样式；为了获得更高级的特性，还需要加载更专门的库。
+\end{tikzlibrary}
+
+% In order to visualize, you basically need to do three things:
+
+为了可视化数据，您基本上需要做三件事：
+%
+\begin{enumerate}
+    % \item You need to select what kind of plot you would like to have (a ``school book plot'' or a ``scientific 2d plot'' or a ``scientific spherical plot'' etc.). This is done by passing an option to the |\datavisualization| command that selects this kind of plot.
+    \item 您需要选择想要的绘图类型（``教科书绘图''或``科学2D绘图''或``科学球形绘图''等）。 这是通过向选择此类绘图的 |\datavisualization| 命令传递一个选项来实现的。
+    % \item You need to provide data points, which is done using the |data| command.
+    \item 您需要提供数据点，这可以使用 |data| 命令来完成。
+    % \item Additionally, you can add options that give you more fine-grained control over the way the visualization will look. You can configure the number of ticks and grid lines, where the labels are placed, the colors, or the fonts. Indeed, since the data visualization engine internally uses \tikzname-styles, you can have extremely fine-grained control over how a plot will look like.
+    \item 此外，还可以添加选项，以便对可视化的外观进行更细的控制。您可以配置刻度和网格线的数量、标签放置的位置、颜色或字体。实际上，由于数据可视化引擎在内部使用\tikzname 样式，您可以非常精细地控制绘图的外观。
+\end{enumerate}
+
+% The syntax of the |\datavisualization| command is designed in such a way that you only need to provide very few options to create plots that ``look good by default''.
+
+|\datavisualization| 命令的语法被设计成这样一种方式的命令，您只需要提供很少的选项来创建``在默认情况下看起来不错''的图形。
+
+% This section is structured as follows: First, the philosophy behind concepts like ``data points'', ``axes'', or ``visualizers'' is explained. Each of these concepts is further detailed in later section. Then, the syntax of the |\datavisualization| command is covered. The reference sections explain which predefined plot kinds are available.
+
+本节的结构如下：首先，解释诸如``数据点''、``轴''或``显像器''等概念背后的原理。后面的部分将进一步详细介绍这些概念。然后，介绍 |\datavisualization| 命令的语法。参考章节说明了可用的预定义图类型。
+
+
+% \subsection{Concept: Data Points and Data Formats}
+\subsection{概念：数据点和数据格式}
+
+% As explained in Section~\ref{section-dv-intro-data-points}, data points are the basic entities that are processed by the data visualization engine. In order to specify data points, you use the |data| command, whose syntax is explained in more detail in Section~\ref{section-dv-data-syntax}. The |data| command allows you to either specify points ``inline'', directly inside your \TeX-file; or you can specify the name of file that contains the data points.
+
+正如在第\ref{section-dv-intro-data-points}节中所解释的，数据点是数据可视化引擎所处理的基本实体。为了指定数据点，可以使用 |data| 命令，它的语法在第\ref{section-dv-data-syntax}节中有更详细的解释。|data| 命令允许您直接在您的\TeX 文件内``内联''指定数据点；或者您可以指定包含数据点的文件的名称。
+
+\medskip
+% \textbf{Specifying data points.} Data points can be formatted in different ways. For instance, in the so called \emph{comma separated values} format, there is one line for each data point and the different attributes of a data point are separated by commas. Another common format is to specify data points using the so called \emph{key--value} format, where on each line the different attributes of a data point are set using a comma-separated list of strings of the form |attribute=value|.
+
+\textbf{指定数据点。}数据点可以用不同的方式格式化。例如，在所谓的\emph{逗号分隔值}格式中，每个数据点有一行，数据点的不同属性用逗号分隔。另一种常见的格式是使用所谓的\emph{键值}格式指定数据点，其中在每一行上使用以逗号分隔的字符串列表设置数据点的不同属性，形式为 |属性=值|。
+
+% Here are two examples, where similar data is given in different formats:
+
+这是两个示例，其中相似的数据以不同的格式给出：
+%
+\begin{codeexample}[preamble={\usetikzlibrary{datavisualization}}]
+\begin{tikzpicture}
+  \datavisualization [school book axes, visualize as smooth line]
+    data {
+      x, y
+      -1.5, 2.25
+      -1, 1
+      -.5, .25
+      0, 0
+      .5, .25
+      1, 1
+      1.5, 2.25
+    };
+\end{tikzpicture}
+\end{codeexample}
+
+\begin{codeexample}[preamble={\usetikzlibrary{datavisualization.formats.functions}}]
+\begin{tikzpicture}
+  \datavisualization [school book axes, visualize as smooth line]
+    data [format=function] {
+      var x : interval [-1.5:1.5] samples 7;
+      func y = \value x*\value x;
+    };
+\end{tikzpicture}
+\end{codeexample}
+
+% In the first example, no format needed to be specified explicitly since the default format is the one used for the data following the |data| keyword: A list of comma-separated values, where each line represents a data point.
+
+在第一个示例中，不需要显式指定格式，因为默认格式是用于 |data| 关键字后面的数据的格式：逗号分隔的值列表，其中每行表示一个数据点。
+
+\medskip
+% \textbf{Number accuracy.}\label{section-dv-expressions} Data visualizations typically demand a much higher accuracy and range of values than \TeX\ provides: \TeX\ numbers are limited to 13 bits for the integer part and 16 bits for the fractional part. Because of this, the data visualization engine does not use \pgfname's standard representation of numbers and \TeX\ dimensions and is does not use the standard parser when reading numbers in a data point. Instead, the |fpu| library, described in Section~\ref{section-library-fpu}, is used to handle numbers.
+
+\textbf{数据精度。}\label{section-dv-expressions}数据可视化通常需要比\TeX\ 提供的更高的精度和范围：\TeX\ 数字的整数部分被限制为13位，小数部分被限制为16位。因此，数据可视化引擎不使用\pgfname 的数字和\TeX\ 尺寸的标准表示，而且在读取数据点中的数字时也不使用标准解析器。相反，第\ref{section-library-fpu}节中描述的 |fpu| 库用于处理数字。
+
+% This use of the |fpu| library has several effects that users of the data visualization system should be aware of:
+
+使用 |fpu| 库有几个效果，数据可视化系统的用户应该知道:
+%
+\begin{enumerate}
+    % \item You can use numbers like |100000000000000| or |0.00000000001| in a data points.
+    \item 你可以用类似于 |100000000000000| 或者 |0.00000000001| 的数据作为数据点。
+    % \item Since the |fpu| library does not support advanced parsing, you currently \emph{cannot} write things like |3+2| in a data point number. This will result in an error.
+    \item 由于 |fpu| 库不支持高级解析，您目前不可能在数据点编号中编写类似 |3+2| 的内容。这将导致一个错误。
+    % \item However, there is a loop-hole: If a ``number'' in a data point starts with a parenthesis, the value between the parentheses \emph{is} parsed using the normal parser:
+    \item 但是，这里存在一个漏洞：如果数据点中的``数据''以圆括号开始，则使用普通解析器解析圆括号中的值：
+        %
+        \begin{itemize}
+            % \item |100000| is allowed.
+            \item |100000| 被允许。
+            % \item |2+3| yields an error.
+            \item |2+3| 将产生错误.
+            % \item |(2+3)| is allowed and evaluates to |5|.
+            \item |(2+3)| 被允许，其结果等于 |5|。
+            % \item |(100000)| yields an error since $100\,000$ is beyond the normal parser's precision.
+            \item |(100000)| 将产生错误，因为 $100\,000$ 超出了正常解析器的精度。
+        \end{itemize}
+        %
+        %The bottom line is that any normal calculations should be set inside round parentheses, while large numbers should not be surrounded by parentheses. Hopefully, in the future, these restrictions will be lifted.
+        % 
+        底线是任何正常的计算都应该在圆括号内设置，而大的数字不应该被圆括号包围。希望在未来，这些限制将被取消。
+\end{enumerate}
+
+% Section~\ref{section-dv-formats} gives an in-depth coverage of the available data formats and explains how new data formats can be defined.
+
+第\ref{section-dv-format}节深入介绍了可用的数据格式，并解释了如何定义新的数据格式。
+
+
+% \subsection{Concept: Axes, Ticks, and Grids}
+\subsection{概念：轴，刻度线和网格}
+
+% Most plots have two or three axes: A horizontal axis usually called the $x$-axis, a vertical axis called the $y$-axis, and possibly some axis pointing in a sloped direction called the $z$-axis. Axes are usually drawn as lines with \emph{ticks} indicating interesting positions on the axes. The data visualization engine gives you detailed control over where these ticks are rendered and how many of them are used. Great care is taken to ensure that the position of ticks are chosen well by default.
+
+大多数绘图都有两个或三个轴：一个水平轴通常称为$x$轴，一个垂直轴称为$y$轴，可能还有一些指向倾斜方向的轴称为$z$轴。轴通常绘制为带有\emph{刻度}的线，表示轴上特定的位置。通过数据可视化引擎，您可以详细控制在哪里呈现这些刻度以及使用了多少刻度。在默认情况下，要非常小心地确保刻度的位置选择得很好。
+
+% From the point of view of the data visualization engine, axes are a somewhat more general concept than ``just'' lines that point ``along'' some dimension: The data visualization engine uses axes to visualize any change of an attribute by varying the position of data points in the plane. For instance, in a polar plot, there is an ``axis'' for the angle and another ``axis'' for the distance if the point from the center. Clearly these axes vary the position of data points in the plane according to some attribute of the data points; but just as clearly they do not point in any ``direction''.
+
+从数据可视化引擎的角度来看，轴是一个比``沿着''某个维度的线更一般的概念：数据可视化引擎使用轴通过改变数据点在平面中的位置来可视化属性的任何更改。例如，在极坐标图中，有一个``轴''表示角度，另一个``轴''表示点距中心的距离。显然，这些轴根据数据点的某些属性改变了数据点在平面中的位置；但同样清楚的是，它们并不指向任何``方向''。
+
+% A great benefit of this approach is that the powerful methods for specifying and automatic inference of ``good'' positions for ticks or grid lines apply to all sorts of situations. For instance, you can use it to automatically put ticks and grid lines at well-chosen angles of a polar plot.
+
+这种方法的一大好处是，为刻度或网格线指定和自动推断``正确''位置的强大方法适用于各种情况。例如，可以使用它自动将刻度和网格线放置在极坐标图的给定角度。
+
+% Typically, you will not need to specify axes explicitly. Rather, predefined styles take care of this for you:
+
+通常，您不需要显式指定轴。相反，预定义的样式会为您处理这些问题：
+%
+\begin{codeexample}[preamble={\usetikzlibrary{datavisualization.formats.functions}}]
+\begin{tikzpicture}
+  \datavisualization [
+    scientific axes,
+    x axis={length=3cm, ticks=few},
+    visualize as smooth line
+  ]
+    data [format=function] {
+      var x : interval [-1.5:1.5] samples 7;
+      func y = \value x*\value x;
+    };
+\end{tikzpicture}
+\end{codeexample}
+
+\begin{codeexample}[preamble={\usetikzlibrary{datavisualization.formats.functions}}]
+\begin{tikzpicture}
+  \datavisualization [
+    scientific axes=clean,
+    x axis={length=3cm, ticks=few},
+    all axes={grid},
+    visualize as smooth line
+  ]
+    data [format=function] {
+      var x : interval [-1.5:1.5] samples 7;
+      func y = \value x*\value x;
+    };
+\end{tikzpicture}
+\end{codeexample}
+
+% Section~\ref{section-dv-axes} explains in more detail how axes, ticks, and grid lines can be chosen and configured.
+
+第\ref{section-dv-axes}节更详细地解释了如何选择和配置轴、刻度和网格线。
+
+
+% \subsection{Concept: Visualizers}
+\subsection{概念：显像器}
+
+% Data points and axes specify \emph{what} is visualized and \emph{where}. A \emph{visualizer} specifies \emph{how} they are visualized. One of the most common visualizers is a \emph{line visualizer} which connects the positions of the data points in the plane using a line. Another common visualizer is the \emph{scatter plot visualizer} where small marks are drawn at the positions of the data points. More advanced visualizers include, say, box plot visualizers or pie chart visualizers.
+
+数据点和轴指定可视化的\emph{内容}和\emph{位置}。\emph{显像器}指定\emph{如何}可视化它们。最常见的显像器之一是\emph{直线显像器}，它使用直线连接平面中数据点的位置。另一种常见的显像器是\emph{散点图显像器}，在数据点的位置绘制小标记。更高级的显像器包括，例如，方框图显像器或饼图显像器。
+%
+\begin{codeexample}[preamble={\usetikzlibrary{datavisualization.formats.functions}}]
+\begin{tikzpicture}
+  \datavisualization [
+    scientific axes=clean,
+    x axis={length=3cm, ticks=few},
+    visualize as smooth line
+  ]
+    data [format=function] {
+      var x : interval [-1.5:1.5] samples 7;
+      func y = \value x*\value x;
+    };
+\end{tikzpicture}
+\end{codeexample}
+%
+\begin{codeexample}[preamble={\usetikzlibrary{datavisualization.formats.functions}}]
+\begin{tikzpicture}
+  \datavisualization [
+    scientific axes=clean,
+    x axis={length=3cm, ticks=few},
+    visualize as scatter
+  ]
+    data [format=function] {
+      var x : interval [-1.5:1.5] samples 7;
+      func y = \value x*\value x;
+    };
+\end{tikzpicture}
+\end{codeexample}
+
+% Section~\ref{section-dv-visualizers} provides more information on visualizers as well as reference lists.
+
+第\ref{section-dv-visualalizer}节提供了有关显像器和引用列表的更多信息。
+
+
+% \subsection{Concept: Style Sheets and Legends}
+\subsection{概念：样式表和图例}
+
+% A single data visualizations may use more than one visualizer. For instance, if you wish to create a plot containing several lines, a separate visualizer is used for each line. In this case, two problems arise:
+
+单个数据可视化可以使用多个显像器。例如，如果您希望创建包含几行代码的绘图，则为每一行使用一个单独的显像器。在这种情况下，出现了两个问题:
+%
+\begin{enumerate}
+    % \item You may wish to make it easy for the reader to differentiate between the different visualizers. For instance, one line should be black, another should be red, and another blue. Alternatively, you might wish one line to be solid, another to be dashed, and a third to be dotted.
+    \item 您可能希望方便读者区分不同的显像器。例如，一条线应该是黑色的，另一条线应该是红色的，另一条线应该是蓝色的。或者，您可能希望一条线为实线，另一条线为虚线，第三条线为虚线。
+
+        % Specifying such styles is trickier than one might expect; experience shows that many plots use ill-chosen and inconsistent styling. For this reason, the data visualization introduces the notion of \emph{style sheets} for visualizers and comes with some well-designed predefined style sheets.
+
+        指定这样的样式比人们想象的要复杂得多；经验表明，许多图形使用了选择不当和不一致的样式。因此，数据可视化为可视化器引入了\emph{样式表}的概念，并附带了一些设计良好的预定义样式表。
+    % \item You may wish to add information concerning what the different visualizers represent. This is typically done using a legend, but it is even better to add labels directly inside the visualization. Both approaches are supported.
+    \item 您可能希望添加关于不同的显像器所表示内容的信息。这通常是使用图例来完成的，可能。这两种方法都被支持。
+\end{enumerate}
+
+% An example where three functions are plotted and a legend is added is shown below. Two style sheets are used so that \emph{both} the coloring and the dashing is varied.
+
+下面是一个示例，其中绘制了三个函数并添加了一个图例。使用了两个样式表，以便颜色和点线样式\emph{都是}不同的。
+%
+\begin{codeexample}[preamble={\usetikzlibrary{datavisualization.formats.functions}}]
+\begin{tikzpicture}[baseline]
+  \datavisualization [ scientific axes=clean,
+                       y axis=grid,
+                       visualize as smooth line/.list={sin,cos,tan},
+                       style sheet=strong colors,
+                       style sheet=vary dashing,
+                       sin={label in legend={text=$\sin x$}},
+                       cos={label in legend={text=$\cos x$}},
+                       tan={label in legend={text=$\tan x$}},
+                       data/format=function ]
+  data [set=sin] {
+    var x : interval [-0.5*pi:4];
+    func y = sin(\value x r);
+  }
+  data [set=cos] {
+    var x : interval [-0.5*pi:4];
+    func y = cos(\value x r);
+  }
+  data [set=tan] {
+    var x : interval [-0.3*pi:.3*pi];
+    func y = tan(\value x r);
+  };
+\end{tikzpicture}
+\end{codeexample}
+
+% Section~\ref{section-dv-style-sheets} details style sheets and legends.
+
+第\ref{section-dv-style-sheets}节详细说明了样式表和图例。
+
+% \subsection{Usage}
+\subsection{用法}
+\label{section-dv-data-syntax}
+
+% Inside a \tikzname\ picture you can use the |\datavisualization| command to create a data visualization. You can use this command several times in a picture to create pictures containing multiple data visualizations.
+
+在\tikzname\ 图片中，您可以使用 |\datavisualization| 命令来创建数据可视化。您可以在图片中多次使用此命令来创建包含多个数据可视化的图片。
+
+\begin{command}{\datavisualization\opt{\oarg{数据可视化选项}}\meta{数据指定}|;|} %\begin{command}{\datavisualization\opt{\oarg{data visualization options}}\meta{data specification}|;|}
+    % This command is available only inside a |{tikzpicture}| environment.
+
+    此命令仅可在 |{tikzpicture}| 环境内部可用。
+
+    % The \meta{data visualization options} are used to configure the data visualization, that is, how the data is to be depicted. The options are executed with the path prefix |/tikz/data visualization|. This means that normal \tikzname\ options like |thin| or |red| cannot be used here. Rather, a large number of options specific to data visualizations are available.
+    
+    \meta{数据可视化选项} 用于配置数据可视化，即如何描述数据。这些选项以路径前缀 |/tikz/data visualization| 执行。这意味着普通\tikzname\ 选项如 |thin| 或 |red| 不能在这里使用。相反，有大量特定于数据可视化的选项可用。
+
+    % As a minimum, you should specify at least two options: First, you should use an option that selects an axis system that is appropriate for your plot. Typical possible keys are |school book axes| or |scientific axes|, detailed information on them can be found in Section~\ref{section-dv-axes}.
+
+    至少应该指定两个选项：首先，应该使用一个选项来选择适合您的图形的坐标轴系统。典型可能的键是 |school book axes| 或 |scientific axes|，它们的详细信息可在第\ref{section-dv-axes}节中找到。
+
+    % Second, you use an option to select \emph{how} the data should be visualized. This is done using a key like |visualize as line| which will, as the name suggests, visualize the data by connecting data points in the plane using a line. Similarly, |visualize as smooth cycle| will try to fit a smooth cycle through the data points. Detailed information on possible visualizers can be found in Section~\ref{section-dv-visualizers}.
+
+    其次，您使用一个选项来选择数据应该如何显示。这是通过使用像 |visualize as line| 这样的键来完成的，正如其名称所示，通过使用一条直线连接平面中的数据点来可视化数据。类似地，|visualize as smooth cycle| 将尝试通过数据点拟合一个平滑循环圈。关于可用的显像器的详细信息可以在第\ref{section-dv-visualizers}节中找到。
+
+    % Following these options, the \meta{data specification} is used to provide the actual to-be-visualized data. The syntax is somewhat similar to commands like |\path|: The \meta{data specification} is a sequence of keywords followed by local options and parameters, terminated with a semicolon. (Indeed, like for the |\path| command, the \meta{data visualizers options} need not be specified at the beginning, but additional option surrounded by square brackets may be given anywhere inside the \meta{data specification}.)
+
+    根据这些选项，\meta{数据指定} 用于提供实际的要可视化的数据。该语法有点类似于 |\path| 这样的命令：\meta{数据指定} 后跟本地选项和参数的关键字序列，以分号结尾。（实际上，就像 |\path| 命令一样，不需要在开始时指定 \meta{数据可视化器选项}，但是在 \meta{数据指定} 内的任何位置都可以提供方括号包围的附加选项）。
+
+    % The different possible keywords inside the \meta{data specification} are explained in the following.
+
+    下面解释了 \meta{数据指定} 中可能存在的不同关键字。
+\end{command}
+
+\begin{datavisualizationoperation}{data}{\opt{\oarg{选项}}\opt{\marg{内敛数据}}} % \begin{datavisualizationoperation}{data}{\opt{\oarg{options}}\opt{\marg{inline data}}}
+    % This command is used to specify data for the data visualization. It can be used several times inside a single visualization and each time the to-be-read data may have a different format, but the data will be visualized as if it have been specified inside a single |data| command.
+
+    此命令用于为数据可视化指定数据。 它可以在单个可视化文件中多次使用，并且每次要读取的数据可能具有不同的格式，但是数据将被可视化，就像在单个 |data| 命令中指定了数据一样。
+
+    % The behavior of the |data| command depends on whether the \meta{inline data} is present. If it is not present, the \meta{options} must be used to specify a source file from which the data is read; if the \meta{inline data} is present no file will be used, instead the data should directly reside inside the \TeX-file and be given between the curly braces surrounding the \meta{inline data}.
+
+    |data| 命令的行为取决于是否存在 \meta{内联数据}。如果不存在，则必须使用 \meta{选项} 指定从其中读取数据的源文件；如果 \meta{内联数据} 存在，则不会使用任何文件，相反，数据应该直接驻留在\TeX 文件中，并在围绕着元 \meta{内联数据} 的大括号之间给出。
+
+    % The \meta{options} are executed with the prefix |/pgf/data|. The following options are always available:
+
+    \meta{选项} 以前缀 |/pgf/data| 执行。以下选项总是可用的：
+    %
+    \begin{key}{/pgf/data/read from file=\meta{文件名} (initially \normalfont empty)} % \begin{key}{/pgf/data/read from file=\meta{filename} (initially \normalfont empty)}
+        % If you set the |source| attribute to a non-empty \meta{filename}, the data will be read from this file. In this case, no \meta{inline data} may be present, not even empty curly braces should be provided.
+
+        如果您将 |source| 属性设置为一个非空 \meta{文件名}，则将从该文件读取数据。在这种情况下，可能不存在 \meta{内联数据}，甚至不应该提供空花括号。
+        %
+\begin{codeexample}[code only]
+\datavisualization ...
+  data [read from file=file1.csv]
+  data [read from file=file2.csv];
+\end{codeexample}
+        %
+        % The other way round, if |read from file| is empty, the  data must directly follow as \meta{inline data}.
+        % 
+        反过来，如果 |read from file| 为空，则数据必须直接通过 \meta{内联数据} 给出。
+        %
+\begin{codeexample}[code only]
+\datavisualization ...
+  data {
+    x, y
+    1, 2
+    2, 3
+  };
+\end{codeexample}
+    \end{key}
+    %
+    % The second important key is |format|, which is used to specify the data format:
+    %
+    第二个重要的键是 |format|，用于指定数据格式:
+    %
+    \begin{key}{/pgf/data/format=\meta{格式} (initially table)} % \begin{key}{/pgf/data/format=\meta{format} (initially table)}
+        % Use this key to locally set the format used for parsing the data, see Section~\ref{section-dv-formats} for a list of predefined formats.
+
+        使用此键可在本地设置用于解析数据的格式，请参阅第\ref{Section -dv-formats}节获取预定义格式列表。
+
+        % The default format is the |table|-format, also known as ``comma-separated values''. The first line contains names of attributes separated by commas, all following lines constitute a data point where the attributes are given by the comma-separated values in that line.
+
+        默认格式是 |table| 格式，也称为``逗号分隔值''。第一行包含用逗号分隔的属性名称，所有后面的行构成一个数据点，其中属性由该行中以逗号分隔的值给出。
+    \end{key}
+
+
+    \medskip
+    % \textbf{Presetting attributes.} Normally, the inline data or the external data contains for each data point the values of the different attributes. However, sometimes you may also wish to set an attribute to a fixed value for all data points of a data set. Suppose, for instance, that you have to source files |experiment007.csv| and |experiment023.csv| and you would like that for all data points of the first file the attribute |/data point/experiment id| is set to 7 while for the data points of the second file they are set to 23. In this case, you can specify the desired settings using an absolute path inside the \meta{options}. The effect will be local to the current |data| command:
+
+    \textbf{预设定的属性。} 通常，内联数据或外部数据包含每个数据点不同属性的值。然而，有时您可能还希望为数据集的所有数据点设置一个固定值。例如，假设您必须添加源文件 |experiment007.csv| 和 |experiment023.csv|。对于第一个文件的所有数据点，属性 |/data point/experiment id| 被设置为7，而对于第二个文件的数据点，它们被设置为23。在这种情况下，您可以使用 \meta{选项} 中的绝对路径指定所需的设置。对于当前的 |data| 命令，效果将是本地的：
+    %
+\begin{codeexample}[code only]
+\datavisualization...
+  data [/data point/experiment=7,  read from file=experiment007.csv]
+  data [/data point/experiment=23, read from file=experiment023.csv];
+\end{codeexample}
+
+\begin{codeexample}[preamble={\usetikzlibrary{datavisualization}}]
+\tikz
+  \datavisualization [school book axes, visualize as line]
+    data [/data point/x=1] {
+      y
+      1
+      2
+    }
+    data [/data point/x=2] {
+      y
+      2
+      0.5
+    };
+\end{codeexample}
+
+
+    \medskip
+    % \textbf{Setting options for multiple |data| commands.} You may wish to generally set the format once and for all. This can be done by using the following key:
+
+    \textbf{为多个 |data| 命令设置选项。} 你可能希望一次性地设置格式。这可以通过使用以下关键完成：
+    %
+    \begin{stylekey}{/tikz/every data}
+        % This key is executed for every |data| command.
+
+        对每个 |data| 命令执行此键。
+    \end{stylekey}
+
+    % Another way of passing options to multiple |data| commands is to use the following facility: Whenever an option with the path |/tikz/data visualization/data| is used, the path will be remapped to |/pgf/data|. This means, in particular, that you can pass an option like |data/format=table| to the |\datavisualization| command to set the data format for all |data| commands of the data visualization.
+
+    将选项传递给多个 |data| 命令的另一种方法是使用以下功能：每当使用路径为 |/tikz/data visualization/data| 的选项时，该路径将被重新映射为 |/pgf/data|。特别地，这意味着您可以向 |\datavisualization| 命令传递 |data/format=table| 这样的选项，以设置数据可视化的所有 |data| 命令的数据格式。
+
+
+    \medskip
+    % \textbf{Parsing inline data.} When you specify data inline, \TeX\ needs to read the data ``line-by-line'', while \TeX\ normally largely ignores end-of-line characters. For this reason, the data visualization system temporarily changes the meaning of the end-of-line character. This is only possible if \TeX\ has not already processed the data in some other way (namely as the parameter to some macro).
+
+    \textbf{内联数据解析。} 当您内联指定数据时，\TeX\ 需要``逐行''读取数据，而\TeX\ 通常会忽略行尾字符。因此，数据可视化系统临时更改行尾字符的含义。只有当\TeX\ 还没有以其他方式（即作为某个宏的参数）处理数据时，才有可能这样做。
+
+    % The bottom line is that you cannot use inline data when the whole |\datavisualization| command is passed as a parameter to some macro that is not setup to handle ``fragile'' code. For instance, in a \textsc{beamer} |frame| you need to add the |fragile| option when a data visualization contains inline data.
+
+    底线是，当整个 |\datavisualization| 命令作为参数传递给某个未处理``脆弱''代码的宏时，您不能使用内联数据。例如，在 \textsc{beamer} 框架中，当数据可视化包含内联数据时，您需要添加 |fragile| 选项。
+
+    % The problem does not arise when an external data |source| is specified.
+
+    当指定外部数据 |source| 时，不会出现这个问题。
+\end{datavisualizationoperation}
+
+\begin{datavisualizationoperation}{data point}{\opt{\oarg{选项}}} % \begin{datavisualizationoperation}{data point}{\opt{\oarg{options}}}
+    % This command is used to specify data a single data point. The \meta{options} are simply executed with the path |/data point| and then a data point is created. This means that inside the \meta{options} you just specify the values of all attributes in key--value syntax.
+
+    此命令用于将数据指定为单个数据点。只使用路径 |/data point| 执行 \meta{选项}，然后创建一个数据点。这意味着在 \meta{选项} 中，您只需指定键值语法中所有属性的值。
+    %
+\begin{codeexample}[preamble={\usetikzlibrary{datavisualization}}]
+\tikz \datavisualization [school book axes, visualize as line]
+  data point [x=1, y=1]    data point [x=1, y=2]
+  data point [x=2, y=2]    data point [x=2, y=0.5];
+\end{codeexample}
+    %
+\end{datavisualizationoperation}
+
+\begin{key}{/tikz/data visualization/data point=\meta{选项}} % \begin{key}{/tikz/data visualization/data point=\meta{options}}
+    % This key is the ``key version'' of the previous command. The difference is that this key can be used internally inside styles.
+
+    这个键是前一个命令的``键版本''。区别在于这个键可以在样式内部使用。
+    %
+\begin{codeexample}[preamble={\usetikzlibrary{datavisualization}}]
+\tikzdatavisualizationset{
+  horizontal/.style={
+    data point={x=#1, y=1}, data point={x=#1, y=2}},
+}
+\tikz \datavisualization
+[ school book axes, visualize as line,
+  horizontal=1,
+  horizontal=2 ];
+\end{codeexample}
+    %
+\end{key}
+
+\begin{datavisualizationoperation}{data group}{\opt{\oarg{选项}}\marg{名字}\opt{|+=|\marg{数据指定}}} % \begin{datavisualizationoperation}{data group}{\opt{\oarg{options}}\marg{name}\opt{|+=|\marg{data specifications}}}
+    % You can store a whole \meta{data specification} in a \emph{data group}. This allows you to reuse data in multiple places without having to write the data to an external file.
+
+    您可以将整个 \meta{数据指定} 存储在一个\emph{数据组}中。这允许您在多个地方重用数据，而不必将数据写入外部文件。
+
+    % The syntax of this command comes in the following three variants:
+
+    这个命令的语法有以下三种变体：
+    %
+    \begin{itemize}
+        % \item |data group| \opt{\oarg{options}} \marg{name} |=| \marg{data specifications}
+        \item |data group| \opt{\oarg{选项}} \marg{名字} |=| \marg{数据指定}
+        % \item |data group| \opt{\oarg{options}} \marg{name} |+=| \marg{data specifications}
+        \item |data group| \opt{\oarg{选项}} \marg{名字} |+=| \marg{数据指定}
+        % \item |data group| \opt{\oarg{options}} \marg{name}
+        \item |data group| \opt{\oarg{选项}} \marg{名字}
+    \end{itemize}
+    %
+    % In the first case, a new data group called \meta{name} is created (an existing data group of the same name will be erased) and the following \meta{data specifications} is stored in this data group. The data group will not be fed to the rendering pipeline, but it is parsed at this point as if it were. The defined data group is defined globally, so you can used it in subsequent visualizations. The \meta{options} are saved with the parsed \meta{data specifications}.
+    %
+    在第一种情况下，创建了一个名为 \meta{名字} 的新数据组（将擦除同名的现有数据组），并将以下 \meta{数据指定} 存储在该数据组中。数据组将不会被馈送到渲染管道，但此时它就像被解析一样被解析。所定义的数据组是全局定义的，因此可以在后续可视化中使用它。\meta{选项} 与解析的 \meta{数据指定} 一起保存。
+
+    % In the second case, an already existing data group is extended by adding the \meta{data specifications} to it.
+
+    在第二种情况下，通过向现有数据组添加 \meta{数据指定} 来扩展该数据组。
+
+    % In the third case (detected by noting that the \meta{name} is neither followed by an equal sign nor a plus sign), the contents of the previously defined data group \meta{name} is inserted. The \meta{options} are also executed.
+
+    在第三种情况下（注意到 \meta{名字} 后面既没有等号也没有加号），插入先前定义的名为 \meta{名字} 的数据组的内容。还将执行 \meta{选项}。
+
+    % Let is now first create a data group. Note that nothing is drawn since the ``dummy'' data visualization is empty and used only for the definition of the data group.
+
+    现在让我们首先创建一个数据组。注意，没有绘制任何内容，因为``假的''数据可视化是空的，并且仅用于数据组的定义。
+    %
+\begin{codeexample}[setup code]
+\tikz \datavisualization data group {points} = {
+  data {
+    x, y
+    0, 1
+    1, 2
+    2, 2
+    5, 1
+    2, 0
+    1, 1
+  }
+};
+\end{codeexample}
+
+    % We can now use this data in different plots:
+
+    We can now use this data in different plots：
+    %
+\begin{codeexample}[preamble={\usetikzlibrary{datavisualization}}]
+\tikz \datavisualization [school book axes,      visualize as line] data group {points};
+\qquad
+\tikz \datavisualization [scientific axes=clean, visualize as line] data group {points};
+\end{codeexample}
+    %
+\end{datavisualizationoperation}
+
+\begin{datavisualizationoperation}{scope}{\opt{\oarg{选项}}\marg{数据指定}} % \begin{datavisualizationoperation}{scope}{\opt{\oarg{options}}\marg{data specification}}
+    % Scopes can be used to nest hierarchical data sets. The \meta{options} will be executed with the path |/pgf/data| and will only apply to the data sets specified inside the \meta{data specification}, which may contain |data| or |scope| commands once more:
+
+    分组可用于嵌套分层数据集。\meta{选项} 将以 |/pgf/data| 路径执行，且仅适用于 \meta{数据指定} 中指定的数据集，其中可能再次包含 |data| 或 |scope| 命令：
+    %
+\begin{codeexample}[code only]
+\datavisualization...
+  scope [/data point/experiment=7]
+  {
+    data [read from file=experiment007-part1.csv]
+    data [read from file=experiment007-part2.csv]
+    data [read from file=experiment007-part3.csv]
+  }
+  scope [/data point/experiment=23, format=foo]
+  {
+    data [read from file=experiment023-part1.foo]
+    data [read from file=experiment023-part2.foo]
+  };
+\end{codeexample}
+    %
+\end{datavisualizationoperation}
+
+\begin{datavisualizationoperation}{info}{\opt{\oarg{选项}}\marg{代码}} % \begin{datavisualizationoperation}{info}{\opt{\oarg{options}}\marg{code}}
+    % This command will execute normal \tikzname\ \meta{code} at the end of a data visualization. The \meta{options} are executed with the normal path |/tikz/|.
+
+    此命令将在数据可视化结束时执行普通的\tikzname\ \meta{代码}。\meta{选项} 以正常路径 |/tikz/| 执行。
+
+    % The only difference between this command and just giving the \meta{code} directly following the data visualization is that inside the \meta{code} following an |info| command you still have access to the coordinate system of the data visualization. In sharp contrast, \tikzname\ code given after a data visualization can no longer access this coordinate system.
+
+    此命令与直接在数据可视化之后提供 \meta{代码} 之间的唯一区别是，在 |info| 命令之后的 \meta{代码} 中，您仍然可以访问数据可视化的坐标系统。与此形成鲜明对比的是，在数据可视化之后给出的\tikzname\ 代码不再能够访问该坐标系统。
+    %
+\begin{codeexample}[preamble={\usetikzlibrary{datavisualization.formats.functions}}]
+\begin{tikzpicture}[baseline]
+  \datavisualization [ school book axes, visualize as line ]
+  data [format=function] {
+    var x : interval [-0.1*pi:2];
+    func y = sin(\value x r);
+  }
+  info {
+    \draw [red] (visualization cs: x={(.5*pi)}, y=1) circle [radius=1pt]
+      node [above,font=\footnotesize] {extremal point};
+  };
+\end{tikzpicture}
+\end{codeexample}
+
+    % As can be seen, inside a data visualization a special coordinate system is available:
+
+    可以看出，在数据可视化中有一个特殊的坐标系统:
+
+    \begin{coordinatesystem}{visualization}
+        % As for other coordinate systems, the syntax is \declare{|(visualization cs:|\meta{list of attribute-value pairs}|)|}. The effect is the following: For each pair \meta{attribute}|=|\meta{value} in the \meta{list} the key |/data point/|\meta{attribute} is set to \meta{value}. Then, it is computed where the resulting data point ``would lie'' on the canvas (however, no data point is passed to the visualizers).
+
+        至于其他坐标系统，语法是 \declare{|(visualization cs:|\meta{属性-值对列表}|)|}。其效果如下：对于 \meta{列表} 中的每对 \meta{属性} |=| \meta{值}，键 |/data point/|\meta{属性} 被设置为 \meta{值}。然后，计算结果数据点在画布上的位置（但是，没有数据点被传递给显像器）。
+    \end{coordinatesystem}
+\end{datavisualizationoperation}
+
+\begin{datavisualizationoperation}{info'}{\opt{\oarg{选项}}\marg{代码}} % \begin{datavisualizationoperation}{info'}{\opt{\oarg{options}}\marg{code}}
+    % This command works like |info|, only the \meta{code} will be executed just before the visualization is done. This allows you to draw things \emph{behind} the visualization.
+
+    这个命令的工作方式类似于 |info|，只有 \meta{代码} 会在完成可视化之前执行。这允许您在可视化\emph{之后}绘制东西。
+    %
+\begin{codeexample}[preamble={\usetikzlibrary{datavisualization.formats.functions}}]
+\begin{tikzpicture}[baseline]
+  \datavisualization [ school book axes, visualize as line ]
+  data [format=function] {
+    var x : interval [-0.1*pi:2];
+    func y = sin(\value x r);
+  }
+  info' {
+    \fill [red] (visualization cs: x={(.5*pi)}, y=1) circle [radius=2mm];
+  };
+\end{tikzpicture}
+\end{codeexample}
+    %
+\end{datavisualizationoperation}
+
+\label{section-dv-bounding-box}%
+\begin{predefinednode}{data visualization bounding box}
+    % This rectangle node stores a bounding box of the data visualization that is currently being constructed. This node can be useful inside |info| commands or when labels need to be added.
+
+    这个矩形节点存储当前正在构建的数据可视化的一个边界框。这个节点在 |info| 命令中或者需要添加标签时非常有用。
+\end{predefinednode}
+
+\begin{predefinednode}{data bounding box}
+    % This rectangle node is similar to |data visualization bounding box|, but it keeps track only of the actual data. The spaces needed for grid lines, ticks, axis labels, tick labels, and other all other information that is not part of the actual data is not part of this box.
+
+    这个矩形节点类似于 |data visualization bounding box|，但它只跟踪实际数据。用于网格线、刻度、轴标签、刻度标签和其他所有不属于实际数据的其他信息的空格不属于此框。
+\end{predefinednode}
+
+
+% \subsection{Advanced: Executing User Code During a Data Visualization}
+\subsection{进阶：在数据可视化期间执行用户代码}
+\label{section-dv-user-code}
+
+% The following keys can be passed to the |\datavisualization| command and allow you to execute some code at some special time during the data visualization process. For details of the process and on which signals are emitted when, see Section~\ref{section-dv-backend}.
+
+下面的键可以传递给 |\datavisualization| 命令，并允许您在数据可视化过程中的特定时间执行某些代码。有关进程的详细信息以及何时发出信号的详细信息，请参阅第\ref{section-dv-backend}节。
+
+\begin{key}{/tikz/data visualization/before survey=\meta{代码}} % \begin{key}{/tikz/data visualization/before survey=\meta{code}}
+    % The \meta{code} is passed to the |before survey| method of the data visualization object and then executed at the appropriate time (see Section~\ref{section-dv-backend} for details).
+
+    \meta{代码} 被传递到数据可视化对象的 |before survey| 方法，然后在适当的时间执行（有关详细信息，请参见第\ref{section-dv-backend}节）。
+
+    % The following commands work likewise:
+
+    以下命令同样起作用：
+\end{key}
+%
+\begin{key}{/tikz/data visualization/at start survey=\meta{代码}} % \begin{key}{/tikz/data visualization/at start survey=\meta{code}}
+\end{key}
+%
+\begin{key}{/tikz/data visualization/at end survey=\meta{代码}} % \begin{key}{/tikz/data visualization/at end survey=\meta{code}}
+\end{key}
+%
+\begin{key}{/tikz/data visualization/after survey=\meta{代码}} % \begin{key}{/tikz/data visualization/after survey=\meta{code}}
+\end{key}
+%
+\begin{key}{/tikz/data visualization/before visualization=\meta{代码}} % \begin{key}{/tikz/data visualization/before visualization=\meta{code}}
+\end{key}
+%
+\begin{key}{/tikz/data visualization/at start visualization=\meta{代码}} % \begin{key}{/tikz/data visualization/at start visualization=\meta{code}}
+\end{key}
+%
+\begin{key}{/tikz/data visualization/at end visualization=\meta{代码}} % \begin{key}{/tikz/data visualization/at end visualization=\meta{code}}
+\end{key}
+%
+\begin{key}{/tikz/data visualization/after visualization=\meta{代码}} % \begin{key}{/tikz/data visualization/after visualization=\meta{code}}
+\end{key}
+
+
+% \subsection{Advanced: Creating New Objects}
+\subsection{进阶：创建新对象}
+
+% You will need the following key only when you wish to create new rendering pipelines from scratch -- instead of modifying an existing pipeline as you would normally do. In the following it is assumed that you are familiar with the concepts of Section~\ref{section-dv-backend}.
+
+只有当您希望从头创建新的渲染管道时才需要以下键——而不是像通常那样修改现有的管道。下面假设您熟悉第\ref{section-dv-backend}节的概念。
+
+\begin{key}{/tikz/data visualization/new object=\meta{选项}} % \begin{key}{/tikz/data visualization/new object=\meta{options}}
+    % This key serves two purposes:
+
+    这个键有两个作用：
+    %
+    \begin{enumerate}
+        % \item This method makes it easy to create a new object as part of the rendering pipeline, using \meta{options} to specify arguments rather that directly calling |\pgfoonew|. Since you have the full power of the keys mechanism at your disposal, it is easy, for instance, to control whether or not parameters to the constructor are expanded or not.
+        \item 使用 \meta{选项} 来指定参数，而不是直接调用 |\pgfoonew|，此方法使得创建新对象作为呈现管道的一部分变得很容易。因为您可以使用键机制的全部功能，所以很容易控制构造函数的参数是否被扩展。
+        % \item The object is not created immediately, but only just before the visualization starts. This allows you to specify that an object must be created, but the parameter values of for its constructor may depend on keys that are not yet set. A typical application is the creating of an axis object: When you say |scientific axes|, the |new object| command is used internally to create two objects representing these axes. However, keys like |x={length=5cm}| can only \emph{later} be used to specify the parameters that need to be passed to the constructor of the objects.
+        \item 对象不是立即创建的，而是在可视化开始之前创建的。这允许您指定,必须创建一个对象，但其构造函数的参数值可能取决于键尚未设置。一个典型的应用程序是一个轴的创建对象：当你使用 |scientific axes| 时，|new object| 命令在内部用于创建代表这些轴的两个对象。但是，像 |x={length=5cm}| 这样的键只能\emph{在以后}用于指定需要传递给对象构造函数的参数。
+  \end{enumerate}
+
+    % The following keys may be used inside the \meta{options}:
+
+    在 \meta{选项} 中可以使用以下键：
+    %
+    \begin{key}{/tikz/data visualization/class=\meta{类名}} % \begin{key}{/tikz/data visualization/class=\meta{class name}}
+        % The class of the to-be-created object.
+
+        要创建的对象的类。
+    \end{key}
+    %
+    \begin{key}{/tikz/data visualization/when=\meta{阶段名} (initially before survey)} % \begin{key}{/tikz/data visualization/when=\meta{phase name} (initially before survey)}
+        % This key is used to specify when the object is to be created. As described above, the object is not created immediately, but at some time during the rendering process. You can specify any of the phases defined by the data visualization object, see Section~\ref{section-dv-backend} for details.
+
+        此键用于指定何时创建对象。如上所述，对象不是立即创建的，而是在呈现过程中的某个时候创建的。您可以指定数据可视化对象定义的任何阶段，详细信息请参见第\ref{section-dv-backend}节。
+    \end{key}
+    %
+    \begin{key}{/tikz/data visualization/store=\meta{键名}} % \begin{key}{/tikz/data visualization/store=\meta{key name}}
+        % If the \meta{key name} is not empty, once the object has been created, a handle to the object will be stored in \meta{key name}. If a handle is already stored in \meta{key name}, the object is not created twice.
+
+        如果 \meta{键名} 非空，一旦对象被创建，对象的句柄将被存储在 \meta{键名} 中。如果句柄已经存储在 \meta{键名} 中，则不会创建该对象两次。
+    \end{key}
+    %
+    \begin{key}{/tikz/data visualization/before creation=\meta{代码}} % \begin{key}{/tikz/data visualization/before creation=\meta{code}}
+        % This code is executed right before the object is finally created. It can be used to compute values that are then passed to the constructor.
+
+        此代码在最终创建对象之前执行。它可用于计算然后传递给构造函数的值。
+    \end{key}
+    %
+    \begin{key}{/tikz/data visualization/after creation=\meta{代码}} % \begin{key}{/tikz/data visualization/after creation=\meta{code}}
+        % This code is executed right after the object has just been created. A handle to the just-created object is available in |\tikzdvobj|.
+
+        此代码在刚刚创建对象之后立即执行。刚刚创建的对象的句柄在 |\tikzdvobj| 中可用。
+    \end{key}
+    %
+    \begin{key}{/tikz/data visualization/arg1=\meta{值}} % \begin{key}{/tikz/data visualization/arg1=\meta{value}}
+        % The value to be passed as the first parameter to the constructor. Similarly, the keys |arg2| to |arg8| specify further parameters passed. Naturally, only as many arguments are passed as parameters are set. Here is an example:
+
+        作为第一个参数传递给构造函数的值。类似地，键 |arg2| 到 |arg8| 指定进一步传递的参数。当然，参数设置时传递的参数数量应该是一样的。
+        %
+\begin{codeexample}[code only]
+\tikzdatavisualizationset{
+  new object={
+    class = example class,
+    arg1  = foo,
+    arg2  = \bar
+  }
+}
+\end{codeexample}
+        %
+        % causes the following object creation code to be executed later on:
+        %
+        使以下对象创建代码在以后执行：
+        %
+\begin{codeexample}[code only]
+\pgfoonew \tikzdvobj=new example class(foo,\bar)
+\end{codeexample}
+        %
+        % Note that you key mechanisms like |.expand once| to pass the value of a macro instead of the macro itself:
+        %
+        请注意，您需要向 |.expand once| 的关键机制。 传递宏的值而不是宏本身：
+        %
+\begin{codeexample}[code only]
+\tikzdatavisualizationset{
+  new object={
+    class              = example class,
+    arg1               = foo,
+    arg2/.expand once  = \bar
+  }
+}
+\end{codeexample}
+        %
+        % Now, if |\bar| is set to |This \emph{is} it.|\@ at the moment to object is created later on, the following object creation code is executed:
+        %
+        现在，如果 |\bar| 被设置为 |This \emph{is} it|。\@ 当前创建的对象稍后将执行以下对象创建代码:
+        %
+\begin{codeexample}[code only]
+\pgfoonew \tikzdvobj=new example class(foo,This \emph{is} it)
+\end{codeexample}
+    \end{key}
+
+    \begin{key}{/tikz/data visualization/arg1 from key=\meta{键}} % begin{key}{/tikz/data visualization/arg1 from key=\meta{key}}
+        % Works like the |arg1|, only the value that is passed to the constructor is the current value of the specified \meta{key} at the moment when the object is created.
+
+        工作方式类似于 |arg1|，只有传递给构造函数的值是在创建对象时指定的 \meta{键} 的当前值。
+        %
+\begin{codeexample}[code only]
+\tikzdatavisualizationset{
+  new object={
+    class              = example class,
+    arg1 from key      = /tikz/some key
+  }
+}
+\tikzset{some key/.initial=foobar}
+\end{codeexample}
+        %
+        % causes the following to be executed:
+        % 
+        这会执行以下操作：
+        %
+\begin{codeexample}[code only]
+\pgfoonew \tikzdvobj=new example class(foobar)
+\end{codeexample}
+        %
+        % Naturally, the keys |arg2 from key| to |arg8 from key| are also provided.
+        %
+        当然，也提供了键 |arg2 from key| 到 键 |arg8 from key|。
+    \end{key}
+
+    \begin{key}{/tikz/data visualization/arg1 handle from key=\meta{键}} % \begin{key}{/tikz/data visualization/arg1 handle from key=\meta{key}}
+        % Works like the |arg1 from key|, only the key must store an object and instead of the object a handle to the object is passed to the constructor.
+
+        工作方式类似于 |arg1 from key|，只是键必须存储一个对象，而不是对象的对象的句柄被传递给构造函数。
+    \end{key}
+\end{key}

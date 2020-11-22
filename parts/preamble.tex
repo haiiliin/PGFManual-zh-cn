@@ -1,4 +1,4 @@
-% Copyright 2006 by Till Tantau
+% Copyright 2019 by Till Tantau
 %
 % This file may be distributed and/or modified
 %
@@ -10,10 +10,6 @@
 
 % pgf version is defined in \pgfversion in file
 % generic/pgf/utilities/pgfrcs.code.tex
-
-\RequirePackage{silence}
-\WarningFilter{hyperref}{Token not allowed}
-\WarningFilter{biblatex}{No driver for entry type}
 
 \def\xcolorversion{2.00}
 
@@ -39,7 +35,6 @@
   arrows,
   arrows.spaced,
   arrows.meta,
-  bbox,
   bending,
   babel,
   calc,
@@ -184,8 +179,8 @@
   \usepackage[T1]{fontenc}
 \fi
 
-\input{parts/macros.tex}
 \graphicspath{{images/}}
+\input{parts/macros}
 
 \usepackage{todonotes}
 \newcommand\todosp[2][]{%        % Stefan Pinnow
