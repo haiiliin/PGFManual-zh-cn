@@ -49,7 +49,7 @@ x, y, z
 %
 % This file is in the \textsc{csv}-format. This format can be read by the |table| parser (which is called thus, rather than ``|csv|'', since it can also read files in which the columns are separated by, say, a semicolon or a space). The |table| format will then read the data and for each line of the data, except for the headline of course, it will produce one data point. For instance, for the last data point the key |/data point/x| will be set to |0|, the key |/data point/y| will be set to |1|, and the key |/data point/z| will be set to |0.5|.
 %
-此文件为\textsc{csv}格式。这种格式可以被 |table| 解析器读取（之所以不称为``| csv |''，是因为它还可以读取列之间用分号或空格隔开的文件）。然后，|table| 格式将读取数据，对于数据的每一行（当然除了标题之外），它将生成一个数据点。例如，对于最后一个数据点，关键字 |/data point/x| 将被设置为 |0|，关键字 |/data point/y| 将被设置为 |1|，关键字 |/data point/z| 将被设置为 |0.5|。
+此文件为\textsc{csv}格式。这种格式可以被 |table| 解析器读取（之所以不称为``|csv|''，是因为它还可以读取列之间用分号或空格隔开的文件）。然后，|table| 格式将读取数据，对于数据的每一行（当然除了标题之外），它将生成一个数据点。例如，对于最后一个数据点，关键字 |/data point/x| 将被设置为 |0|，关键字 |/data point/y| 将被设置为 |1|，关键字 |/data point/z| 将被设置为 |0.5|。
 
 % All parsers are basically line-oriented. This means that, normally, each line in the input data should contain one data point. This rule may not always apply, for instance empty lines are typically ignored and sometimes a data point may span several lines, but deviating from this ``one data point per line'' rule makes parsers harder to program.
 
@@ -207,7 +207,7 @@ data [format=named] {
     这个库定义了下面描述的格式，允许您通过一个待求函数间接地指定数据点。
 
     \begin{dataformat}{function}
-        This format allows you to specify a function that is then evaluated in order to create the desired data points. In other words, the data lines do not contain the data itself, but rather a functional description of the data.
+        % This format allows you to specify a function that is then evaluated in order to create the desired data points. In other words, the data lines do not contain the data itself, but rather a functional description of the data.
 
         该格式允许您指定一个函数，然后对其进行计算以创建所需的数据点。 换句话说，数据线不包含数据本身，而是数据的函数描述。
 
@@ -217,7 +217,7 @@ data [format=named] {
         %
         \begin{enumerate}
             % \item |var |\declare{\meta{variable}}| : interval[|\meta{low}|:|\meta{high}|]| \opt{|samples |\meta{number}}|;|
-            \item |var |\declare{\meta{变量}}| : interval[|\meta{最小值}|:|\meta{最大值}|]| \opt{|samples |\meta{数字}}|;|
+            \item |var |\declare{\meta{变量}}| : interval[|\meta{最小值}|:|\meta{最大值}|]| \opt{|samples |\meta{数量}}|;|
             % \item |var |\declare{\meta{variable}}| : interval[|\meta{low}|:|\meta{high}|] step |\meta{step}|;|
             \item |var |\declare{\meta{变量}}| : interval[|\meta{最小值}|:|\meta{最大值}|] step |\meta{步长}|;|
             % \item |var |\declare{\meta{variable}}| : {|\meta{values}|};|

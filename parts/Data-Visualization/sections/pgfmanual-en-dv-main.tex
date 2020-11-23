@@ -285,7 +285,7 @@
 
 在\tikzname\ 图片中，您可以使用 |\datavisualization| 命令来创建数据可视化。您可以在图片中多次使用此命令来创建包含多个数据可视化的图片。
 
-\begin{command}{\datavisualization\opt{\oarg{数据可视化选项}}\meta{数据指定}|;|} %\begin{command}{\datavisualization\opt{\oarg{data visualization options}}\meta{data specification}|;|}
+\begin{command}{\datavisualization\opt{\oarg{数据可视化选项}}\meta{数据说明}|;|} %\begin{command}{\datavisualization\opt{\oarg{data visualization options}}\meta{data specification}|;|}
     % This command is available only inside a |{tikzpicture}| environment.
 
     此命令仅可在 |{tikzpicture}| 环境内部可用。
@@ -304,11 +304,11 @@
 
     % Following these options, the \meta{data specification} is used to provide the actual to-be-visualized data. The syntax is somewhat similar to commands like |\path|: The \meta{data specification} is a sequence of keywords followed by local options and parameters, terminated with a semicolon. (Indeed, like for the |\path| command, the \meta{data visualizers options} need not be specified at the beginning, but additional option surrounded by square brackets may be given anywhere inside the \meta{data specification}.)
 
-    根据这些选项，\meta{数据指定} 用于提供实际的要可视化的数据。该语法有点类似于 |\path| 这样的命令：\meta{数据指定} 后跟本地选项和参数的关键字序列，以分号结尾。（实际上，就像 |\path| 命令一样，不需要在开始时指定 \meta{数据可视化器选项}，但是在 \meta{数据指定} 内的任何位置都可以提供方括号包围的附加选项）。
+    根据这些选项，\meta{数据说明} 用于提供实际的要可视化的数据。该语法有点类似于 |\path| 这样的命令：\meta{数据说明} 后跟本地选项和参数的关键字序列，以分号结尾。（实际上，就像 |\path| 命令一样，不需要在开始时指定 \meta{数据可视化器选项}，但是在 \meta{数据说明} 内的任何位置都可以提供方括号包围的附加选项）。
 
     % The different possible keywords inside the \meta{data specification} are explained in the following.
 
-    下面解释了 \meta{数据指定} 中可能存在的不同关键字。
+    下面解释了 \meta{数据说明} 中可能存在的不同关键字。
 \end{command}
 
 \begin{datavisualizationoperation}{data}{\opt{\oarg{选项}}\opt{\marg{内敛数据}}} % \begin{datavisualizationoperation}{data}{\opt{\oarg{options}}\opt{\marg{inline data}}}
@@ -452,10 +452,10 @@
     %
 \end{key}
 
-\begin{datavisualizationoperation}{data group}{\opt{\oarg{选项}}\marg{数据组名称}\opt{|+=|\marg{数据指定}}} % \begin{datavisualizationoperation}{data group}{\opt{\oarg{options}}\marg{name}\opt{|+=|\marg{data specifications}}}
+\begin{datavisualizationoperation}{data group}{\opt{\oarg{选项}}\marg{数据组名称}\opt{|+=|\marg{数据说明}}} % \begin{datavisualizationoperation}{data group}{\opt{\oarg{options}}\marg{name}\opt{|+=|\marg{data specifications}}}
     % You can store a whole \meta{data specification} in a \emph{data group}. This allows you to reuse data in multiple places without having to write the data to an external file.
 
-    您可以将整个 \meta{数据指定} 存储在一个\emph{数据组}中。这允许您在多个地方重用数据，而不必将数据写入外部文件。
+    您可以将整个 \meta{数据说明} 存储在一个\emph{数据组}中。这允许您在多个地方重用数据，而不必将数据写入外部文件。
 
     % The syntax of this command comes in the following three variants:
 
@@ -463,20 +463,20 @@
     %
     \begin{itemize}
         % \item |data group| \opt{\oarg{options}} \marg{name} |=| \marg{data specifications}
-        \item |data group| \opt{\oarg{选项}} \marg{数据组名称} |=| \marg{数据指定}
+        \item |data group| \opt{\oarg{选项}} \marg{数据组名称} |=| \marg{数据说明}
         % \item |data group| \opt{\oarg{options}} \marg{name} |+=| \marg{data specifications}
-        \item |data group| \opt{\oarg{选项}} \marg{数据组名称} |+=| \marg{数据指定}
+        \item |data group| \opt{\oarg{选项}} \marg{数据组名称} |+=| \marg{数据说明}
         % \item |data group| \opt{\oarg{options}} \marg{name}
         \item |data group| \opt{\oarg{选项}} \marg{数据组名称}
     \end{itemize}
     %
     % In the first case, a new data group called \meta{name} is created (an existing data group of the same name will be erased) and the following \meta{data specifications} is stored in this data group. The data group will not be fed to the rendering pipeline, but it is parsed at this point as if it were. The defined data group is defined globally, so you can used it in subsequent visualizations. The \meta{options} are saved with the parsed \meta{data specifications}.
     %
-    在第一种情况下，创建了一个名为 \meta{数据组名称} 的新数据组（将擦除同名的现有数据组），并将以下 \meta{数据指定} 存储在该数据组中。数据组将不会被馈送到渲染管道，但此时它就像被解析一样被解析。所定义的数据组是全局定义的，因此可以在后续可视化中使用它。\meta{选项} 与解析的 \meta{数据指定} 一起保存。
+    在第一种情况下，创建了一个名为 \meta{数据组名称} 的新数据组（将擦除同名的现有数据组），并将以下 \meta{数据说明} 存储在该数据组中。数据组将不会被馈送到渲染管道，但此时它就像被解析一样被解析。所定义的数据组是全局定义的，因此可以在后续可视化中使用它。\meta{选项} 与解析的 \meta{数据说明} 一起保存。
 
     % In the second case, an already existing data group is extended by adding the \meta{data specifications} to it.
 
-    在第二种情况下，通过向现有数据组添加 \meta{数据指定} 来扩展该数据组。
+    在第二种情况下，通过向现有数据组添加 \meta{数据说明} 来扩展该数据组。
 
     % In the third case (detected by noting that the \meta{name} is neither followed by an equal sign nor a plus sign), the contents of the previously defined data group \meta{name} is inserted. The \meta{options} are also executed.
 
@@ -512,10 +512,10 @@
     %
 \end{datavisualizationoperation}
 
-\begin{datavisualizationoperation}{scope}{\opt{\oarg{选项}}\marg{数据指定}} % \begin{datavisualizationoperation}{scope}{\opt{\oarg{options}}\marg{data specification}}
+\begin{datavisualizationoperation}{scope}{\opt{\oarg{选项}}\marg{数据说明}} % \begin{datavisualizationoperation}{scope}{\opt{\oarg{options}}\marg{data specification}}
     % Scopes can be used to nest hierarchical data sets. The \meta{options} will be executed with the path |/pgf/data| and will only apply to the data sets specified inside the \meta{data specification}, which may contain |data| or |scope| commands once more:
 
-    分组可用于嵌套分层数据集。\meta{选项} 将以 |/pgf/data| 路径执行，且仅适用于 \meta{数据指定} 中指定的数据集，其中可能再次包含 |data| 或 |scope| 命令：
+    分组可用于嵌套分层数据集。\meta{选项} 将以 |/pgf/data| 路径执行，且仅适用于 \meta{数据说明} 中指定的数据集，其中可能再次包含 |data| 或 |scope| 命令：
     %
 \begin{codeexample}[code only]
 \datavisualization...

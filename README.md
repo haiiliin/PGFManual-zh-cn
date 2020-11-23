@@ -4,6 +4,14 @@ Chinese translation of [PGFManual v3.1.6a](https://github.com/pgf-tikz/pgf/relea
 
 
 
+## Downloads
+
+- [PGFManual (Chinese)](https://github.com/Hailin-Jing/PGFManual-zh-cn/raw/main/PGFManual-zh-cn.pdf)
+- [PGFManual (Official)](https://github.com/pgf-tikz/pgf/releases/download/3.1.6a/pgfmanual.pdf)
+- [Minimal introduction to TikZ (Unofficial)](http://cremeronline.com/LaTeX/minimaltikz.pdf)
+
+
+
 ## Translation Progress
 
 - [x] Introduction
@@ -144,12 +152,4 @@ Chinese translation of [PGFManual v3.1.6a](https://github.com/pgf-tikz/pgf/relea
   - [ ] Animation System Layer
 - [ ] References and Index
   - [ ] Index
-
-## Downloads
-
-- [PGFManual (Chinese)](https://github.com/Hailin-Jing/PGFManual-zh-cn/raw/main/PGFManual-zh-cn.pdf)
-
-- [PGFManual (Official)](https://github.com/pgf-tikz/pgf/releases/download/3.1.6a/pgfmanual.pdf)
-
-- [Minimal introduction to TikZ (Unofficial)](http://cremeronline.com/LaTeX/minimaltikz.pdf)
 
