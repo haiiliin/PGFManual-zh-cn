@@ -1164,36 +1164,54 @@ data [format=function] {
 \end{key}
 
 
-\iffalse
-
-\subsection{Ticks and Grids}
+% \subsection{Ticks and Grids}
+\subsection{刻度与网格}
 \label{section-dv-ticks-and-grids}
 
-\subsubsection{Concepts}
+% \subsubsection{Concepts}
+\subsubsection{概念}
 
-A \emph{tick} is a small visual indication on an axis of the value of the axis's attribute at the position where the tick is shown. A tick may be accompanied additionally by a textual representation, but it need not. A \emph{grid line} is similar to a tick, but it is not an indication on the axis, but rather a whole line that indicates all positions where the attribute has a certain value. Unlike ticks, grid lines (currently) are not accompanied by a textual representation.
+% A \emph{tick} is a small visual indication on an axis of the value of the axis's attribute at the position where the tick is shown. A tick may be accompanied additionally by a textual representation, but it need not. A \emph{grid line} is similar to a tick, but it is not an indication on the axis, but rather a whole line that indicates all positions where the attribute has a certain value. Unlike ticks, grid lines (currently) are not accompanied by a textual representation.
 
-Just as for axes, the data visualization system decouples the specification of which ticks are present \emph{in principle} from where they are visualized. In the following, I describe how you specify which ticks and grid lines you would like to be drawn and how they should look like (their styling). The axis system of your choice will then visualize the ticks at a sensible position for the chosen system. For details on how to change where whole axis is shown along with its ticks, see Section~\ref{section-dv-visualize-ticks}.
+\emph{刻度}是在坐标轴上显示轴属性值的一个小的可视化指示。刻度可以用一个附加文本框表示，但实际上不需要这样大费周章。\emph{网格线}与刻度类似，但它不是轴上的指示线，而是一整条线，指示属性具有某个值的所有位置。与刻度不同，（当前）网格线不需要用文本表示。
 
-Specifying which ticks you are interested in is done as follows: First, you use |ticks| key (or, for specifying which grid lines should be present, the |grid| key). This key takes several possible options, described in detail in the following, which have different effects:
+% Just as for axes, the data visualization system decouples the specification of which ticks are present \emph{in principle} from where they are visualized. In the following, I describe how you specify which ticks and grid lines you would like to be drawn and how they should look like (their styling). The axis system of your choice will then visualize the ticks at a sensible position for the chosen system. For details on how to change where whole axis is shown along with its ticks, see Section~\ref{section-dv-visualize-ticks}.
+
+就像坐标轴一样，数据可视化系统将刻度表示的规范与它们被可视化的地方分离开来。在下面，我将描述如何指定您想要绘制的刻度线和网格线，以及它们应该是什么样子（它们的样式）。然后，您所选择的坐标轴系统将在所选系统的一个合理位置上可视化刻度。有关如何更改整个坐标轴及其刻度的显示位置的详细信息，请参阅第\ref{section-dv-visualalize-ticks}节。
+
+% Specifying which ticks you are interested in is done as follows: First, you use |ticks| key (or, for specifying which grid lines should be present, the |grid| key). This key takes several possible options, described in detail in the following, which have different effects:
+
+指定你所感兴趣的刻度的步骤如下：首先，使用 |ticks| 键（或者，若指定应显示哪些网格线，使用 |grid| 键）。 该键具有几个可能的选项，下面将对其进行详细描述，它们会产生不同的效果：
 %
 \begin{enumerate}
-    \item Keys like |step=10| or |minor steps between steps| cause a ``semi-automatic'' computation of possible steps. Here, you explicitly specify the stepping of steps, but the first stepping and their number are computed automatically according to the range of possible values for the attribute.
-    \item Keys like |few|, |some|, or |many| can be passed to |ticks| in order to have \tikzname\ compute good tick positions automatically. This is usually what you want to happen, which is why most axis system will implicitly say |ticks={some}|.
-    \item Keys like |at| or |also at| provide ``absolute control'' over which ticks or grid lines are shown. For these keys, you can not only specify at what value a tick should be shown, but also its styling and also whether it is a major, minor, or subminor tick or grid line.
+    % \item Keys like |step=10| or |minor steps between steps| cause a ``semi-automatic'' computation of possible steps. Here, you explicitly specify the stepping of steps, but the first stepping and their number are computed automatically according to the range of possible values for the attribute.
+    \item 像 |step=10| 或 |minor steps between steps| 之类的键可能会导致步长的``半自动''计算。 在这里，您明确指定了步长，但是第一步会根据属性的可能范围自动计算。
+    % \item Keys like |few|, |some|, or |many| can be passed to |ticks| in order to have \tikzname\ compute good tick positions automatically. This is usually what you want to happen, which is why most axis system will implicitly say |ticks={some}|.
+    \item 为了使\tikzname\ 自动计算合适的刻度位置，可以将诸如 |few|，|some|，或者 |many| 的键传递给刻度。 通常这就是您想要发生的情况，这就是为什么大多数坐标轴系统会隐式使用 |ticks={some}| 的原因。
+    % \item Keys like |at| or |also at| provide ``absolute control'' over which ticks or grid lines are shown. For these keys, you can not only specify at what value a tick should be shown, but also its styling and also whether it is a major, minor, or subminor tick or grid line.
+    \item |at| 或 |also at| 之类的键提供对刻度线或网格线的``绝对控制''。 对于这些键，您不仅可以指定应显示刻度线的值，还可以指定其样式以及主要，次要或次次要刻度或网格线。
 \end{enumerate}
 
-In the following, the main keys |ticks| and |grids| are documented first. Then the different kinds of ways of specifying where ticks or grid lines should be shown are explained.
+% In the following, the main keys |ticks| and |grids| are documented first. Then the different kinds of ways of specifying where ticks or grid lines should be shown are explained.
+
+在下面，首先记录主要的键 |ticks| 和 |grids|。然后解释了如何使用不同方式指定刻度或网格线应该显示在何处。
 
 
-\subsubsection{The Main Options: Tick and Grid}
+% \subsubsection{The Main Options: Tick and Grid}
+\subsubsection{主要选项：刻度和网格}
 
-\begin{key}{/tikz/data visualization/axis options/ticks=\meta{options} (default some)}
-    This key can be passed to an axis in order to configure which ticks are present for the axis. The possible \meta{options} include, for instance, keys like |step|, which is used to specify a stepping for the ticks, but also keys like |major| or |minor| for specifying the positions of major and minor ticks in detail. The list of possible options is described in the rest of this section.
+\begin{key}{/tikz/data visualization/axis options/ticks=\meta{选项} (default some)} % \begin{key}{/tikz/data visualization/axis options/ticks=\meta{options} (default some)}
+    % This key can be passed to an axis in order to configure which ticks are present for the axis. The possible \meta{options} include, for instance, keys like |step|, which is used to specify a stepping for the ticks, but also keys like |major| or |minor| for specifying the positions of major and minor ticks in detail. The list of possible options is described in the rest of this section.
 
-    Note that the |ticks| option will only configure which ticks should be shown in principle. The actual rendering is done only when the |visualize ticks| key is used, documented in Section~\ref{section-dv-visualize-ticks}, which is typically done only internally by an axis system.
+    可以将此键传递给坐标轴，以便配置为坐标轴提供哪些刻度。可能的 \meta{选项} 包括，例如，像 |step| 这样的键，它用于指定刻度的步长，还包括像 |major| 或 |minor| 这样的键，用于详细指定主要和次要刻度线的位置。其它可能的选项列表将在本节的其余部分进行描述。
 
-    The \meta{options} will be executed with the path prefix |/tikz/data visualization/|. When the |ticks| key is used multiple times for an axis, the \meta{options} accumulate.
+    % Note that the |ticks| option will only configure which ticks should be shown in principle. The actual rendering is done only when the |visualize ticks| key is used, documented in Section~\ref{section-dv-visualize-ticks}, which is typically done only internally by an axis system.
+
+    注意，|ticks| 选项将只配置原则上应该显示的刻度。实际的呈现只有在使用 |visualize ticks| 键后才会完成，详细用法记录在第\ref{section-dv-visualize-ticks}节中，这通常是由坐标轴系统内部完成的。
+
+    % The \meta{options} will be executed with the path prefix |/tikz/data visualization/|. When the |ticks| key is used multiple times for an axis, the \meta{options} accumulate.
+
+    \meta{选项} 将以路径前缀 |/tikz/data visualization/| 执行。当对一个坐标轴多次使用 |ticks| 键时，\meta{选项} 会累积。
     %
 \begin{codeexample}[width=6cm,preamble={\usetikzlibrary{datavisualization}}]
 \tikz \datavisualization [
@@ -1216,14 +1234,20 @@ In the following, the main keys |ticks| and |grids| are documented first. Then t
     %
 \end{key}
 
-\begin{key}{/tikz/data visualization/axis options/grid=\meta{options} (default at default ticks)}
-    This key is similar to |ticks|, only it is used to configure where grid lines should be shown rather than ticks. In particular, the options that can be passed to the |ticks| key can also be passed to the |grid| key. Just like |ticks|, the \meta{options} only specify which grid lines should be drawn in principle; it is the job of the |visualize grid| key to actually cause any grid lines to be shown.
+\begin{key}{/tikz/data visualization/axis options/grid=\meta{选项} (default at default ticks)} % \begin{key}{/tikz/data visualization/axis options/grid=\meta{options} (default at default ticks)}
+    % This key is similar to |ticks|, only it is used to configure where grid lines should be shown rather than ticks. In particular, the options that can be passed to the |ticks| key can also be passed to the |grid| key. Just like |ticks|, the \meta{options} only specify which grid lines should be drawn in principle; it is the job of the |visualize grid| key to actually cause any grid lines to be shown.
 
-    If you do not specify any \meta{options}, the default text |at default ticks| is used. This option causes grid lines to be drawn at all positions where ticks are shown by default. Since this usually exactly what you would like to happen, most of the time you just need to |all axes=grid| to cause a grid to be shown.
+    这个键类似于 |ticks|，只是它用于配置网格线应该显示在哪里，而不是刻度。特别是，可以传递给 |ticks| 键的选项也可以传递给 |grid| 键。就像 |ticks| 一样，\meta{选项} 只指定原则上应该绘制哪些网格线；|visualize ticks| 键的任务是实际显示所有网格线。
+
+    % If you do not specify any \meta{options}, the default text |at default ticks| is used. This option causes grid lines to be drawn at all positions where ticks are shown by default. Since this usually exactly what you would like to happen, most of the time you just need to |all axes=grid| to cause a grid to be shown.
+
+    如果没有指定任何 \meta{选项}，则将使用默认刻度 |at default ticks|。此选项使默认情况下在刻度的所有位置绘制网格线。因为这通常是您想要发生的，大多数情况下，您只需要使用 |all axes=grid|，以使网格显示。
 \end{key}
 
-\begin{key}{/tikz/data visualization/axis options/ticks and grid=\meta{options}}
-    This key passes the \meta{options} to both the |ticks| key and also to the |grid| key. This is useful when you want to specify some special points explicitly where you wish a tick to be shown and also a grid line.
+\begin{key}{/tikz/data visualization/axis options/ticks and grid=\meta{选项}} % \begin{key}{/tikz/data visualization/axis options/ticks and grid=\meta{options}}
+    % This key passes the \meta{options} to both the |ticks| key and also to the |grid| key. This is useful when you want to specify some special points explicitly where you wish a tick to be shown and also a grid line.
+
+    此键将 \meta{选项} 同时传递给 |ticks| 键和 |grid| 键。当您想在希望在显示刻度线的地方明确指定一些特殊刻度以及网格线时，此选项很有用。
     %
 \begin{codeexample}[preamble={\usetikzlibrary{datavisualization.formats.functions}}]
 \tikz \datavisualization
@@ -1241,7 +1265,8 @@ In the following, the main keys |ticks| and |grids| are documented first. Then t
 \end{key}
 
 
-\subsubsection{Semi-Automatic Computation of Tick and Grid Line Positions}
+% \subsubsection{Semi-Automatic Computation of Tick and Grid Line Positions}
+\subsubsection{刻度线和网格线位置的半自动计算}
 \label{section-dv-concept-tick-placement-strategies}
 
 Consider the following problem: The data visualization engine determines that in a plot the $x$-values vary between $17.4$ and $34.5$. In this case, we certainly do not want, say, ten ticks at exactly ten evenly spaced positions starting with $17.4$ and ending with $34.5$, because this would yield ticks at positions like $32.6$. Ticks should be placed at ``nice'' positions like $20$, $25$, and $30$.
@@ -3164,5 +3189,3 @@ we can use the following key:
 
     Finally, the \meta{application options} can be used to actually apply the configuration that has been chosen by the \meta{options}. The idea is that \meta{default options}, \meta{options}, and also |every| \meta{axis system name} all have a chance of changing, re-changing and re-setting all sorts of styles and keys. Then, with the last change ``winning'', the resulting setting of a style can be executed, which may then cause a label visualization to be installed.
 \end{key}
-
-\fi
