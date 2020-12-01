@@ -1269,13 +1269,21 @@ data [format=function] {
 \subsubsection{刻度线和网格线位置的半自动计算}
 \label{section-dv-concept-tick-placement-strategies}
 
-Consider the following problem: The data visualization engine determines that in a plot the $x$-values vary between $17.4$ and $34.5$. In this case, we certainly do not want, say, ten ticks at exactly ten evenly spaced positions starting with $17.4$ and ending with $34.5$, because this would yield ticks at positions like $32.6$. Ticks should be placed at ``nice'' positions like $20$, $25$, and $30$.
+% Consider the following problem: The data visualization engine determines that in a plot the $x$-values vary between $17.4$ and $34.5$. In this case, we certainly do not want, say, ten ticks at exactly ten evenly spaced positions starting with $17.4$ and ending with $34.5$, because this would yield ticks at positions like $32.6$. Ticks should be placed at ``nice'' positions like $20$, $25$, and $30$.
 
-Determining which positions are ``nice'' is somewhat difficult. In the above example, the positions $20$, $25$, and $30$ are certainly nice, but only three ticks may be a bit few of them. Better might be the tick positions $17.5$, $20$, $22.5$, through to $32.5$. However, users might prefer even numbers over fractions like $2.5$ as the stepping.
+考虑以下问题：数据可视化引擎在绘图过程中，$x$的值在$17.4$和$34.5$之间变化。在本例中，我们当然不想要恰好以$17.4$开始、$34.5$结束的10个均匀间隔的位置上的10个刻度，因为这将产生像$32.6$这样的刻度。刻度应该放在一个``合理的''位置，比如$20$，$25$，$30$。
 
-A \emph{tick placement strategy} is a method of automatically deciding which positions are \emph{good} for placing ticks. The data visualization engine comes with a number of predefined strategies, but you can also define new ones yourself. When the data visualization is requested to automatically determine ``good'' positions for the placement of ticks on an axis, it uses one of several possible \emph{basic strategies}. These strategies differ dramatically in which tick positions they will choose: For a range of values between $5$ and $1000$, a |linear steps| strategy might place ticks at positions $100$, $200$, through to $1000$, while an |exponential steps| strategy would prefer the tick positions $10$, $100$ and $1000$. The exact number and values of the tick positions chosen by either strategy can be fine-tuned using additional options like |step| or |about|.
+% Determining which positions are ``nice'' is somewhat difficult. In the above example, the positions $20$, $25$, and $30$ are certainly nice, but only three ticks may be a bit few of them. Better might be the tick positions $17.5$, $20$, $22.5$, through to $32.5$. However, users might prefer even numbers over fractions like $2.5$ as the stepping.
 
-Here is an example of the different stepping chosen when one varies the tick placement strategy:
+确定哪些职位是“``合理''的有点困难。在上面的例子中，$20$，$25$，$30$的位置当然是不错的，但是只有三个刻度似乎有点少。更合理的选择是$17.5$，$20$，$22.5$，一直到$32.5$。但是，用户可能更喜欢证书，而不是像$2.5$这样的分数来作为刻度。
+
+% A \emph{tick placement strategy} is a method of automatically deciding which positions are \emph{good} for placing ticks. The data visualization engine comes with a number of predefined strategies, but you can also define new ones yourself. When the data visualization is requested to automatically determine ``good'' positions for the placement of ticks on an axis, it uses one of several possible \emph{basic strategies}. These strategies differ dramatically in which tick positions they will choose: For a range of values between $5$ and $1000$, a |linear steps| strategy might place ticks at positions $100$, $200$, through to $1000$, while an |exponential steps| strategy would prefer the tick positions $10$, $100$ and $1000$. The exact number and values of the tick positions chosen by either strategy can be fine-tuned using additional options like |step| or |about|.
+
+\emph{刻度放置策略}是一种自动决定哪些位置适合放置刻度的方法。数据可视化引擎提供了许多预定义的策略，但是您也可以自己定义新的策略。当要求数据可视化自动确定轴上刻度的``合理''位置时，它使用几种可能的\emph{基本策略}之一。对于$5$到$1000$的范围内，|linear steps| 策略可能会在$100$、$200$到4的位置设置刻度，而|指数步骤|策略更喜欢在$100$、$200$直到$1000$的位置设置刻度点。每一种策略所选择的刻度点位置的确切数量和值都可以使用额外的选项进行微调，如 |step| 或 |about|。
+
+% Here is an example of the different stepping chosen when one varies the tick placement strategy:
+
+这是一个示例，它改变了刻度线放置策略时选择的不同步长：
 %
 \begin{codeexample}[preamble={\usetikzlibrary{datavisualization.formats.functions}}]
 \begin{tikzpicture}
@@ -1298,12 +1306,18 @@ Here is an example of the different stepping chosen when one varies the tick pla
 \end{tikzpicture}
 \end{codeexample}
 
-Two strategies are always available: |linear steps|, which yields (semi)automatic ticks are evenly spaced positions, and |exponential steps|, which yields (semi)automatic steps at positions at exponentially increasing positions -- which is exactly what is needed for logarithmic plots. These strategies are details in Section~\ref{section-dv-strategies}.
+% Two strategies are always available: |linear steps|, which yields (semi)automatic ticks are evenly spaced positions, and |exponential steps|, which yields (semi)automatic steps at positions at exponentially increasing positions -- which is exactly what is needed for logarithmic plots. These strategies are details in Section~\ref{section-dv-strategies}.
 
-The following options are used to configure tick placement strategies like |linear steps|. Unlike the basic choice of a placement strategy, which is an axis option, the following should be passed to the option |ticks| or |grid| only. So, you would write things like |x axis={ticks={step=2}}|, but |x axis={linear steps}|.
+有两种策略总是可用的：|linear steps|，产生均匀间隔位置的（半）自动刻度；以及 |exponential steps|，在指数增加位置上的位置，产生（半）自动刻度，一般用于对数图。 这些策略在第\ref{section-dv-strategies}节中有详细介绍。
 
-\begin{key}{/tikz/data visualization/step=\meta{value} (initially 1)}
-    The value of this key is used to determine the spacing of the major ticks. The key is used by the |linear steps| and |exponential steps| strategies, see the explanations in Section~\ref{section-dv-strategies} for details. Basically, all ticks are placed at all multiples of \meta{value} that lie in the attribute range interval.
+% The following options are used to configure tick placement strategies like |linear steps|. Unlike the basic choice of a placement strategy, which is an axis option, the following should be passed to the option |ticks| or |grid| only. So, you would write things like |x axis={ticks={step=2}}|, but |x axis={linear steps}|.
+
+下面的选项用于配置刻度放置策略，如 |linear steps|。与放置策略的基本选择（坐标轴选项）不同，下面的选项应该仅传递给选项 |ticks| 或 |grid|。你可以使用 |x axis={ticks={step=2}}|，但不能使用 |x axis={linear steps}|。
+
+\begin{key}{/tikz/data visualization/step=\meta{值} (initially 1)} % \begin{key}{/tikz/data visualization/step=\meta{value} (initially 1)}
+    % The value of this key is used to determine the spacing of the major ticks. The key is used by the |linear steps| and |exponential steps| strategies, see the explanations in Section~\ref{section-dv-strategies} for details. Basically, all ticks are placed at all multiples of \meta{value} that lie in the attribute range interval.
+
+    此键的值用于确定主刻度的间距。这个键被 |linear steps| 和 |exponential steps| 策略所使用，详见第\ref{section-dv-strategies}节的解释。基本上，所有刻度都被放置在位于属性范围间隔内的 \meta{值} 的所有整数倍数处。
     %
 \begin{codeexample}[preamble={\usetikzlibrary{datavisualization.formats.functions}}]
 \tikz \datavisualization [
@@ -1318,8 +1332,10 @@ The following options are used to configure tick placement strategies like |line
     %
 \end{key}
 
-\begin{key}{/tikz/data visualization/minor steps between steps=\meta{number} (default 9)}
-    Specifies that between any two major steps (whose positions are specified by the |step| key), there should be \meta{number} many minor steps. Note that the default of |9| is exactly the right number so that each interval between two minor steps is exactly a tenth of the size of a major step. See also Section~\ref{section-dv-strategies} for further details.
+\begin{key}{/tikz/data visualization/minor steps between steps=\meta{数量} (default 9)} % \begin{key}{/tikz/data visualization/minor steps between steps=\meta{number} (default 9)}
+    % Specifies that between any two major steps (whose positions are specified by the |step| key), there should be \meta{number} many minor steps. Note that the default of |9| is exactly the right number so that each interval between two minor steps is exactly a tenth of the size of a major step. See also Section~\ref{section-dv-strategies} for further details.
+
+    指定在任意两个主刻度之间（其位置由 |step| 键指定）应该有 \meta{数量} 个小刻度。注意，缺省值 |9| 恰好是一个合理的数字，因为每两个小刻度之间的间隔恰好是大刻度的十分之一。更多细节请参见第\ref{section-dv-strategies}节。
     %
 \begin{codeexample}[preamble={\usetikzlibrary{datavisualization.formats.functions}}]
 \begin{tikzpicture}
@@ -1336,33 +1352,50 @@ The following options are used to configure tick placement strategies like |line
     %
 \end{key}
 
-\begin{key}{/tikz/data visualization/phase=\meta{value} (initially 0)}
-    See Section~\ref{section-dv-strategies} for details on how the phase of steps influences the tick placement.
+\begin{key}{/tikz/data visualization/phase=\meta{值} (initially 0)} % \begin{key}{/tikz/data visualization/phase=\meta{value} (initially 0)}
+    % See Section~\ref{section-dv-strategies} for details on how the phase of steps influences the tick placement.
+
+    请参见第\ref{section-dv-strategies}节了解刻度相位如何影响刻度位置的详细信息。
 \end{key}
 
 
-\subsubsection{Automatic Computation of Tick and Grid Line Positions}
+% \subsubsection{Automatic Computation of Tick and Grid Line Positions}
+\subsubsection{自动计算刻度线和网格线的位置}
 
-The |step| option gives you ``total control'' over the stepping of ticks on an axis, but you often do not know the correct stepping in advance. In this case, you may prefer to have a good value for |step| being computed for you automatically.
+% The |step| option gives you ``total control'' over the stepping of ticks on an axis, but you often do not know the correct stepping in advance. In this case, you may prefer to have a good value for |step| being computed for you automatically.
 
-Like the |step| key, these options are passed to the |ticks| option. So, for instance, you would write |x axis={ticks={about=4}}| to request about four ticks to be placed on the $x$-axis.
+|step| 选项为您提供了对轴上刻度步进的``完全控制''，但是您通常无法预先知道正确的步进值。在这种情况下，您可能希望自动计算 |step| 的良好值。
 
-\begin{key}{/tikz/data visualization/about=\meta{number}}
-    This key asks the data visualization to place \emph{about} \meta{number}
-    many ticks on an axis. It is not guaranteed that \emph{exactly} \meta{number} many ticks will be used, rather the actual number will be the closest number of ticks to \meta{number} so that their stepping is still ``good''. For instance, when you say |about=10|, it may happen that exactly |10|, but perhaps even |13| ticks are actually selected, provided that these numbers of ticks lead to good stepping values like |5| or |2.5| rather than numbers like |3.4| or |7|. The method that is used to determine which steppings a deemed to be ``good'' depends on the current tick placement strategy.
+% Like the |step| key, these options are passed to the |ticks| option. So, for instance, you would write |x axis={ticks={about=4}}| to request about four ticks to be placed on the $x$-axis.
+
+与 |step| 键一样，这些选项也被传递给 |ticks| 选项。因此，例如，您可以编写 |x axis={ticks={about=4}}| 来请求在$x$轴上放置大约4个刻度。
+
+\begin{key}{/tikz/data visualization/about=\meta{数量}} % \begin{key}{/tikz/data visualization/about=\meta{number}}
+    % This key asks the data visualization to place \emph{about} \meta{number} many ticks on an axis. It is not guaranteed that \emph{exactly} \meta{number} many ticks will be used, rather the actual number will be the closest number of ticks to \meta{number} so that their stepping is still ``good''. For instance, when you say |about=10|, it may happen that exactly |10|, but perhaps even |13| ticks are actually selected, provided that these numbers of ticks lead to good stepping values like |5| or |2.5| rather than numbers like |3.4| or |7|. The method that is used to determine which steppings a deemed to be ``good'' depends on the current tick placement strategy.
+
+    此键要求数据可视化在坐标轴上`\emph{大致}放置 \meta{数量} 个刻度。这并不能保证系统 \emph{严格}放置 \meta{数量} 个刻度，实际的刻度数量将是接近于 \meta{数量} 的刻度数量，这样可以保证步长仍然是``好的''。例如，当你使用 |about=10|，它可能正好放置了 |10| 个刻度，但实际上也可能放置 |13| 个刻度，只要这些刻度的数量可以产生一个较好的步长，如 |5| 或 |2.5|，而不是像 |3.4| 或 |7| 这样的数字。确定哪些步长被认为是``好的''取决于当前的刻度放置策略。
 
 
     \medskip
-    \textbf{Linear steps.}
-    Let us start with |linear steps|: First, the difference between the maximum value $v_{\max}$ and the minimum value $v_{\min}$ on the axis is computed; let us call it $r$ for ``range''. Then, $r$ is divided by \meta{number}, yielding a target stepping~$s$. If $s$ is a number like $1$ or $5$ or $10$, then this number could be used directly as the new value of |step|. However, $s$ will typically something strange like $0.023\,45$ or $345\,223.76$, so $s$ must be replaced by a better value like $0.02$ in the first case and perhaps $250\,000$ in the second case.
+    % \textbf{Linear steps.} Let us start with |linear steps|: First, the difference between the maximum value $v_{\max}$ and the minimum value $v_{\min}$ on the axis is computed; let us call it $r$ for ``range''. Then, $r$ is divided by \meta{number}, yielding a target stepping~$s$. If $s$ is a number like $1$ or $5$ or $10$, then this number could be used directly as the new value of |step|. However, $s$ will typically something strange like $0.023\,45$ or $345\,223.76$, so $s$ must be replaced by a better value like $0.02$ in the first case and perhaps $250\,000$ in the second case.
 
-    In order to determine which number is to be used, $s$ is rewritten in the form $m \cdot 10^k$ with $1 \le m < 10$ and $k \in \mathbb Z$. For instance, $0.023\,45$ would be rewritten as $2.345 \cdot 10^{-2}$ and $345\,223.76$ as $3.452\,2376 \cdot 10^5$. The next step is to replace the still not-so-good number $m$ like $2.345$ or $3.452\,237$ by a ``good'' value $m'$. For this, the current value of the |about strategy| is used:
+    \textbf{线性步长刻度放置策略。}让我们从 |linear steps| 开始：首先，计算坐标轴上的最大值$v_{\max}$和最小值$v_{\min}$之间的差值；我们称它为$r$的``范围''。然后，我么将$r$除以 \meta{数量}，得到目标步长$s$。如果$s$是像$1$，$5$或$10$这样的数字，那么这个数字可以直接用作 |step| 的新值。然而，$s$通常会是一些奇怪的数字，比如像$0.023\,45$ 或者$345\,223.76$这样的数字，所以$s$必须使用一个更好的数字，比如在第一种情况下使用$0.02$，在第二种情况下可能使用$250\,000$。
+
+    % In order to determine which number is to be used, $s$ is rewritten in the form $m \cdot 10^k$ with $1 \le m < 10$ and $k \in \mathbb Z$. For instance, $0.023\,45$ would be rewritten as $2.345 \cdot 10^{-2}$ and $345\,223.76$ as $3.452\,2376 \cdot 10^5$. The next step is to replace the still not-so-good number $m$ like $2.345$ or $3.452\,237$ by a ``good'' value $m'$. For this, the current value of the |about strategy| is used:
+
+    为了确定使用哪个数字，$s$被重写为$m \cdot 10^k$的形式，其中$1 \le m < 10$ 以及 $k \in \mathbb Z$。例如，$0.023\,45$将重写为$2.345 \cdot 10^{-2}$，$345\,223.76$将重写为$3.452\,2376 \cdot 10^5$。下一步是将仍然不太好的数字$m$，如$2.345$或$3.452\,237$，替换为``良好的''数字$m'$。为此，我们将使用 |about strategy| 键的当前值：
     %
-    \begin{key}{/tikz/data visualization/about strategy=\meta{list}}
-        The \meta{list} is a comma-separated sequence of pairs \meta{threshold}/\meta{value} like for instance |1.5/1.0| or |2.3/2.0|. When a good value $m'$ is sought for a given $m$, we iterate over the list and find the first pair \meta{threshold}/\meta{value} where \meta{threshold} exceeds~$m$. Then $m'$ is set to \meta{value}. For instance, if \meta{list} is |1.5/1.0,2.3/2.0,4/2.5,7/5,11/10|, which is the default, then for $m=3.141$ we would get $m'=2.5$ since $4 > 3.141$, but $2.3 \le 3.141$. For $m=6.3$ we would get $m'=5$.
+    \begin{key}{/tikz/data visualization/about strategy=\meta{列表}} % \begin{key}{/tikz/data visualization/about strategy=\meta{list}}
+        % The \meta{list} is a comma-separated sequence of pairs \meta{threshold}/\meta{value} like for instance |1.5/1.0| or |2.3/2.0|. When a good value $m'$ is sought for a given $m$, we iterate over the list and find the first pair \meta{threshold}/\meta{value} where \meta{threshold} exceeds~$m$. Then $m'$ is set to \meta{value}. For instance, if \meta{list} is |1.5/1.0,2.3/2.0,4/2.5,7/5,11/10|, which is the default, then for $m=3.141$ we would get $m'=2.5$ since $4 > 3.141$, but $2.3 \le 3.141$. For $m=6.3$ we would get $m'=5$.
+
+        \meta{列表} 是一个逗号分隔的序列对 \meta{阀值}/\meta{值}，类似于 |1.5/1.0| 或 |2.3/2.0|。当需要为给定的$m$寻找一个好的值$m'$时，我们遍历列表并找到第一个序列对 \meta{阀值}/\meta{值}，其中的 \meta{阀值} 大于$m$。然后$m'$被设置为 \meta{值}。例如，如果 \meta{列表}是 |1.5/1.0,2.3/2.0,4/2.5,7/5,11/10|，这也是该键的默认值，如果$m=3.141$，我们将得到$m'=2.5$，因为$4 > 3.141$，但$2.3 \le 3.141$。如果$m=6.3$，那么我们将得到$m'=5$。
+
+        
     \end{key}
     %
-    Once $m'$ has been determined, the stepping is set to $s' = m' \cdot 10^k$.
+    % Once $m'$ has been determined, the stepping is set to $s' = m' \cdot 10^k$.
+    %
+    一旦确定了$m'$，步进就将设置为$s' = m' \cdot 10^k$。
 
     % Define an axis type
     \tikzdatavisualizationset{
@@ -1409,7 +1442,9 @@ Like the |step| key, these options are passed to the |ticks| option. So, for ins
       \end{tikzpicture}
     }
 
-    The net effect of all this is that for the default strategy the only valid stepping are the values $1$, $2$, $2.5$ and $5$ and every value obtainable by multiplying one of these values by a power of ten. The following example shows the effects of, first, setting |about=5| (corresponding to the |some| option) and then having axes where the minimum value is always |0| and where the maximum value ranges from |10| to |100| and, second, setting |about| to the values from |3| (corresponding to the |few| option) and to |10| (corresponding to the |many| option) while having the minimum at |0| and the maximum at |100|:
+    % The net effect of all this is that for the default strategy the only valid stepping are the values $1$, $2$, $2.5$ and $5$ and every value obtainable by multiplying one of these values by a power of ten. The following example shows the effects of, first, setting |about=5| (corresponding to the |some| option) and then having axes where the minimum value is always |0| and where the maximum value ranges from |10| to |100| and, second, setting |about| to the values from |3| (corresponding to the |few| option) and to |10| (corresponding to the |many| option) while having the minimum at |0| and the maximum at |100|:
+
+    所有这些的最终结果是，对于默认策略，唯一有效的步长只有$1$、$2$、$2.5$和$5$，以及将它们乘以10的乘方可以得到的那些值。下面的例子将显示这种刻度放置策略的效果，首先，设置 |about=5|（对应于 |some| 选项），我们得到的坐标轴的最小值将总是 |0|，最大值在 |10| 到 |100| 之间变化，第二，设置 |about| 键在 |3|（对应于 |few| 选项）到 |10|（对应于 |many| 选项）之间变化，我们得到的坐标轴的最小值为 |0|，最大值为 |100|：
 
     \showstrategy{standard about strategy}
 
